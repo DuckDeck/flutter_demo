@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(primaryColor: Colors.purple),
       home: Scaffold(
         appBar: AppBar(title: Text('Top Lakes'),),
-        body: Image.asset('001.jpg'),
+        body: Image.network('http://d.5857.com/xiezhansdade_20181219/002.jpg'),
       )
     );
   }
