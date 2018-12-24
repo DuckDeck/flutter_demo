@@ -58,7 +58,6 @@ class _ShoppingListState extends State<ShoppingList>{
 
   @override
     Widget build(BuildContext context) {
-      // TODO: implement build
       return new Scaffold(
         appBar: new AppBar(title:  new Text('Shopping List'),),
         body: new ListView(

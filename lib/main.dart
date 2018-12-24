@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'RandomWordsState.dart';
 import 'Shopping.dart';
+import 'layout.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -14,29 +15,8 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: Text('Top Lakes'),),
         body: new Container(padding: EdgeInsets.all(10.0),
-          child: Column(
-            children: <Widget>[
-              new Text("You suck" * 12,textAlign: TextAlign.center),
-              new Text("\uE914 \uE000 \uE90D \uE91D", style: TextStyle(fontFamily: "MaterialIcons", fontSize: 34.0, color: Colors.green),),
-              new Text("You suck",textScaleFactor: 2.5,style:TextStyle(
-                color: Colors.red,background: Paint()..color = Colors.greenAccent,decoration: TextDecoration.lineThrough,
-                decorationStyle: TextDecorationStyle.wavy
-              ) ),
-              Text.rich(TextSpan(
-                children: [
-                  TextSpan(text: "Home:"),
-                  TextSpan(text: "https://youtube.com",style: TextStyle(color: Colors.blue) )
-                ]
-              ),textAlign: TextAlign.left,),
-              RaisedButton(child: Text("A Button"),onPressed: ()=>{},),
-              FlatButton(child: Text("A Flat Button"),color: Colors.blue, highlightColor: Colors.blue[700],
-              colorBrightness:Brightness.light ,splashColor: Colors.grey, shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(20.0) ), onPressed: ()=>{},),
-              OutlineButton(child: Text("A Outline Button"),onPressed: ()=>{},),
-              IconButton(icon: Icon(Icons.cake,color: Colors.red,),onPressed: ()=>{},),
-              Image(image:AssetImage("images/001.jpg"),color: Colors.blue,colorBlendMode: BlendMode.saturation,),
-              Checkbox(onChanged: (bool s)=>{},value: true,)
-            ],
-          ),)
+          child: InfiniteListView()
+      )
       )
     );
   }
