@@ -27,7 +27,7 @@ String _text = "";
               });
               try {
                 HttpClient httpClient = new HttpClient();
-                HttpClientRequest req = await httpClient.getUrl(Uri.parse("https://www.smzdm.com/"));
+                HttpClientRequest req = await httpClient.getUrl(Uri.parse("http://zhannei.baidu.com/cse/search"));
                 req.headers.add("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36");
                 HttpClientResponse response = await req.close();
                 _text = await response.transform(utf8.decoder).join();
