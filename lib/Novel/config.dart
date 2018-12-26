@@ -8,6 +8,6 @@ class Constants{
       0xe642,
       fontFamily: "appIconFont",
     ),
-    size: 300,
+    size: 100,
   );
 }
