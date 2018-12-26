@@ -28,7 +28,7 @@ class NovelInfo{
       var items = docu.querySelectorAll('.result-game-item');
       if(items.length > 0){
          for(var item in items){
-          var img = item.querySelector('.result-game-item-pic-link-img').attributes["src"];
+          var img = item.querySelector('.result-game-item-pic-link-img').attributes["src"] ?? '';
           var name = item.querySelector('.result-game-item-title-link').attributes['title'] ?? '';
           var link = item.querySelector('.result-game-item-title-link').attributes["href"] ?? '';
           var infos = item.querySelectorAll('p.result-game-item-info-tag');
@@ -36,6 +36,7 @@ class NovelInfo{
           var author = '';
           var type = '';
           var updateTime = '';
+          
           for(var info in infos){
             if(info.children[0].text == "作者："){
                 author = info.children[1].text.trim();

@@ -13,6 +13,7 @@ class _NovelSearchState extends State<NovelSearch>{
   List<NovelInfo> novels = List<NovelInfo>();
   TextEditingController _textController = new TextEditingController();
   FocusNode textFocus = new FocusNode();
+  var isLoading = false;
   @override
     void initState() {
       super.initState();
@@ -22,8 +23,10 @@ class _NovelSearchState extends State<NovelSearch>{
        if (_controller.position.pixels ==
           _controller.position.maxScrollExtent) {
          print('滑动到了最底部');
-         getData(_textController.text, novels.length % 10 + 1);
-      }
+         if(novels.length >= 10){
+           _loadmore();
+         }
+       }
       });
     }
 
@@ -31,7 +34,6 @@ class _NovelSearchState extends State<NovelSearch>{
 
   @override
     Widget build(BuildContext context) {
-      
       return Scaffold(
         appBar: new AppBar(title: new Text("小说搜索"),),
         body: Container(
@@ -56,10 +58,23 @@ class _NovelSearchState extends State<NovelSearch>{
             ListView.builder(
               controller: _controller,
               itemBuilder: (BuildContext context,int index){
-                return NovelInfoView(novelInfo: novels[index],);
+                // if(isLoading){
+                //   if(index < novels.length){
+                //     return NovelInfoView(novelInfo: novels[index],);
+                //   }
+                //   return _getMoreWidget();
+                // }
+                // else{
+                //   return NovelInfoView(novelInfo: novels[index],);
+                // }
+                
+                 if(index < novels.length){
+                    return NovelInfoView(novelInfo: novels[index],);
+                  }
+                  return isLoading ? _getMoreWidget() : null;
               },
-              itemCount: novels.length,
-            
+              itemCount: novels.length + 1,
+               //itemCount: isLoading ? novels.length + 1 : novels.length,
           ),
           )
         ],
@@ -79,23 +94,64 @@ class _NovelSearchState extends State<NovelSearch>{
       textFocus.unfocus();
     }
 
-      getData(String key,int index) async{
+    getData(String key,int index) async{
+      print(key);
       var res = await NovelInfo.getNovelList(_textController.text, index);
+
       if(res.length <= 0){
         Fluttertoast.showToast(msg: "没有搜索到小说",toastLength:Toast.LENGTH_SHORT,gravity: ToastGravity.BOTTOM);
         return;
       }
       if(index == 0){
          setState(() {
+           isLoading = false;
           novels = res;
         });
       }
       else{
          setState(() {
+            isLoading = false;
           novels += res;
         });
       }
     }
+
+    void _loadmore(){
+      if(!isLoading){
+        setState(() {
+          isLoading = true;
+        });
+      }
+      getData(_textController.text, novels.length % 10 + 1);
+    }
+
+    Widget _getMoreWidget() {
+      return Center(
+        child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '加载中...     ',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              CircularProgressIndicator(strokeWidth: 1.0,)
+            ],
+          ),
+        ),
+     );
+  }
+
+  @override
+    void dispose() {
+
+      super.dispose();
+      _controller.dispose();
+      _textController.dispose(); 
+    }
+
 }
 
 
@@ -109,8 +165,8 @@ class NovelInfoView extends StatelessWidget{
 
   @override
     Widget build(BuildContext context) {
-      var img = CachedNetworkImage(imageUrl: novelInfo.cover,placeholder: Constants.NovelImagePlaceHolder,width: 100,height: 160,);
-      var name = Text(novelInfo.name);
+      var img = CachedNetworkImage(imageUrl: novelInfo.cover,placeholder: Constants.NovelImagePlaceHolder,width: 100,height: 180,);
+      var name = Text(novelInfo.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),);
       var desc = Text(novelInfo.desc);
       var author = Text("作者: " + novelInfo.author);
       var type = Text("类型: " + novelInfo.type);
