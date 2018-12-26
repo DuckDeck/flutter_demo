@@ -23,6 +23,7 @@ dependencies:
   path_provider: ^0.4.1
   dio: ^1.0.13
   html: any
+  cached_network_image: ^0.5.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
