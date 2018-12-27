@@ -3,6 +3,7 @@ import 'package:flutter_demo/Novel/Model/NovelInfo.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_demo/Novel/config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_demo/Novel/Page/NovelSectionList.dart';
 class NovelSearch extends StatefulWidget{
   @override
     State<StatefulWidget> createState() => new _NovelSearchState();
@@ -14,10 +15,11 @@ class _NovelSearchState extends State<NovelSearch>{
   TextEditingController _textController = new TextEditingController();
   FocusNode textFocus = new FocusNode();
   var isLoading = false;
+  var isLoadAll = false;
   @override
     void initState() {
       super.initState();
-      _textController.text = "星辰变";
+       _textController.text = "星辰变";
          _controller.addListener((){
         print(_controller.offset);
        if (_controller.position.pixels ==
@@ -44,7 +46,6 @@ class _NovelSearchState extends State<NovelSearch>{
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
             Row(children: <Widget>[
-              
               new Expanded(
                   child: TextField(decoration: InputDecoration(
                       hintText: "输入小说名开始搜索", 
@@ -57,16 +58,9 @@ class _NovelSearchState extends State<NovelSearch>{
           new Flexible( child:
             ListView.builder(
               controller: _controller,
+              
               itemBuilder: (BuildContext context,int index){
-                // if(isLoading){
-                //   if(index < novels.length){
-                //     return NovelInfoView(novelInfo: novels[index],);
-                //   }
-                //   return _getMoreWidget();
-                // }
-                // else{
-                //   return NovelInfoView(novelInfo: novels[index],);
-                // }
+
                 
                  if(index < novels.length){
                     return NovelInfoView(novelInfo: novels[index],);
@@ -74,7 +68,6 @@ class _NovelSearchState extends State<NovelSearch>{
                   return isLoading ? _getMoreWidget() : null;
               },
               itemCount: novels.length + 1,
-               //itemCount: isLoading ? novels.length + 1 : novels.length,
           ),
           )
         ],
@@ -98,8 +91,14 @@ class _NovelSearchState extends State<NovelSearch>{
       print(key);
       var res = await NovelInfo.getNovelList(_textController.text, index);
 
-      if(res.length <= 0){
+      if(res.length <= 0 && index == 0){
         Fluttertoast.showToast(msg: "没有搜索到小说",toastLength:Toast.LENGTH_SHORT,gravity: ToastGravity.BOTTOM);
+        return;
+      }
+      else if(res.length <= 0 && index != 0){
+        setState(() {
+           isLoadAll = true;
+        });
         return;
       }
       if(index == 0){
@@ -134,10 +133,10 @@ class _NovelSearchState extends State<NovelSearch>{
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                '加载中...     ',
+                isLoadAll ? '已经到底了': '加载中...     ',
                 style: TextStyle(fontSize: 16.0),
               ),
-              CircularProgressIndicator(strokeWidth: 1.0,)
+              isLoadAll ? null : CircularProgressIndicator(strokeWidth: 1.0,)
             ],
           ),
         ),
@@ -146,7 +145,6 @@ class _NovelSearchState extends State<NovelSearch>{
 
   @override
     void dispose() {
-
       super.dispose();
       _controller.dispose();
       _textController.dispose(); 
@@ -159,18 +157,20 @@ class _NovelSearchState extends State<NovelSearch>{
 
 
 class NovelInfoView extends StatelessWidget{
-  const NovelInfoView({Key key,this.novelInfo}) : assert(novelInfo != null) ,super(key:key);
+   NovelInfoView({Key key,this.novelInfo}) : assert(novelInfo != null) ,super(key:key);
 
   final NovelInfo  novelInfo;
-
+  var  con ;
   @override
     Widget build(BuildContext context) {
+      con = context;
       var img = CachedNetworkImage(imageUrl: novelInfo.cover,placeholder: Constants.NovelImagePlaceHolder,width: 100,height: 180,);
       var name = Text(novelInfo.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),);
       var desc = Text(novelInfo.desc);
       var author = Text("作者: " + novelInfo.author);
       var type = Text("类型: " + novelInfo.type);
       var updateTime = Text("更新时间: " +novelInfo.updateTime );
+
       return Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
@@ -184,7 +184,10 @@ class NovelInfoView extends StatelessWidget{
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            img,
+            GestureDetector(
+              child: img,
+              onTap: gotoSection,
+            ),
             SizedBox(width: 10),
             Expanded(
               child: Column(
@@ -202,6 +205,12 @@ class NovelInfoView extends StatelessWidget{
         ),
       );
 
+    }
+
+    void gotoSection(){
+      Navigator.of(con).push(new MaterialPageRoute(builder: (BuildContext context){
+         return SectionList(url: novelInfo.link);
+      }));
     }
 
 }

@@ -25,6 +25,7 @@ dependencies:
   html: any
   cached_network_image: ^0.5.1
   fluttertoast: ^2.2.2
+  gbk2utf8: ^0.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
