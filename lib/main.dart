@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome to flutter',
       theme: new ThemeData(primaryColor: Colors.purple),
-      home: new NovelSearch()
+      home: new RandomWords()
       );
     
   }
