@@ -3,7 +3,6 @@ import 'RandomWordsState.dart';
 import 'Shopping.dart';
 import 'layout.dart';
 import 'file.dart';
-import 'http.dart';
 import 'TurnBox.dart';
 import 'package:flutter_demo/Novel/Page/NovelSearchPage.dart';
 void main() => runApp(MyApp());
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome to flutter',
       theme: new ThemeData(primaryColor: Colors.purple),
-      home: new BottomNavigation()
+      home: new InfiniteListView()
       );
     
   }
