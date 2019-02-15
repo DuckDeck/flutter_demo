@@ -14,7 +14,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       super.initState();
       list
       ..add(HomeScreen(name: "Home",))
-      ..add(HomeScreen(name: "Rmail",))
+      ..add(HomeScreen(name: "Email",))
       ..add(HomeScreen(name: "Pages",))
       ..add(HomeScreen(name: "Airplay",));
     }
