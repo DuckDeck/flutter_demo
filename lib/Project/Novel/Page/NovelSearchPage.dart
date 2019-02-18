@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/Novel/Model/NovelInfo.dart';
+import 'package:flutter_demo/Project/Novel/Model/NovelInfo.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_demo/Novel/config.dart';
+import 'package:flutter_demo/Project/Novel/config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_demo/Novel/Page/NovelSectionList.dart';
+import 'package:flutter_demo/Project/Novel/Page/NovelSectionList.dart';
 class NovelSearch extends StatefulWidget{
   @override
     State<StatefulWidget> createState() => new _NovelSearchState();

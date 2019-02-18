@@ -9,6 +9,7 @@ class _DraggablePageState extends State<DraggablePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("可拖拽控件"),),
       body: Stack(children: <Widget>[
         DraggableWidget(offset: Offset(80.0, 80.0),widgetColor: Colors.tealAccent,),
         DraggableWidget(offset: Offset(200.0, 80.0),widgetColor: Colors.redAccent,),

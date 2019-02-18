@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/Novel/Model/SectionInfo.dart';
+import 'package:flutter_demo/Project/Novel/Model/SectionInfo.dart';
 
 class SectionList extends StatefulWidget{
   const SectionList({ Key key,this.url}):super(key:key);

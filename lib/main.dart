@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/view/RandomWordsState.dart';
 import 'layout.dart';
 import 'package:flutter_demo/view/FloatingBottomBar.dart';
-import 'package:flutter_demo/Novel/Page/NovelSearchPage.dart';
 import 'package:flutter_demo/view/BottomNavigationWidget.dart';
 import 'package:flutter_demo/view/NavigationAnimate.dart';
 import 'package:flutter_demo/view/VisualEffect.dart';

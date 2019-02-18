@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Touch/TouchDemoPage.dart';
+import 'package:flutter_demo/Project/ProjectList.dart';
 const items = [
-  "Touch&Gesture"
+  "Touch&Gesture","Project",
 ];
 class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -31,6 +32,11 @@ class HomePage extends StatelessWidget {
         case 0:
             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
               return TouchDamoPage();
+      }));
+      break;
+       case 1:
+            Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+              return ProjectListPage();
       }));
           break;
         default:
