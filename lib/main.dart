@@ -8,7 +8,7 @@ import 'package:flutter_demo/view/NavigationAnimate.dart';
 import 'package:flutter_demo/view/VisualEffect.dart';
 import 'package:flutter_demo/view/KeepAlive.dart';
 import 'package:flutter_demo/view/SearchBar.dart';
-import 'package:flutter_demo/Touch/TouchDemoPage.dart';
+import 'package:flutter_demo/Splash.dart';
 void main() => runApp(MyApp());
 
 const items = [
@@ -24,33 +24,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome to flutter',
       theme: new ThemeData(primaryColor: Colors.purple),
-      home: Scaffold(
-        appBar: AppBar(title: Text("Flutter Demo"),),
-        body: ListView.builder(itemBuilder: (BuildContext context,int index){
-          return GestureDetector(
-            onTap: (){
-              gotoPage(index,context);
-            },
-            child: ListTile(title: Text(items[index]),),
-          );
-        },
-        itemCount: items.length,),
-        )
+      home: SplashPage()
       );
     
   }
 
-  void gotoPage(int index,BuildContext context) {
-      print(index);
-      switch (index) {
-        case 0:
-            Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-              return TouchDamoPage();
-      }));
-          break;
-        default:
-      }
-  }
 }
 
 

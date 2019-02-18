@@ -10,12 +10,9 @@ class _DraggablePageState extends State<DraggablePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: <Widget>[
-        DraggableWidget(offset: Offset(80.0, 80.0),
-        widgetColor: Colors.tealAccent,),
-        DraggableWidget(offset: Offset(180.0, 80.0),
-        widgetColor: Colors.redAccent,),
-        Center(child: DragTarget(onAccept: (Color color){
-          _draggableColor = color;
+        DraggableWidget(offset: Offset(80.0, 80.0),widgetColor: Colors.tealAccent,),
+        DraggableWidget(offset: Offset(200.0, 80.0),widgetColor: Colors.redAccent,),
+        Center(child: DragTarget(onAccept: (Color color){ _draggableColor = color;
         },
         builder: (context,candiddaeData,rejectedData){
           return Container(width: 200,height: 200,color: _draggableColor,);
@@ -42,8 +39,7 @@ class _DraggableWidgetState extends State<DraggableWidget> {
     }
   @override
   Widget build(BuildContext context) {
-    return Positioned(left: offset.dx,
-    top: offset.dy,
+    return Positioned(left: offset.dx,top: offset.dy,
     child: Draggable(
       data: widget.widgetColor,
       child: Container(width: 100,height: 100,color: widget.widgetColor),
