@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/Layout/ListViewPage.dart';
-import 'package:flutter_demo/Layout/FloatingBottomBar.dart';
+import 'package:flutter_demo/Touch/DragItem.dart';
 const items = [
-  "无限滚动的ListView","下面有悬浮按钮的BottomBar"
+  "Drag"
 ];
 
-class LayoutListPage extends StatefulWidget {
-  _LayoutListPageState createState() => _LayoutListPageState();
+class TouchListPage extends StatefulWidget {
+  _TouchListPageState createState() => _TouchListPageState();
 }
 
-class _LayoutListPageState extends State<LayoutListPage> {
+class _TouchListPageState extends State<TouchListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("布局"),),
+        appBar: AppBar(title: Text("Flutter Demo"),),
         body: ListView.builder(itemBuilder: (BuildContext context,int index){
           return GestureDetector(
             onTap: (){
@@ -31,15 +30,11 @@ void gotoPage(int index,BuildContext context) {
       switch (index) {
         case 0:
              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-               return InfiniteListView();
-              }));
-          break;
-          case 1:
-             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-               return FloatingBottomAppBar();
+              return DragItemPage();
               }));
           break;
         default:
       }
   }
+  
 }

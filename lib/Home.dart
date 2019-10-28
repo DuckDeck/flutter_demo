@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Layout/LayoutList.dart';
 import 'package:flutter_demo/Project/ProjectList.dart';
+import 'package:flutter_demo/Touch/TouchList.dart';
+import 'package:flutter_demo/Data/DataList.dart';
 const items = [
-  "Touch&Gesture","Project","Layout"
+  "Touch&Gesture","Project","Layout","数据和文件"
 ];
 class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class HomePage extends StatelessWidget {
       switch (index) {
         case 0:
             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-              
+              return TouchListPage();
       }));
       break;
        case 1:
@@ -42,6 +44,11 @@ class HomePage extends StatelessWidget {
           case 2:
             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
               return LayoutListPage();
+      }));
+       break;
+          case 3:
+            Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+              return DataListPage();
       }));
           break;
         default:

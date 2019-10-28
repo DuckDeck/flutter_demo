@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Layout/ListViewPage.dart';
-import 'package:flutter_demo/Layout/FloatingBottomBar.dart';
+import 'package:flutter_demo/Data/ReadWriteData.dart';
 const items = [
-  "无限滚动的ListView","下面有悬浮按钮的BottomBar"
+  "读写文件"
 ];
 
-class LayoutListPage extends StatefulWidget {
-  _LayoutListPageState createState() => _LayoutListPageState();
+class DataListPage extends StatefulWidget {
+  _DataListPageState createState() => _DataListPageState();
 }
 
-class _LayoutListPageState extends State<LayoutListPage> {
+class _DataListPageState extends State<DataListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("布局"),),
+        appBar: AppBar(title: Text("数据和文件"),),
         body: ListView.builder(itemBuilder: (BuildContext context,int index){
           return GestureDetector(
             onTap: (){
@@ -31,12 +31,7 @@ void gotoPage(int index,BuildContext context) {
       switch (index) {
         case 0:
              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-               return InfiniteListView();
-              }));
-          break;
-          case 1:
-             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-               return FloatingBottomAppBar();
+               return ReadWriteData();
               }));
           break;
         default:
