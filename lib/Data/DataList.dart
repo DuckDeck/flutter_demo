@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/Layout/ListViewPage.dart';
+import 'package:flutter_demo/Tool/NavigationTransition.dart';
 import 'package:flutter_demo/Data/ReadWriteData.dart';
 const items = [
   "读写文件"
@@ -30,9 +30,9 @@ void gotoPage(int index,BuildContext context) {
       print(index);
       switch (index) {
         case 0:
-             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-               return ReadWriteData();
-              }));
+             Navigator.of(context).push(new SlideTransitionRoute(
+                ReadWriteData()
+              ));
           break;
         default:
       }

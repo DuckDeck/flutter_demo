@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/Layout/ListViewPage.dart';
-import 'package:flutter_demo/Layout/FloatingBottomBar.dart';
+import 'package:flutter_demo/UI/ListViewPage.dart';
+import 'package:flutter_demo/UI/FloatingBottomBar.dart';
+import 'package:flutter_demo/UI/SearchBar.dart';
+import 'package:flutter_demo/UI/Shopping.dart';
+import 'package:flutter_demo/UI/TurnBox.dart';
 const items = [
-  "无限滚动的ListView","下面有悬浮按钮的BottomBar"
+  "无限滚动的ListView","下面有悬浮按钮的BottomBar","搜索条","购物车","TuenBox"
 ];
 
 class LayoutListPage extends StatefulWidget {
@@ -37,6 +40,21 @@ void gotoPage(int index,BuildContext context) {
           case 1:
              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
                return FloatingBottomAppBar();
+              }));
+          break;
+           case 2:
+             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+               return SearchBar();
+              }));
+          break;
+          case 3:
+             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+               return ShoppingList();
+              }));
+          break;
+           case 4:
+             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+               return TurnBox();
               }));
           break;
         default:
