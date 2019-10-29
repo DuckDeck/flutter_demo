@@ -49,12 +49,13 @@ void gotoPage(int index,BuildContext context) {
           break;
           case 3:
              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-               return ShoppingList();
+               List<Product> items = [Product(name: "stan"),Product(name: "zoe")];
+               return ShoppingList(products: items,);
               }));
           break;
            case 4:
              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-               return TurnBox();
+               return TurnBoxRoute();
               }));
           break;
         default:
