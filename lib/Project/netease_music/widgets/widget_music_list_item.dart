@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:netease_cloud_music/model/music.dart';
-import 'package:netease_cloud_music/widgets/rounded_net_image.dart';
-import 'package:netease_cloud_music/widgets/v_empty_view.dart';
-
+import 'package:flutter_demo/Project/netease_music/model/music.dart';
+import 'rounded_net_image.dart';
+import 'v_empty_view.dart';
 import '../application.dart';
 import 'common_text_style.dart';
-import 'h_empty_view.dart';
 
 class WidgetMusicListItem extends StatelessWidget {
   final MusicData _data;

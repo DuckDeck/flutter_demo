@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_demo/Project/netease_music/model/play_sonts.dart';
+import 'package:flutter_demo/Project/netease_music/provider/play_songs_model.dart';
 import 'package:provider/provider.dart';
 
 import 'common_text_style.dart';
