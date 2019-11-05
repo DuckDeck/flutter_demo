@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'common_text_style.dart';
-import 'package:netease_cloud_music/utils/number_utils.dart';
+import 'package:flutter_demo/Project/netease_music/utils/number_utils.dart';
 import 'v_empty_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'widget_play_list_cover.dart';

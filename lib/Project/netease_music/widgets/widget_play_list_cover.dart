@@ -1,8 +1,8 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:netease_cloud_music/utils/number_utils.dart';
-import 'package:netease_cloud_music/utils/utils.dart';
+import 'package:flutter_demo/Project/netease_music/utils/number_utils.dart';
+import 'package:flutter_demo/Project/netease_music/utils/utils.dart';
 
 /// 歌单、新碟上架等封面组件
 class PlayListCoverWidget extends StatelessWidget {
