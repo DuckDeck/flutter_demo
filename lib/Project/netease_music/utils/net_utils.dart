@@ -16,15 +16,15 @@ import 'package:flutter_demo/Project/netease_music/model/song_detail.dart';
 import 'package:flutter_demo/Project/netease_music/model/top_list.dart';
 import 'package:flutter_demo/Project/netease_music/model/user.dart';
 import 'package:netease_cloud_music/pages/comment/comment_type.dart';
-import 'package:netease_cloud_music/route/navigate_service.dart';
-import 'package:netease_cloud_music/route/routes.dart';
-import 'package:netease_cloud_music/utils/navigator_util.dart';
-import 'package:netease_cloud_music/utils/utils.dart';
-import 'package:netease_cloud_music/widgets/loading.dart';
+import 'package:flutter_demo/Project/netease_music/utils/navigator_util.dart';
+import 'package:flutter_demo/Project/netease_music/utils/utils.dart';
+import 'package:flutter_demo/Project/netease_music/widgets/loading.dart';
 import 'package:path_provider/path_provider.dart';
-
 import '../application.dart';
 import 'custom_log_interceptor.dart';
+
+import 'package:flutter_demo/Project/netease_music/route/navigate_service.dart';
+import 'package:flutter_demo/Project/netease_music/route/routes.dart';
 
 class NetUtils {
   static Dio _dio;

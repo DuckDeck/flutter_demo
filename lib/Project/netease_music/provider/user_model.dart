@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:netease_cloud_music/application.dart';
-import 'package:netease_cloud_music/model/user.dart';
-import 'package:netease_cloud_music/utils/navigator_util.dart';
-import 'package:netease_cloud_music/utils/net_utils.dart';
+import 'package:flutter_demo/Project/netease_music/application.dart';
+import 'package:flutter_demo/Project/netease_music/model/user.dart';
+import 'package:flutter_demo/Project/netease_music/utils/navigator_util.dart';
+import 'package:flutter_demo/Project/netease_music/utils/net_utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:netease_cloud_music/utils/utils.dart';
+import 'package:flutter_demo/Project/netease_music/utils/utils.dart';
 
 class UserModel with ChangeNotifier {
   User _user;
