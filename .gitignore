@@ -15,4 +15,5 @@ pubspec.lock
 doc/api/
 local.properties
 ios/
-*.DS_Store
+.DS_Store
+.flutter-plugins
