@@ -15,7 +15,7 @@ import 'package:flutter_demo/Project/netease_music/model/song_comment.dart' hide
 import 'package:flutter_demo/Project/netease_music/model/song_detail.dart';
 import 'package:flutter_demo/Project/netease_music/model/top_list.dart';
 import 'package:flutter_demo/Project/netease_music/model/user.dart';
-import 'package:netease_cloud_music/pages/comment/comment_type.dart';
+import 'package:flutter_demo/Project/netease_music/pages/comment/comment_type.dart';
 import 'package:flutter_demo/Project/netease_music/utils/navigator_util.dart';
 import 'package:flutter_demo/Project/netease_music/utils/utils.dart';
 import 'package:flutter_demo/Project/netease_music/widgets/loading.dart';

@@ -1,7 +1,7 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:netease_cloud_music/provider/play_songs_model.dart';
+import 'package:flutter_demo/Project/netease_music/provider/play_songs_model.dart';
 import 'common_text_style.dart';
 
 class SongProgressWidget extends StatelessWidget {

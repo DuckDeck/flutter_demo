@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_demo/Project/netease_music/model/song.dart';
-import 'package:netease_cloud_music/provider/play_songs_model.dart';
+import 'package:flutter_demo/Project/netease_music/provider/play_songs_model.dart';
 import 'widget_over_img.dart';
 import 'package:provider/provider.dart';
 
