@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const items = [
-  "Novel小说"
+  "Novel小说","云音乐"
 ];
 
 class ProjectListPage extends StatefulWidget {
@@ -29,6 +29,11 @@ void gotoPage(int index,BuildContext context) {
       print(index);
       switch (index) {
         case 0:
+             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+          
+              }));
+          break;
+          case 0:
              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
           
               }));
