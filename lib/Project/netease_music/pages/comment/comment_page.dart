@@ -14,7 +14,7 @@ import 'package:flutter_demo/Project/netease_music/widgets/rounded_net_image.dar
 import 'package:flutter_demo/Project/netease_music/widgets/v_empty_view.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_demo/Project/netease_music/widgets/widget_load_footer.dart';
-import 'package:flutter_demo/Project/netease_music/widgets/widget_ovar_img.dart';
+import 'package:flutter_demo/Project/netease_music/widgets/widget_over_img.dart';
 
 import 'comment_input_widget.dart';
 

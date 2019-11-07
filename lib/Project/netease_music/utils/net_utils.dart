@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_demo/Project/netease_music/model//album.dart';
@@ -37,6 +38,7 @@ class NetUtils {
     _dio = Dio(BaseOptions(baseUrl: '$baseUrl:3000', followRedirects: false))
       ..interceptors.add(CookieManager(cj))
       ..interceptors.add(CustomLogInterceptor(responseBody: true, requestBody: true));
+    
   }
 
   static Future<Response> _get(
