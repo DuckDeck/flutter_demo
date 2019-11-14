@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
-import 'package:flutter_demo/Project/netease_music/provider/user_model.dart';
-import 'package:flutter_demo/Project/netease_music/route/navigate_service.dart';
-import 'package:flutter_demo/Project/netease_music/route/routes.dart';
-import 'package:flutter_demo/Project/netease_music/application.dart';
-import 'package:flutter_demo/Project/netease_music/utils/net_utils.dart';
-import 'package:flutter_demo/Project/netease_music/utils/log_util.dart';
-import 'package:flutter_demo/Project/netease_music/pages/splash_page.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_demo/Project/netease_music/provider/play_songs_model.dart';
+// import 'package:flutter_demo/Project/netease_music/provider/user_model.dart';
+// import 'package:flutter_demo/Project/netease_music/route/navigate_service.dart';
+// import 'package:flutter_demo/Project/netease_music/route/routes.dart';
+// import 'package:flutter_demo/Project/netease_music/application.dart';
+// import 'package:flutter_demo/Project/netease_music/utils/net_utils.dart';
+// import 'package:flutter_demo/Project/netease_music/utils/log_util.dart';
+// import 'package:flutter_demo/Project/netease_music/pages/splash_page.dart';
+// import 'package:provider/provider.dart';
+// import 'package:flutter_demo/Project/netease_music/provider/play_songs_model.dart';
 const items = [
   "Novel小说","云音乐"
 ];
@@ -43,27 +43,27 @@ void gotoPage(int index,BuildContext context) {
               }));
           break;
           case 0:
-             Router router = Router();
-            Routes.configureRoutes(router);
-            Application.router = router;
-            NetUtils.init();
-            Application.setupLocator();
-            LogUtil.init(tag: 'NETEASE_MUSIC');
+          //    Router router = Router();
+          //   Routes.configureRoutes(router);
+          //   Application.router = router;
+          //   NetUtils.init();
+          //   Application.setupLocator();
+          //   LogUtil.init(tag: 'NETEASE_MUSIC');
 
-          var pro =  MultiProvider(
-            providers: [
-              ChangeNotifierProvider<UserModel>.value(
-                value: UserModel(),
-              ),
-              ChangeNotifierProvider<PlaySongsModel>(
-                builder: (_) => PlaySongsModel()..init(),
-              ),
-            ],
-            child: Ease_Music(),
-          );
-              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-                  return pro;
-              }));
+          // var pro =  MultiProvider(
+          //   providers: [
+          //     ChangeNotifierProvider<UserModel>.value(
+          //       value: UserModel(),
+          //     ),
+          //     ChangeNotifierProvider<PlaySongsModel>(
+          //       builder: (_) => PlaySongsModel()..init(),
+          //     ),
+          //   ],
+          //   child: Ease_Music(),
+          // );
+          //     Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+          //         return pro;
+          //     }));
           break;
         default:
       }
@@ -71,20 +71,20 @@ void gotoPage(int index,BuildContext context) {
   
 }
 
-class Ease_Music extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      navigatorKey: Application.getIt<NavigateService>().key,
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Colors.white,
-        splashColor: Colors.transparent,
-      ),
-      home: SplashPage(),
-      onGenerateRoute: Application.router.generator,
-    );
-  }
-}
+// class Ease_Music extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: 'Flutter Demo',
+//       navigatorKey: Application.getIt<NavigateService>().key,
+//       theme: ThemeData(
+//         brightness: Brightness.light,
+//         primaryColor: Colors.white,
+//         splashColor: Colors.transparent,
+//       ),
+//       home: SplashPage(),
+//       onGenerateRoute: Application.router.generator,
+//     );
+//   }
+// }
