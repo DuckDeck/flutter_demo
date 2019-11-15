@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_demo/UI/LayoutList.dart';
 // import 'package:flutter_demo/Project/ProjectList.dart';
 // import 'package:flutter_demo/Touch/TouchList.dart';
-// import 'package:flutter_demo/Data/DataList.dart';
+import 'package:flutter_demo/Data/menu.dart';
 const items = [
   "触摸&手势","UI和布局","数据和文件"
 ];
@@ -42,9 +42,9 @@ class HomePage extends StatelessWidget {
       // }));
           break;
           case 2:
-      //       Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-      //         return LayoutListPage();
-      // }));
+            Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+              return DataMenuPage();
+      }));
        break;
          
         default:
