@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/Tool/NavigationTransition.dart';
 import 'package:flutter_demo/UI/ListViewPage.dart';
 import 'package:flutter_demo/UI/FloatingBottomBar.dart';
 import 'package:flutter_demo/UI/SearchBar.dart';
@@ -6,7 +8,7 @@ import 'package:flutter_demo/UI/Shopping.dart';
 import 'package:flutter_demo/UI/TurnBox.dart';
 import 'package:flutter_demo/Tool/Animation.dart';
 const items = [
-  "无限滚动的ListView","下面有悬浮按钮的BottomBar","搜索条","购物车","TuenBox","动画效果"
+  "无限滚动的ListView","下面有悬浮按钮的BottomBar","搜索条","购物车","TuenBox","动画效果","Hero动画","Stagger动画"
 ];
 
 class LayoutListPage extends StatefulWidget {
@@ -55,13 +57,21 @@ void gotoPage(int index,BuildContext context) {
               }));
           break;
            case 4:
-             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+             Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
                return TurnBoxRoute();
               }));
           break;
           case 5:
-             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-               return ScaleAnimationRoute();
+             Navigator.of(context).push(SlideTransitionRoute(ScaleAnimationRoute()));
+          break;
+          case 6:
+              Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+               return HeroAnimationRoute();
+              }));
+          break;
+           case 7:
+             Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+               return StaggerRoute();
               }));
           break;
         default:
