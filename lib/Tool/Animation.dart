@@ -290,3 +290,32 @@ class SlideTransitionX extends AnimatedWidget {
   }
   
 }
+
+
+class AnimatedDecoratedBox extends  ImplicitlyAnimatedWidget{
+
+ AnimatedDecoratedBox({Key key,@required this.decoration,this.child, Curve curve = Curves.linear,@required Duration duration,Duration reverseDuration})
+ :super(key:key,curve:curve,duration:duration);
+ final BoxDecoration decoration;
+ final Widget child;
+
+  @override
+  ImplicitlyAnimatedWidgetState<ImplicitlyAnimatedWidget> createState() {
+   
+    return _AnimatedDecoratedBox();
+  }
+}
+
+class _AnimatedDecoratedBox extends AnimatedWidgetBaseState<AnimatedDecoratedBox> {
+  DecorationTween _decoration;
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(decoration: _decoration.evaluate(animation),child: widget.child,);
+  }
+
+  @override
+  void forEachTween(visitor) {
+   _decoration = visitor(_decoration,widget.decoration,(value)=>DecorationTween(begin: value));
+  }
+
+}

@@ -7,8 +7,9 @@ import 'package:flutter_demo/UI/SearchBar.dart';
 import 'package:flutter_demo/UI/Shopping.dart';
 import 'package:flutter_demo/UI/TurnBox.dart';
 import 'package:flutter_demo/Tool/Animation.dart';
+import 'package:flutter_demo/UI/AnimationPage.dart';
 const items = [
-  "无限滚动的ListView","下面有悬浮按钮的BottomBar","搜索条","购物车","TuenBox","动画效果","Hero动画","Stagger动画","计数器动画"
+  "无限滚动的ListView","下面有悬浮按钮的BottomBar","搜索条","购物车","TuenBox","动画效果","Hero动画","Stagger动画","计数器动画","动画过度组件"
 ];
 
 class LayoutListPage extends StatefulWidget {
@@ -77,6 +78,11 @@ void gotoPage(int index,BuildContext context) {
           case 8:
              Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
                return AnimatedSwitcherCounterRoute();
+              }));
+          break;
+           case 9:
+             Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+               return AnimationPage();
               }));
           break;
         default:
