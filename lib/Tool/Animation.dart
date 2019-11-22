@@ -292,7 +292,8 @@ class SlideTransitionX extends AnimatedWidget {
 }
 
 
-class AnimatedDecoratedBox extends  ImplicitlyAnimatedWidget{
+//这个有问题目前还不能解决
+class AnimatedDecoratedBox extends  ImplicitlyAnimatedWidget{ 
 
  AnimatedDecoratedBox({Key key,@required this.decoration,this.child, Curve curve = Curves.linear,@required Duration duration,Duration reverseDuration})
  :super(key:key,curve:curve,duration:duration);
