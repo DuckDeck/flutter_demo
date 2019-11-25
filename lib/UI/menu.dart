@@ -10,7 +10,7 @@ import 'package:flutter_demo/UI/AnimationPage.dart';
 import 'package:flutter_demo/Tool/UIs.dart';
 const items = [
   "无限滚动的ListView","下面有悬浮按钮的BottomBar","搜索条","购物车","TuenBox","动画效果","Hero动画","Stagger动画","计数器动画","动画过度组件"
-  ,"自定义组件","自绘组件"
+  ,"自定义组件","自绘组件","圆形进度条"
 ];
 
 class LayoutListPage extends StatefulWidget {
@@ -94,6 +94,11 @@ void gotoPage(int index,BuildContext context) {
           case 11:
              Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
                return CustomPaintRoute();
+              }));
+          break;
+           case 12:
+             Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+               return GraduebtCircularProgressRoute();
               }));
           break;
         default:
