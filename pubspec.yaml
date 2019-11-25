@@ -27,6 +27,7 @@ dependencies:
   path_provider: ^1.1.2
   dio: ^3.0.0
   html: any
+  json_annotation: ^3.0.0
   # cached_network_image: ^2.0.0-rc
   # fluttertoast: ^2.2.2
   # gbk2utf8: ^0.0.1

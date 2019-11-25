@@ -73,7 +73,7 @@ AnimationController _controller;
 @override
   void initState() {
     super.initState();
-    _controller = new AnimationController(vsync: this,lowerBound: double.infinity,upperBound: double.infinity);
+    _controller = new AnimationController(vsync: this,lowerBound: -double.infinity,upperBound: double.infinity);
     _controller.value = widget.turns;
   }
 
