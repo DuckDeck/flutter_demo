@@ -112,7 +112,7 @@ double _turns = .0;
       appBar: AppBar(title: Text("TurbBox"),) ,
       body: Center(child: Column(children: <Widget>[
       TurnBox(turns: _turns,speed: 500,child: Icon(Icons.add,size:150,color: Colors.blue,),),
-      TurnBox(turns: _turns,speed: 1000,child: Icon(Icons.refresh,size: 150,color: Colors.red,),), //显示不出来不知道为什么
+      TurnBox(turns: _turns,speed: 1000,child: Icon(Icons.refresh,size: 150,color: Colors.red,),),
       RaisedButton(child: Text("顺时针旋转1/5圈"),onPressed: (){ setState(() {
               _turns += .2;
             }); },),
