@@ -301,7 +301,7 @@ class AnimatedDecoratedBox extends  ImplicitlyAnimatedWidget{
  final Widget child;
 
   @override
-  ImplicitlyAnimatedWidgetState<ImplicitlyAnimatedWidget> createState() {
+  _AnimatedDecoratedBox createState() {
    
     return _AnimatedDecoratedBox();
   }
@@ -311,12 +311,19 @@ class _AnimatedDecoratedBox extends AnimatedWidgetBaseState<AnimatedDecoratedBox
   DecorationTween _decoration;
   @override
   Widget build(BuildContext context) {
+    print(_decoration);
     return DecoratedBox(decoration: _decoration.evaluate(animation),child: widget.child,);
   }
 
   @override
   void forEachTween(visitor) {
+    print("forEachTween");
+    print(visitor);
+    print(_decoration);
    _decoration = visitor(_decoration,widget.decoration,(value)=>DecorationTween(begin: value));
+   print("print(_decoration);");
+   print(_decoration);
+   //调用 visitor 方法还是null
   }
 
 }
