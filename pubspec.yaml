@@ -28,6 +28,8 @@ dependencies:
   dio: ^3.0.0
   html: any
   json_annotation: ^3.0.0
+  r_scan: ^0.1.0
+  permission_handler: ^4.0.0
   # cached_network_image: ^2.0.0-rc
   # fluttertoast: ^2.2.2
   # gbk2utf8: ^0.0.1
