@@ -31,7 +31,7 @@ void gotoPage(int index,BuildContext context) {
       switch (index) {
         case 0:
              Navigator.of(context).push(new SlideTransitionRoute(
-                ScanBarPage()
+                ScanBarCodePage()
               ));
           break;
         default:

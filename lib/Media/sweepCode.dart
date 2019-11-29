@@ -1,14 +1,39 @@
 
 import 'dart:io';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:r_scan/r_scan.dart';
-class ScanBarPage extends StatelessWidget {
-  const ScanBarPage({Key key}) : super(key: key);
+class ScanBaecodePage extends StatefulWidget {
+  @override
+  _ScanBaecodePageState createState() => _ScanBaecodePageState();
+}
 
+class _ScanBaecodePageState extends State<ScanBaecodePage> {
 
-Future<bool> canReadStorage() async{
+RScanController _controller;
+
+@override
+void initState() { 
+  super.initState();
+  initController();
+}
+bool isFirst = true;
+
+Future<void> initController() async{
+  _controller = RScanController();
+  _controller.addListener((){
+    final result = _controller.result;
+    if(result != null){
+      if(isFirst){
+        Navigator.of(context).pop(result);
+        isFirst = false;
+      }
+    }
+  });
+}
+
+  Future<bool> canReadStorage() async{
   if(Platform.isIOS) return true;
   var status = await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
   if(status != PermissionStatus.granted){
@@ -46,22 +71,29 @@ Future<bool> canOpenCamera() async{
     return Container(
       child: Scaffold(
         appBar: AppBar(title: Text("扫码"),),
-        body: Container(
-          padding:EdgeInsets.all(20.0),
-          child: Column(children: <Widget>[
-            RaisedButton(child: Text("扫码"),
-            onPressed: scanImage,
-            )
-          ],),
-        ),
+        body: FutureBuilder<bool>(
+            future: canOpenCamera(),
+            builder: (BuildContext context,AsyncSnapshot<bool> snapshot){
+              if(snapshot.hasData && snapshot.data == true){
+                
+              }
+            },
+        )
       ),
     );
   }
 
-  void scanImage() async{
-    final result = await RScan.scanImagePath("path");
-    if(result.isNotEmpty){
 
+
+  void scanImage() async{
+    var img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    
+    final result = await RScan.scanImagePath(img.path);
+    if(result.isNotEmpty){
+      print("扫描结果是: $result");
+    }
+    else{
+       print("图片没有二维码: $result");
     }
   }
-} 
+}
