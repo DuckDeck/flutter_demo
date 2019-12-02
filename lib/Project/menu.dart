@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Tool/NavigationTransition.dart';
-import 'package:flutter_demo/Media/sweepCode.dart';
 const items = [
   "扫码",
 ];
