@@ -33,7 +33,7 @@ void gotoPage(int index,BuildContext context) {
         case 0:
 
          Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
-                return IsolatedIsland();
+                return Island();
               }));
              
           break;
