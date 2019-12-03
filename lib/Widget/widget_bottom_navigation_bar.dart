@@ -3,7 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_demo/Project/Isolated_island/book_list_page.dart';
 import 'package:flutter_demo/Project/Isolated_island/home_page.dart';
 import 'package:flutter_demo/Project/Isolated_island/love_page.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class BottomNavBarWidget extends StatefulWidget {
   @override
   _BottomNavBarWidgetState createState() => _BottomNavBarWidgetState();
@@ -25,13 +25,14 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> with SingleTick
   }
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(width: 750,height: 1334)..init(context);
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         index: currentIndex,
         items: <Widget>[
-          Image.asset("Images/home.png",width: 30,height: 30,),
-          Image.asset("Images/book.png",width: 30,height: 30,),
-          Image.asset("Images/like.png",width: 30,height: 30,),
+          Image.asset("Images/home.png",width: ScreenUtil.getInstance().setWidth(100),height: ScreenUtil.getInstance().setWidth(100),),
+          Image.asset("Images/book.png",width: ScreenUtil.getInstance().setWidth(100),height: ScreenUtil.getInstance().setWidth(100),),
+          Image.asset("Images/like.png",width: ScreenUtil.getInstance().setWidth(100),height: ScreenUtil.getInstance().setWidth(100),),
         ],
         onTap: (index){
           setState(() {
