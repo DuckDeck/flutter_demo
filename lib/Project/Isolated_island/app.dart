@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Widget/widget_bottom_navigation_bar.dart';
 import 'package:flutter_demo/Project/Isolated_island/splash_screen_page.dart';
@@ -5,7 +8,7 @@ import 'package:flutter_demo/Project/Isolated_island/guide_page.dart';
 class Island extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
+    enablePlatormOverrideForDesktop();
   return MaterialApp(
     debugShowCheckedModeBanner: false,
     title: "孤岛",
@@ -18,4 +21,12 @@ class Island extends StatelessWidget {
     },
   );
   }
+
+void enablePlatormOverrideForDesktop(){
+  if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  }
 }
+
+}
+
