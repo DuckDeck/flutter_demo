@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/Tool/NavigationTransition.dart';
 import 'package:flutter_demo/Project/Isolated_island/app.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_demo/Project/4KImage/main_image_list.dart';
 const items = [
-  "孤岛",
+  "孤岛","美图",
 ];
 
 class ProjectMenuPage extends StatefulWidget {
@@ -34,6 +35,13 @@ void gotoPage(int index,BuildContext context) {
 
          Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
                 return Island();
+              }));
+             
+          break;
+          case 1:
+
+         Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+                return MainImageList();
               }));
              
           break;
