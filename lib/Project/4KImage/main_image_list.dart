@@ -1,6 +1,9 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:gbk2utf8/gbk2utf8.dart';
 import 'model.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
@@ -71,6 +74,11 @@ List<ImgInfo> items = [];
   void initState() {
     super.initState();
     _refreshData();
+    _scrollController.addListener((){
+      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        _addMoreData();
+      }
+    });
   }
 
   @override
@@ -100,6 +108,11 @@ List<ImgInfo> items = [];
    _getData(false);
   }
 
+  Future<Null> _addMoreData() async{
+    _page ++;
+    _getData(true);
+  }
+
   void _getData(bool _deAdd) async{
     print("开始请求，类型是${widget.imgCat.name}");
     var index = "";
@@ -110,15 +123,21 @@ List<ImgInfo> items = [];
 
     var url = "http://pic.netbian.com/${widget.imgCat.urlSegment}/$index";
     print(url);
-    final res = await Dio().get(url);
-    var result = res.data;
+    Dio dio = Dio();
+    dio.options.responseType = ResponseType.bytes;
+    Response<List<int>> res = await dio.get<List<int>>(url);
+    final result = decodeGbk(res.data);
+
     html.Document dom = parse(result);
     var uls =  dom.body.querySelector("ul.clearfix");
+    
+  
     setState(() {
       items += uls.children.map((img){
-        final imgUrl = img.firstChild.firstChild.attributes["src"];
-        final imgName = img.firstChild.attributes["alt"];
-        final imgPage = img.firstChild.attributes["alt"];
+        final tag = img.firstChild;
+        final imgPage = "http://pic.netbian.com/" + tag.attributes["href"];
+        final imgUrl = "http://pic.netbian.com/" + tag.firstChild.attributes["src"];
+        final imgName = tag.firstChild.attributes["alt"];
         return ImgInfo(imgName: imgName,imgPage: imgPage,imgUrl: imgUrl);
       }).toList();
     });
