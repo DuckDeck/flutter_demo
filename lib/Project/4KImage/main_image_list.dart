@@ -8,6 +8,8 @@ import 'model.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:html/dom.dart' as html;
+import 'package:flutter/cupertino.dart';
+import 'image_detail.dart';
 class MainImageList extends StatefulWidget {
   @override
   _MainImageListState createState() => _MainImageListState();
@@ -63,7 +65,6 @@ class _ScrollImagesPageState extends State<ScrollImagesPage> with AutomaticKeepA
 
 ScrollController _scrollController = ScrollController();
 int _page = 0;
-int _size = 21;
 int _eLoading = 0; //0不显示 1 正在请求 2 没有更多数据
 List<ImgInfo> items = [];
 
@@ -151,13 +152,19 @@ class ImageCell extends StatelessWidget {
   final ImgInfo imageInfo;
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return GestureDetector(child: Card(
       child: Column(
         children: <Widget>[
           Image.network(imageInfo.imgUrl),
           Center(child: Text(imageInfo.imgName),)
         ],
       ),
+    ),
+    onTap: (){
+      Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context){
+                return ImageDetail(imgInfo: imageInfo,);
+              }));
+    },
     );
   }
 }
