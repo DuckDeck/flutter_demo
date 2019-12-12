@@ -9,7 +9,6 @@ class _TitleSection extends StatelessWidget{
 
   @override
     Widget build(BuildContext context) {
-      // TODO: implement build
       return Container(
         padding: EdgeInsets.all(32.0),
         child: Row(
@@ -46,7 +45,6 @@ class _InfiniteListViewState extends State<InfiniteListView>{
   @override
     void initState() {
       _retrieceData();
-      print("12313131312313123");
       _controller.addListener((){
         print(_controller.offset);
         if(_controller.offset < 1000 && showToTop){
@@ -64,10 +62,7 @@ class _InfiniteListViewState extends State<InfiniteListView>{
 
   @override
     Widget build(BuildContext context) {
-
-      print("zzzzz12313131312313123");
       return Scaffold(
-       
         body: ListView.separated(
         itemCount: _words.length,
         controller: _controller,
@@ -101,7 +96,6 @@ class _InfiniteListViewState extends State<InfiniteListView>{
               
             });
       });
-    
     }
 
     @override

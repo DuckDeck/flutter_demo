@@ -163,7 +163,7 @@ class ImageCell extends StatelessWidget {
     onTap: (){
       Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context){
                 return ImageDetail(imgInfo: imageInfo,);
-              }));
+       }));
     },
     );
   }
