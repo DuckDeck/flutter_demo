@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/4KImage/model.dart';
 import 'package:dio/dio.dart';
@@ -5,6 +7,8 @@ import 'package:gbk2utf8/gbk2utf8.dart';
 import 'package:html/parser.dart';
 import 'package:html/dom.dart' as html;
 import 'package:flutter/cupertino.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 class ImageDetail extends StatefulWidget {
   ImageDetail({this.imgInfo});
   final ImgInfo imgInfo;
@@ -54,12 +58,9 @@ class _ImageDetailState extends State<ImageDetail> {
                 ),
                ),
                Text("更多相似图片"),
-              GestureDetector(child: Image.network(snapshot.data.moreImages[0].imgUrl),onTap: (){toPage(snapshot.data.moreImages[0]);},),
-              GestureDetector(child: Image.network(snapshot.data.moreImages[1].imgUrl),onTap: (){toPage(snapshot.data.moreImages[1]);},),
-              GestureDetector(child: Image.network(snapshot.data.moreImages[2].imgUrl),onTap: (){toPage(snapshot.data.moreImages[2]);},),
-              GestureDetector(child: Image.network(snapshot.data.moreImages[3].imgUrl),onTap: (){toPage(snapshot.data.moreImages[3]);},),
-              GestureDetector(child: Image.network(snapshot.data.moreImages[4].imgUrl),onTap: (){toPage(snapshot.data.moreImages[4]);},),
-              GestureDetector(child: Image.network(snapshot.data.moreImages[5].imgUrl),onTap: (){toPage(snapshot.data.moreImages[5]);},),
+               Column(children: snapshot.data.moreImages.map((item){
+                return GestureDetector(child: Image.network(item.imgUrl),onTap: (){toPage(item);});
+               }).toList(),)
               ],
             ),
             );
@@ -75,6 +76,16 @@ class _ImageDetailState extends State<ImageDetail> {
        }));
   }
 
+  void saveImage(String img) async{
+     var response = await Dio().get(img, options: Options(responseType: ResponseType.bytes));
+    final result = await ImageGallerySaver.saveImage(Uint8List.fromList(response.data));
+    if(result){
+       Fluttertoast.showToast(msg: "下载成功，但是下载原图需要登录才行");
+    }
+    else{
+      Fluttertoast.showToast(msg: "下载失败");
+    }
+  }
 
   Future<ImgDetail> _getData() async{
     Dio dio = Dio();
