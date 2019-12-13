@@ -9,6 +9,7 @@ import 'package:html/dom.dart' as html;
 import 'package:flutter/cupertino.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'login_page.dart';
 class ImageDetail extends StatefulWidget {
   ImageDetail({this.imgInfo});
   final ImgInfo imgInfo;
@@ -49,10 +50,11 @@ class _ImageDetailState extends State<ImageDetail> {
                    mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     RaisedButton(child: Text("下载"),onPressed: (){
-
+                        saveImage(snapshot.data.imgUrl);
                     },),
                     RaisedButton(child: Text("原图下载"),onPressed: (){
-                      
+                      Fluttertoast.showToast(msg: "下载原图需要登录才行,现在开始登录");
+                      toLogin();
                     },)
                   ],
                 ),
@@ -68,6 +70,12 @@ class _ImageDetailState extends State<ImageDetail> {
 
        )
     );
+  }
+
+  void toLogin(){
+       Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context){
+            return LoginPage();
+       }));
   }
 
   void toPage(ImgInfo item){
