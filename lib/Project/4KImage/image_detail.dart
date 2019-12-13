@@ -87,7 +87,8 @@ class _ImageDetailState extends State<ImageDetail> {
   void saveImage(String img) async{
      var response = await Dio().get(img, options: Options(responseType: ResponseType.bytes));
     final result = await ImageGallerySaver.saveImage(Uint8List.fromList(response.data));
-    if(result){
+   
+    if(result is String){
        Fluttertoast.showToast(msg: "下载成功，但是下载原图需要登录才行");
     }
     else{

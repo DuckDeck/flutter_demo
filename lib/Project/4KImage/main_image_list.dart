@@ -20,8 +20,8 @@ class _MainImageListState extends State<MainImageList>  with SingleTickerProvide
   var titles = [CatInfo(name: "最新",urlSegment: "new"),CatInfo(name: "风景",urlSegment: "4kfengjing"),
   CatInfo(name: "美女",urlSegment: "4kmeinv"),CatInfo(name: "游戏",urlSegment: "4kyouxi"),
   CatInfo(name: "动漫",urlSegment: "4kdongman"),CatInfo(name: "影视",urlSegment: "4kyingshi"),
-  CatInfo(name: "明星",urlSegment: "4kmingxing"),CatInfo(name: "明星",urlSegment: "4kqiche"),
-  CatInfo(name: "动物",urlSegment: "4kdongwu"),CatInfo(name: "汽车",urlSegment: "4krenwu"),
+  CatInfo(name: "明星",urlSegment: "4kmingxing"),CatInfo(name: "汽车",urlSegment: "4kqiche"),
+  CatInfo(name: "动物",urlSegment: "4kdongwu"),CatInfo(name: "人物",urlSegment: "4krenwu"),
   CatInfo(name: "美食",urlSegment: "4kmeishi"),CatInfo(name: "宗教",urlSegment: "4kzongjiao"),
   CatInfo(name: "背景",urlSegment: "4kbeijing"),];
  
