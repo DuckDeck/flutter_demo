@@ -50,3 +50,8 @@ class Reslotion {
     return "$width X $height";
   }
 }
+
+class UserInfo {
+  var head = "";
+  var name = "";
+}
