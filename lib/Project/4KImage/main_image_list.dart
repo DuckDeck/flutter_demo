@@ -10,6 +10,7 @@ import 'package:html/parser.dart';
 import 'package:html/dom.dart' as html;
 import 'package:flutter/cupertino.dart';
 import 'image_detail.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 class MainImageList extends StatefulWidget {
   @override
   _MainImageListState createState() => _MainImageListState();
@@ -77,6 +78,7 @@ List<ImgInfo> items = [];
     _refreshData();
     _scrollController.addListener((){
       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        print("到最下在开始圆形更多");
         _addMoreData();
       }
     });
@@ -97,7 +99,7 @@ List<ImgInfo> items = [];
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
           itemBuilder: (context,index)=>ImageCell(imageInfo: items[index],),
-          staggeredTileBuilder: (index)=>StaggeredTile.fit(2),  
+          staggeredTileBuilder: (index)=>StaggeredTile.fit(2),
         ),
       ),
     );
@@ -153,12 +155,24 @@ class ImageCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(child: Card(
-      child: Column(
+      child: Container(
+        
+        child: Column(
         children: <Widget>[
-          Image.network(imageInfo.imgUrl),
+          Container(
+            constraints: BoxConstraints(
+              minHeight: ScreenUtil.instance.setHeight(200)
+            ),
+            child: CachedNetworkImage(imageUrl: imageInfo.imgUrl,
+          
+            placeholder: (context,url)=>Center(child: CircularProgressIndicator(),),
+            errorWidget: (context,url,error)=>Icon(Icons.error),
+          ),
+          ),
           Center(child: Text(imageInfo.imgName),)
         ],
       ),
+      )
     ),
     onTap: (){
       Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context){
