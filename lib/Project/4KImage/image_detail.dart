@@ -10,6 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'login_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ImageDetail extends StatefulWidget {
   ImageDetail({this.imgInfo});
   final ImgInfo imgInfo;
@@ -28,12 +30,19 @@ class _ImageDetailState extends State<ImageDetail> {
        body: FutureBuilder<ImgDetail>(
          future: _getData(),
          builder:  (BuildContext context, AsyncSnapshot<ImgDetail> snapshot){
-           print("snapshot.data.imgUrl");
-           print(snapshot.data);
+          
             return SingleChildScrollView(
               child: Column(
               children: <Widget>[
-                Image.network(snapshot.data.imgUrl),
+               Container(
+                constraints: BoxConstraints(
+                  minHeight: ScreenUtil.instance.setHeight(375) / snapshot.data.resolution.rate
+                ),
+                child: CachedNetworkImage(imageUrl: snapshot.data.imgUrl,
+              
+                placeholder: (context,url)=>Center(child: CircularProgressIndicator(),),
+                errorWidget: (context,url,error)=>Icon(Icons.error),
+              ),),
                Container(
                  padding: EdgeInsets.symmetric(vertical: 10.0),
                  child:  Row(
@@ -107,7 +116,7 @@ class _ImageDetailState extends State<ImageDetail> {
     String imgUrl = "http://pic.netbian.com/" + a.firstChild.attributes["src"];
     final info = dom.body.querySelector("div.infor");
     
-    final resolution = Reslotion.parse(info.children[1].children.first.text);
+    final resolution = Resolution.parse(info.children[1].children.first.text);
     final size =  info.children[2].children.first.text;
     final updateTime =  info.children[3].children.first.text;
     final imgDetail = ImgDetail();

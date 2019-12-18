@@ -13,7 +13,7 @@ class ImgInfo {
 
 class ImgDetail {
   var imgUrl = "";
-  Reslotion resolution ;
+  Resolution resolution ;
   var size = 0.0;
   var sizeStr = "";
   var updateTimeStr = "";
@@ -27,20 +27,21 @@ class ImgDetail {
 
 }
 
-class Reslotion {
-  Reslotion({this.width,this.height});
+class Resolution {
+  Resolution({this.width,this.height});
   var width = 0;
   var height = 0;
-  static Reslotion parse(String str){
+  get rate { return width.toDouble() / height.toDouble();}
+  static Resolution parse(String str){
     if(str.contains("x") || str.contains("X")){
       final parts =  str.toLowerCase().split("x");
       if(parts.last.length == 0){
-        return Reslotion(width: 0,height: 0);
+        return Resolution(width: 0,height: 0);
       }
-      return Reslotion(width: int.parse(parts.first),height: int.parse(parts.last));
+      return Resolution(width: int.parse(parts.first),height: int.parse(parts.last));
     }
     else{
-      return Reslotion(width: 0,height: 0);
+      return Resolution(width: 0,height: 0);
     }
   }
 
