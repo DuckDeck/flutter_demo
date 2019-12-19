@@ -3,6 +3,7 @@ import 'package:flutter_demo/Tool/NavigationTransition.dart';
 import 'package:flutter_demo/Project/Isolated_island/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_demo/Project/4KImage/main_image_list.dart';
+import 'package:flutter_demo/Project/4KImage/tool.dart';
 const items = [
   "孤岛","美图",
 ];
@@ -41,7 +42,7 @@ void gotoPage(int index,BuildContext context) {
           case 1:
 
          Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
-                return MainImageList();
+                return ImgReduxApp();
               }));
              
           break;

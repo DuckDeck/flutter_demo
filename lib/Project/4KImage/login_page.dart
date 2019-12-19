@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:gbk2utf8/gbk2utf8.dart';
 import 'package:html/dom.dart' as html;
 import 'package:html/parser.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -27,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
     void initState() {
-    // TODO: implement initState
     super.initState();
     getLoginPage();
   }
@@ -36,7 +36,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("登录页面"),),
-      body: Container(child: Html(data: html_string,),),
+      // body: Container(child: Html(data: html_string,),),
+      body: Container(child: WebView(
+        initialUrl: "http://pic.netbian.com/e/memberconnect/?apptype=qq", //还是有问题
+        javascriptMode: JavascriptMode.unrestricted,
+        
+      )),
     );
   }
 
@@ -47,8 +52,6 @@ class _LoginPageState extends State<LoginPage> {
     final result = decodeGbk(res.data);
 
     html.Document dom = parse(result);
-    print(result);
-    print("123123123");
     final loginUrl = dom.body.children.first.text;
     final aa = loginUrl.substring(20,loginUrl.length - 3);
     print(aa);

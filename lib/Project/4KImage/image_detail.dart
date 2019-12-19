@@ -30,8 +30,13 @@ class _ImageDetailState extends State<ImageDetail> {
        body: FutureBuilder<ImgDetail>(
          future: _getData(),
          builder:  (BuildContext context, AsyncSnapshot<ImgDetail> snapshot){
-          
-            return SingleChildScrollView(
+          switch(snapshot.connectionState){
+            case ConnectionState.waiting:
+            case ConnectionState.active:
+            case ConnectionState.none:
+            return Center(child: CircularProgressIndicator(),);
+            case ConnectionState.done:
+             return SingleChildScrollView(
               child: Column(
               children: <Widget>[
                Container(
@@ -75,6 +80,8 @@ class _ImageDetailState extends State<ImageDetail> {
               ],
             ),
             );
+          }
+           
          }
 
        )
