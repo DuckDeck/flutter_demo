@@ -12,7 +12,7 @@ class _ProjectMenuPageState extends State<ProjectMenuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("多媒体"),),
+        appBar: AppBar(title: Text("Foundation"),),
         body: ListView.builder(itemBuilder: (BuildContext context,int index){
           return GestureDetector(
             onTap: (){
