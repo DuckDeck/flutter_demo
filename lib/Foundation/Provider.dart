@@ -9,7 +9,7 @@ class _ProviderPageState extends State<ProviderPage> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(builder: (_)=>ProviderModel(),)],
+      providers: [ChangeNotifierProvider(builder: (_)=>ProviderModel(), create: (BuildContext context) {},)],
       child: Scaffold(
         appBar: AppBar(title: LayoutBuilder(
           builder: (BuildContext context,BoxConstraints constraints){

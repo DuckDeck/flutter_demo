@@ -5,7 +5,8 @@ import 'package:flutter_demo/Data/menu.dart';
 import 'package:flutter_demo/Media/menu.dart';
 import 'package:flutter_demo/Project/menu.dart';
 import 'package:flutter/cupertino.dart';
-const items = ["触摸&手势", "UI和布局", "数据和文件", "影音多媒体", "独立项目"];
+import 'package:flutter_demo/Foundation/menu.dart';
+const items = ["基础", "触摸&手势", "UI和布局", "数据和文件", "影音多媒体", "独立项目"];
 
 class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -38,30 +39,34 @@ class HomePage extends StatelessWidget {
       case 0:
         Navigator.of(context)
             .push(new MaterialPageRoute(builder: (BuildContext context) {
-          return TouchMenuPage();
+          return FoundationMenuPage();
         }));
         break;
       case 1:
         Navigator.of(context)
             .push(new MaterialPageRoute(builder: (BuildContext context) {
-          return LayoutListPage();
+          return TouchMenuPage();
         }));
         break;
       case 2:
         Navigator.of(context)
             .push(new MaterialPageRoute(builder: (BuildContext context) {
-          return DataMenuPage();
+          return LayoutListPage();
         }));
         break;
       case 3:
         Navigator.of(context)
             .push(new MaterialPageRoute(builder: (BuildContext context) {
+          return DataMenuPage();
+        }));
+        break;
+      case 4:
+        Navigator.of(context)
+            .push(new MaterialPageRoute(builder: (BuildContext context) {
           return MediaMenuPage();
         }));
         break;
-         case 4:
-      
-
+      case 5:
          Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
                 return ProjectMenuPage();
               }));
