@@ -89,11 +89,11 @@ Future<bool> canOpenCamera() async{
     var img = await ImagePicker.pickImage(source: ImageSource.gallery);
     
     final result = await RScan.scanImagePath(img.path);
-    if(result.isNotEmpty){
-      print("扫描结果是: $result");
-    }
-    else{
-       print("图片没有二维码: $result");
-    }
+    // if(result.isNotEmpty){
+    //   print("扫描结果是: $result");
+    // }
+    // else{
+    //    print("图片没有二维码: $result");
+    // }
   }
 }
