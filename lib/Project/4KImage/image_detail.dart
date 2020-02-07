@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/4KImage/model.dart';
 import 'package:dio/dio.dart';
@@ -88,10 +88,18 @@ class _ImageDetailState extends State<ImageDetail> {
     );
   }
 
-  void toLogin(){
-       Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context){
-            return LoginPage();
-       }));
+  void toLogin() async{
+      //  Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context){
+      //       return LoginPage();
+      //  }));
+    const url = "http://pic.netbian.com/e/memberconnect/?apptype=qq"; //这样的话高超了外部浏览器，但是不知道怎么取登录成功返回的信息
+    if (await canLaunch(url)){
+      await launch(url);
+    }
+    else{
+
+    }
+
   }
 
   void toPage(ImgInfo item){
