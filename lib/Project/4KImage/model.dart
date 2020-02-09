@@ -21,7 +21,6 @@ class ImgDetail {
 
   @override
   String toString() {
-
     return "图片地址$imgUrl _ 图片解析度$resolution _ 图片大小 $sizeStr";
   }
 
@@ -47,7 +46,6 @@ class Resolution {
 
   @override
   String toString() {
-
     return "$width X $height";
   }
 }
