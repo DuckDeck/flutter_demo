@@ -28,7 +28,7 @@ dependencies:
   dio: ^3.0.0
   html: any
   json_annotation: ^3.0.0
-  r_scan: ^0.1.0
+  r_scan: ^0.1.4+1
   permission_handler: ^4.0.0
   image_picker: ^0.6.2+1
   cached_network_image: ^2.0.0-rc

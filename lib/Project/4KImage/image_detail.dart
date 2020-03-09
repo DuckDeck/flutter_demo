@@ -36,7 +36,15 @@ class _ImageDetailState extends State<ImageDetail> {
             case ConnectionState.none:
             return Center(child: CircularProgressIndicator(),);
             case ConnectionState.done:
-             return SingleChildScrollView(
+            print("snapshot.data");
+            print(snapshot.data);
+             if(snapshot.data == null){
+               return Center(child: 
+                Text("HTML解析失败")
+               );
+             }
+             else{
+                return SingleChildScrollView(
               child: Column(
               children: <Widget>[
                Container(
@@ -80,6 +88,8 @@ class _ImageDetailState extends State<ImageDetail> {
               ],
             ),
             );
+             }
+            
           }
            
          }
@@ -127,14 +137,13 @@ class _ImageDetailState extends State<ImageDetail> {
     final size =  info.children[2].children.first.text;
     final updateTime =  info.children[3].children.first.text;
     final imgDetail = ImgDetail();
-    print("imgUrl");
-    print(imgUrl);
     imgDetail.sizeStr = size;
     imgDetail.imgUrl =  imgUrl;
     imgDetail.updateTimeStr = updateTime;
     imgDetail.resolution = resolution;
+    print("主图片");
+    print(imgDetail);
     var more = dom.body.querySelector("ul.clearfix");
-    print(more);
     // more.children.forEach((f){
     //   var imgTag = f.querySelector("img");
     //   var title = f.querySelector("a");
@@ -147,11 +156,13 @@ class _ImageDetailState extends State<ImageDetail> {
       var title = item.querySelector("a");
       var u = "http://pic.netbian.com/" + imgTag.attributes["src"];
       final imgPage = "http://pic.netbian.com/"+ title.attributes["href"];
-      return ImgInfo(imgUrl:u,imgName: title.attributes["title"],imgPage: imgPage);
+      var subImg =  ImgInfo(imgUrl:u,imgName: title.attributes["title"],imgPage: imgPage);
+      print(subImg);
+      return subImg;
     }).toList();
-    print(imgs);
+  
     imgDetail.moreImages = imgs;
-     return imgDetail;
+    return imgDetail;
   }
 
  
