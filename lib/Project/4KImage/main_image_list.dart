@@ -11,6 +11,10 @@ import 'package:html/dom.dart' as html;
 import 'package:flutter/cupertino.dart';
 import 'image_detail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+const recentSuggest = [
+  "DVA",
+  "美食",
+];
 class MainImageList extends StatefulWidget {
   @override
   _MainImageListState createState() => _MainImageListState();
@@ -193,6 +197,8 @@ class ImageCell extends StatelessWidget {
 
 
 class SearchBarDelegate extends SearchDelegate<String>{
+  List<ImgInfo> items = [];
+  
   @override
   List<Widget> buildActions(BuildContext context){
     return [
@@ -210,17 +216,32 @@ class SearchBarDelegate extends SearchDelegate<String>{
   }
   @override
   Widget buildResults(BuildContext context) {
-    return Container(
-      width: 100.0,
-      height: 100.0,
-      child: Card(
-        color: Colors.redAccent,
-        child: Center(
-          child: Text(query),
-        ),
-      ),
-    );
+    return FutureBuilder<List<ImgInfo>>(future: _getData(),
+    builder:(BuildContext context, AsyncSnapshot<List<ImgInfo>> snapshot){
+       switch(snapshot.connectionState){
+            case ConnectionState.waiting:
+            case ConnectionState.active:
+            case ConnectionState.none:
+            return Center(child: CircularProgressIndicator(),);
+            case ConnectionState.done:
+              return Container(child: Center(child: Text("123"),),);
+            }
+    });
   }
+
+Future<List<ImgInfo>> _getData() async{
+  Dio dio = Dio();
+  var data = {"keyboard":query,"tempid":1,"tbname":"photo","show":"title"};
+  var url = "http://pic.netbian.com/e/search/index.php";
+  
+ var res = await dio.post(url,queryParameters: data);
+ var location = res.headers.value("Location");
+ print("location");
+ print(location);
+ print(res.headers);
+ //这样直接写不会返回搜索的所需要的东西，可能需要自定义请求头
+}
+
    @override
   Widget buildSuggestions(BuildContext context) {
     // final suggestionList = query.isEmpty
@@ -231,14 +252,10 @@ class SearchBarDelegate extends SearchDelegate<String>{
         itemBuilder: (context, index) => ListTile(
               title: RichText(
                   text: TextSpan(
-                      text: "123",
+                      text: recentSuggest[index],
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
-                      children: [
-                    TextSpan(
-                        text: "456",
-                        style: TextStyle(color: Colors.grey))
-                  ])),
+                      )),
             ));
   }
 }
