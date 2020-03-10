@@ -39,12 +39,20 @@ class _MainImageListState extends State<MainImageList>  with SingleTickerProvide
     return DefaultTabController(
       length: 13,
       child: Scaffold(
-        appBar: AppBar(title: const Text("美图"), bottom: TabBar(
+        appBar: AppBar(title: const Text("美图"),
+         actions: <Widget>[
+            IconButton(icon: Icon(Icons.search),onPressed: (){
+            print("开始搜索");
+            showSearch(context: context,delegate: SearchBarDelegate());
+          },)
+         ],
+         bottom: TabBar(
           isScrollable: true,
           tabs:titles.map((title){
             return Tab(text: title.name,);
           }).toList(),
         ),),
+        
         body: TabBarView(
           children: titles.map((img){
             return ScrollImagesPage(imgCat: img,);
@@ -180,5 +188,57 @@ class ImageCell extends StatelessWidget {
        }));
     },
     );
+  }
+}
+
+
+class SearchBarDelegate extends SearchDelegate<String>{
+  @override
+  List<Widget> buildActions(BuildContext context){
+    return [
+      IconButton(
+        icon:Icon(Icons.clear),
+        onPressed: ()=>query = "",)
+      ];
+  }
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+        icon: AnimatedIcon(
+            icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
+        onPressed: () => close(context, null));
+  }
+  @override
+  Widget buildResults(BuildContext context) {
+    return Container(
+      width: 100.0,
+      height: 100.0,
+      child: Card(
+        color: Colors.redAccent,
+        child: Center(
+          child: Text(query),
+        ),
+      ),
+    );
+  }
+   @override
+  Widget buildSuggestions(BuildContext context) {
+    // final suggestionList = query.isEmpty
+    //     ? recentSuggest
+    //     : searchList.where((input) => input.startsWith(query)).toList();
+    return ListView.builder(
+        itemCount: 2,
+        itemBuilder: (context, index) => ListTile(
+              title: RichText(
+                  text: TextSpan(
+                      text: "123",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                      children: [
+                    TextSpan(
+                        text: "456",
+                        style: TextStyle(color: Colors.grey))
+                  ])),
+            ));
   }
 }
