@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gbk2utf8/gbk2utf8.dart';
 import 'model.dart';
+
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:html/dom.dart' as html;
@@ -224,22 +227,38 @@ class SearchBarDelegate extends SearchDelegate<String>{
             case ConnectionState.none:
             return Center(child: CircularProgressIndicator(),);
             case ConnectionState.done:
-              return Container(child: Center(child: Text("123"),),);
+              return Container(child: Center(child: Text("直接用他们的链接搜索的话一直返回没有搜索到相关的内容，但是网页是可以的，可能需要自定义请求头,写了一些请求头还是不行"),),);
             }
     });
   }
 
 Future<List<ImgInfo>> _getData() async{
   Dio dio = Dio();
-  var data = {"keyboard":query,"tempid":1,"tbname":"photo","show":"title"};
+  dio.interceptors.add(CookieManager(CookieJar()));
+  var data = {"keyboard":query,"tempid":1,"tbname":"photo","show":"title","submit":""};
+  print("请求的数据");
+  print(data);  
   var url = "http://pic.netbian.com/e/search/index.php";
-  
- var res = await dio.post(url,queryParameters: data);
+  dio.options.responseType = ResponseType.bytes;
+  var option = Options();
+  option.headers = {HttpHeaders.acceptHeader:"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+  ,HttpHeaders.acceptEncodingHeader:"gzip, deflate",
+  HttpHeaders.cacheControlHeader:"max-age=0",
+  HttpHeaders.contentTypeHeader:"application/x-www-form-urlencoded",
+  HttpHeaders.userAgentHeader:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36 Edg/79.0.309.54"
+  };
+ var res = await dio.post<List<int>>(url,queryParameters: data,options: option);
  var location = res.headers.value("Location");
+ print("header");
+ print(res.request.headers);
  print("location");
  print(location);
+ print("statuscode");
+ print(res.statusCode);
  print(res.headers);
- //这样直接写不会返回搜索的所需要的东西，可能需要自定义请求头
+ final result = decodeGbk(res.data);
+ print(result);
+ //这样直接写不会返回搜索的所需要的东西，可能需要自定义请求头,写了一些请求头还是不行
 }
 
    @override
