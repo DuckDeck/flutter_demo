@@ -1,18 +1,17 @@
 
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:r_scan/r_scan.dart';
-class ScanBaecodePage extends StatefulWidget {
+class ScancodePage extends StatefulWidget {
   @override
-  _ScanBaecodePageState createState() => _ScanBaecodePageState();
+  _ScancodePageState createState() => _ScancodePageState();
 }
 
-class _ScanBaecodePageState extends State<ScanBaecodePage> {
-
-RScanController _controller;
-
+class _ScancodePageState extends State<ScancodePage> {
+var _imgPath;
 @override
 void initState() { 
   super.initState();
@@ -21,16 +20,7 @@ void initState() {
 bool isFirst = true;
 
 Future<void> initController() async{
-  _controller = RScanController();
-  _controller.addListener((){
-    final result = _controller.result;
-    if(result != null){
-      if(isFirst){
-        Navigator.of(context).pop(result);
-        isFirst = false;
-      }
-    }
-  });
+ 
 }
 
   Future<bool> canReadStorage() async{
@@ -71,19 +61,38 @@ Future<bool> canOpenCamera() async{
     return Container(
       child: Scaffold(
         appBar: AppBar(title: Text("扫码"),),
-        body: FutureBuilder<bool>(
-            future: canOpenCamera(),
-            builder: (BuildContext context,AsyncSnapshot<bool> snapshot){
-              if(snapshot.hasData && snapshot.data == true){
-                
-              }
-            },
+        body: Column(
+          children: <Widget>[
+            Center(child: RaisedButton(onPressed: ()=>{
+              _openGallery()
+            }, child: Text("扫图片中的码"),),),
+            Center(child: RaisedButton(onPressed: null, child: Text("扫描图片链接的码"),),),
+            Center(child: RaisedButton(onPressed: ()=>{
+              _scanMemeryImage()
+            }, child: Text("扫描内存图片的码"),),),
+            Center(child: RaisedButton(onPressed: null, child: Text("打开摄像头扫码")),),
+          ],
         )
       ),
     );
   }
 
 
+  _openGallery() async{
+    var img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    print(img.path);
+   setState(() {
+     _imgPath = img;
+   });
+   final result = await RScan.scanImagePath(img.path);
+   print(result.message);
+  }
+
+  _scanMemeryImage() async{
+    var data = await rootBundle.load("images/barcode.png");
+    final result = await RScan.scanImageMemory(data.buffer.asUint8List());
+    print(result.message);
+  }
 
   void scanImage() async{
     var img = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -97,3 +106,13 @@ Future<bool> canOpenCamera() async{
     // }
   }
 }
+
+
+// FutureBuilder<bool>(
+//             future: canOpenCamera(),
+//             builder: (BuildContext context,AsyncSnapshot<bool> snapshot){
+//               if(snapshot.hasData && snapshot.data == true){
+                
+//               }
+//             },
+//         )

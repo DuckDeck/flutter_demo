@@ -61,10 +61,9 @@ class HomePage extends StatelessWidget {
         }));
         break;
       case 4:
-        Navigator.of(context)
-            .push(new MaterialPageRoute(builder: (BuildContext context) {
-          return MediaMenuPage();
-        }));
+         Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+                return MediaMenuPage();
+              }));
         break;
       case 5:
          Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
