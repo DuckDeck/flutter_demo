@@ -240,6 +240,7 @@ Future<List<ImgInfo>> _getData() async{
   print(data);  
   var url = "http://pic.netbian.com/e/search/index.php";
   dio.options.responseType = ResponseType.bytes;
+
   var option = Options();
   option.headers = {HttpHeaders.acceptHeader:"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
   ,HttpHeaders.acceptEncodingHeader:"gzip, deflate",
@@ -247,10 +248,17 @@ Future<List<ImgInfo>> _getData() async{
   HttpHeaders.contentTypeHeader:"application/x-www-form-urlencoded",
   HttpHeaders.userAgentHeader:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36 Edg/79.0.309.54"
   };
+
+
+
+
+  dio.options.contentType = ContentType.parse("application/x-www-form-urlencoded").toString();
+  print(dio.options.contentType);
  var res = await dio.post<List<int>>(url,queryParameters: data,options: option);
+ 
  var location = res.headers.value("Location");
  print("header");
- print(res.request.headers);
+ print(res.request.headers); //在上面设置了contentType但是在这里打印不出来
  print("location");
  print(location);
  print("statuscode");
