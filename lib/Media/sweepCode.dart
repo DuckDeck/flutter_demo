@@ -12,6 +12,7 @@ class ScancodePage extends StatefulWidget {
 
 class _ScancodePageState extends State<ScancodePage> {
 var _imgPath;
+var _scanResult = "";
 @override
 void initState() { 
   super.initState();
@@ -31,7 +32,7 @@ Future<void> initController() async{
     for(final item in future.entries){
       if(item.value != PermissionStatus.granted){
         return false;
-      }
+      } 
     }
   }
   else{
@@ -71,6 +72,7 @@ Future<bool> canOpenCamera() async{
               _scanMemeryImage()
             }, child: Text("扫描内存图片的码"),),),
             Center(child: RaisedButton(onPressed: null, child: Text("打开摄像头扫码")),),
+            Text(_scanResult)
           ],
         )
       ),
@@ -80,18 +82,22 @@ Future<bool> canOpenCamera() async{
 
   _openGallery() async{
     var img = await ImagePicker.pickImage(source: ImageSource.gallery);
-    print(img.path);
    setState(() {
      _imgPath = img;
    });
    final result = await RScan.scanImagePath(img.path);
    print(result.message);
+   setState(() {
+     _scanResult = result.message;
+   });
   }
 
   _scanMemeryImage() async{
-    var data = await rootBundle.load("images/barcode.png");
+    var data = await rootBundle.load("Images/barcode.png");
     final result = await RScan.scanImageMemory(data.buffer.asUint8List());
-    print(result.message);
+    setState(() {
+     _scanResult = result.message;
+   });
   }
 
   void scanImage() async{
