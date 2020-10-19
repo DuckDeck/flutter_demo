@@ -49,10 +49,10 @@ void gotoPage(int index,BuildContext context) {
           break;
          case 2:
 
-         Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+        var res =  Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
                 return TimeCarvingPage();
               }));
-             
+          Scaffold.of(context)..removeCurrentSnackBar()..showSnackBar(SnackBar(content: Text('$res'))); 
           break;
         default:
       }
