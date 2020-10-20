@@ -6,7 +6,7 @@ import 'package:flutter_demo/Project/4KImage/main_image_list.dart';
 import 'package:flutter_demo/Project/4KImage/tool.dart';
 import 'TimeBooking/main.dart';
 const items = [
-  "孤岛","美图","TimeCarving",
+  "孤岛","美图","TimeCarving","TimeShow"
 ];
 
 class ProjectMenuPage extends StatefulWidget {
