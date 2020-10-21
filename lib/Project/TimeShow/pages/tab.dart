@@ -9,7 +9,7 @@ class TabPage extends StatefulWidget {
 }
 
 class _TabPageState extends State<TabPage> {
-  final _nabigationLKeys = TsTabBar.tabs.map<GlobalKey<NavigatorState>>((e) => GlobalKey<NavigatorState>()).toList();
+  final _navigatorLKeys = TsTabBar.tabs.map<GlobalKey<NavigatorState>>((e) => GlobalKey<NavigatorState>()).toList();
   final _focusScopeNodes = TsTabBar.tabs.map<FocusScopeNode>((e) => FocusScopeNode()).toList();
   var _tabIndex = 0;
   void switchTab(int index){
@@ -20,14 +20,34 @@ class _TabPageState extends State<TabPage> {
   }
 
 Future<bool> _onWillPop() async{
-  final maybePop = await _nabigationLKeys[_tabIndex].currentState.maybePop();
+  final maybePop = await _navigatorLKeys[_tabIndex].currentState.maybePop();
   return Future.value(!maybePop);
 }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: IndexedStack(
+        index: _tabIndex,
+        children: TsTabBar.tabs.asMap().entries.map<Widget>((entry) => FocusScope(
+          node: _focusScopeNodes[entry.key],
+          child: Navigator(
+            key: _navigatorLKeys[entry.key],
+            onGenerateRoute: (settings) {
+              WidgetBuilder builder;
+              switch(settings.name){
+                case '/':
+                builder = entry.value['builder'];
+                break;
+                default:
+                throw Exception('invalid route : ${settings.name}');
+              }
+              return MaterialPageRoute(builder: builder,settings: settings);
+            },
+          ),
+        )),
+      ),
     );
   }
 }
