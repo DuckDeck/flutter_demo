@@ -25,4 +25,21 @@ class AppState {
   this.post = post ?? PostState(),
   this.publish = publish ?? PublishState(),
   this.user = user ?? UserState();
+
+
+  AppState copyWith({
+   String version,
+   AccounState account,
+   PostState post,
+   PublishState publish,
+   UserState user
+  }) => AppState(
+    version : version ?? this.version,
+    account : account ?? this.account,
+    post : post ?? this.post,
+    publish : publish ?? this.publish,
+    user : user ?? this.user
+  );
+
+  
 }
