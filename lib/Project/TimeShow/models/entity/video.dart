@@ -24,7 +24,7 @@ class VideoEntity {
     return width != 0 && height != 0 ? width / height : 16 /  9;
   }
 
-    factory VideoEntity.fromJson(Map<String,dynamic> json) => _$VideoEntityFromJson(json);
+  factory VideoEntity.fromJson(Map<String,dynamic> json) => _$VideoEntityFromJson(json);
 
   Map<String,dynamic> toJson() => _$VideoEntityToJson(this);
 
