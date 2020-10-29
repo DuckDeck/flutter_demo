@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/Project/Blog/main.dart';
 import 'package:flutter_demo/Tool/NavigationTransition.dart';
 import 'package:flutter_demo/Project/Isolated_island/app.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_demo/Project/4KImage/main_image_list.dart';
 import 'package:flutter_demo/Project/4KImage/tool.dart';
 import 'TimeBooking/main.dart';
 const items = [
-  "孤岛","美图","TimeCarving","TimeShow"
+  "孤岛","美图","TimeCarving","Zoe Blog"
 ];
 
 class ProjectMenuPage extends StatefulWidget {
@@ -42,17 +43,24 @@ void gotoPage(int index,BuildContext context) {
           break;
           case 1:
 
-         Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
-                return ImgReduxApp();
-              }));
+          Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+                  return ImgReduxApp();
+                }));
              
           break;
          case 2:
 
-        var res =  Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
-                return TimeCarvingPage();
-              }));
-          Scaffold.of(context)..removeCurrentSnackBar()..showSnackBar(SnackBar(content: Text('$res'))); 
+          var res =  Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+                  return TimeCarvingPage();
+                }));
+            Scaffold.of(context)..removeCurrentSnackBar()..showSnackBar(SnackBar(content: Text('$res'))); 
+          break;
+          case 3:
+
+          Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+                  return HomeBlogPage();
+                }));
+             
           break;
         default:
       }

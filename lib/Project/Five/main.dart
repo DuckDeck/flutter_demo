@@ -30,6 +30,5 @@ class FiveStrokeInfo{
   var text = "";
   var pinyin = "";
   var img = "";
-  
-
+  var code = "";
 }

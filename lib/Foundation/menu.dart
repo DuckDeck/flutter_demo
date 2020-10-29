@@ -41,10 +41,11 @@ class _FoundationMenuPageState extends State<FoundationMenuPage> {
         }));
         break;
       case 1:
-        Navigator.of(context)
-            .push(new CupertinoPageRoute(builder: (BuildContext context) {
-          return ProviderPage();
-        }));
+        // Navigator.of(context)
+        //     .push(new CupertinoPageRoute(builder: (BuildContext context) {
+        //   return ProviderPage();
+        // }));
+        debugDumpApp();
         break;
 
         break;
