@@ -3,6 +3,7 @@ import 'package:logging/logging.dart';
 class TsConfig {
   static PackageInfo packageInfo;
   static var domain = 'timeshow.app';
+  static var apiBaseUrl = 'http://lovelive.ink:7110';
   static var debug = false;
   static var loggingLevel = Level.INFO;
   static var isLogAction = false;

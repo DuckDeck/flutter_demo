@@ -40,6 +40,8 @@ class AppState {
     publish : publish ?? this.publish,
     user : user ?? this.user
   );
+      factory AppState.fromJson(Map<String,dynamic> json) => _$AppStateFromJson(json);
+    Map<String,dynamic> toJson() => _$AppStateToJson(this);
 
   
 }
