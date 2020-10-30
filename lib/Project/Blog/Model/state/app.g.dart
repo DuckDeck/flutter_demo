@@ -8,15 +8,14 @@ part of 'app.dart';
 
 AppState _$AppStateFromJson(Map<String, dynamic> json) {
   return AppState(
-      version: json['version'] as String,
-      account: json['account'] == null
-          ? null
-          : AccountState.fromJson(json['account'] as Map<String, dynamic>));
-    
+    version: json['version'] as String,
+    account: json['account'] == null
+        ? null
+        : AccountState.fromJson(json['account'] as Map<String, dynamic>),
+  );
 }
 
 Map<String, dynamic> _$AppStateToJson(AppState instance) => <String, dynamic>{
       'version': instance.version,
       'account': instance.account,
- 
-};
+    };

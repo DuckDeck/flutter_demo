@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/main.dart';
-import 'package:flutter_demo/Tool/NavigationTransition.dart';
 import 'package:flutter_demo/Project/Isolated_island/app.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_demo/Project/4KImage/main_image_list.dart';
 import 'package:flutter_demo/Project/4KImage/tool.dart';
 import 'TimeBooking/main.dart';
 const items = [
@@ -31,7 +29,7 @@ class _ProjectMenuPageState extends State<ProjectMenuPage> {
         );
       
   }
-void gotoPage(int index,BuildContext context) {
+void gotoPage(int index,BuildContext context) async{
       print(index);
       switch (index) {
         case 0:
@@ -57,9 +55,7 @@ void gotoPage(int index,BuildContext context) {
           break;
           case 3:
 
-          Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
-                  return HomeBlogPage();
-                }));
+                startBlogApp();
              
           break;
         default:

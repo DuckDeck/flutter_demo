@@ -28,6 +28,11 @@ class _HomeBlogPageState extends State<HomeBlogPage> {
   }
 }
 
+
+class _ViewModel {
+  
+}
+
 class LeftMenu extends StatelessWidget {
   const LeftMenu({
     Key key,

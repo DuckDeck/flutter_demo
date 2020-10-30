@@ -8,10 +8,13 @@ part of 'account.dart';
 
 AccountState _$AccountStateFromJson(Map<String, dynamic> json) {
   return AccountState(
-      user: json['user'] == null
-          ? null
-          : UserInfo.fromJson(json['user'] as Map<String, dynamic>));
+    user: json['user'] == null
+        ? null
+        : UserInfo.fromJson(json['user'] as Map<String, dynamic>),
+  );
 }
 
 Map<String, dynamic> _$AccountStateToJson(AccountState instance) =>
-    <String, dynamic>{'user': instance.user};
+    <String, dynamic>{
+      'user': instance.user,
+    };

@@ -8,23 +8,23 @@ part of 'user.dart';
 
 UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
   return UserInfo(
-      id: json['id'] as int,
-      username: json['username'] as String,
-      intro: json['intro'] as String,
-      avatar: json['avatar'] as String,
-      mobile: json['mobile'] as String,
-      email: json['email'] as String,
-      postCount: json['postCount'] as int,
-      likeCount: json['likeCount'] as int,
-      followingCount: json['followingCount'] as int,
-      isFollowing: json['isFollowing'] as bool,
-      createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse(json['createdAt'] as String));
+    id: json['id'] as int,
+    username: json['username'] as String,
+    intro: json['intro'] as String,
+    avatar: json['avatar'] as String,
+    mobile: json['mobile'] as String,
+    email: json['email'] as String,
+    postCount: json['postCount'] as int,
+    likeCount: json['likeCount'] as int,
+    followingCount: json['followingCount'] as int,
+    isFollowing: json['isFollowing'] as bool,
+    createdAt: json['createdAt'] == null
+        ? null
+        : DateTime.parse(json['createdAt'] as String),
+  );
 }
 
-Map<String, dynamic> _$UserInfoToJson(UserInfo instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'id': instance.id,
       'username': instance.username,
       'intro': instance.intro,
@@ -35,5 +35,5 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) =>
       'likeCount': instance.likeCount,
       'followingCount': instance.followingCount,
       'isFollowing': instance.isFollowing,
-      'createdAt': instance.createdAt?.toIso8601String()
+      'createdAt': instance.createdAt?.toIso8601String(),
     };
