@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_demo/Foundation/Reflect.dart';
-import 'Provider.dart';
+
 const items = ["反射", "Provider"];
 
 class FoundationMenuPage extends StatefulWidget {
@@ -45,7 +45,16 @@ class _FoundationMenuPageState extends State<FoundationMenuPage> {
         //     .push(new CupertinoPageRoute(builder: (BuildContext context) {
         //   return ProviderPage();
         // }));
-        debugDumpApp();
+        showDialog(context: context,builder: (context) {
+            return AlertDialog(
+              title: Text("提示"),
+              content: Text("你确实要删除文件"),
+              actions: [
+                FlatButton(onPressed: ()=> Navigator.of(context).pop(), child: Text("取消")),
+                FlatButton(onPressed: ()=> Navigator.of(context).pop(true), child: Text("删除")),
+              ],
+            );
+        });
         break;
 
         break;

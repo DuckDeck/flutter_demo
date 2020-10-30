@@ -12,12 +12,15 @@ class _HomeBlogPageState extends State<HomeBlogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text("ZOE Blog"),
         actions: [IconButton(icon: Icon(Icons.search), onPressed: null)],
-        leading: Builder(builder: (context){
-          return IconButton(icon: Icon(Icons.person), onPressed: (){
-              Scaffold.of(context).openDrawer();
-          });
+        leading: Builder(builder: (context) {
+          return IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              });
         }),
       ),
       drawer: LeftMenu(),
@@ -57,10 +60,19 @@ class LeftMenu extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(child: ListView(children: [
-              ListTile(leading: const Icon(Icons.add),title: const Text("Add Count"),),
-              ListTile(leading: const Icon(Icons.settings),title: const Text("Manage Account"),)
-            ],))
+            Expanded(
+                child: ListView(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.add),
+                  title: const Text("Add Count"),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.settings),
+                  title: const Text("Manage Account"),
+                )
+              ],
+            ))
           ],
         ),
       ),
