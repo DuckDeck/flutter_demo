@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/main.dart';
+import 'package:flutter_demo/Project/Five/main.dart';
 import 'package:flutter_demo/Project/Isolated_island/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_demo/Project/4KImage/tool.dart';
 import 'TimeBooking/main.dart';
 const items = [
-  "孤岛","美图","TimeCarving","Zoe Blog"
+  "孤岛","美图","TimeCarving","五笔反查","Zoe Blog"
 ];
 
 class ProjectMenuPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _ProjectMenuPageState extends State<ProjectMenuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("多媒体"),),
+        appBar: AppBar(title: Text("独立项目"),),
         body: ListView.builder(itemBuilder: (BuildContext context,int index){
           return GestureDetector(
             onTap: (){
@@ -53,7 +54,13 @@ void gotoPage(int index,BuildContext context) async{
                 }));
             Scaffold.of(context)..removeCurrentSnackBar()..showSnackBar(SnackBar(content: Text('$res'))); 
           break;
-          case 3:
+           case 3:
+            Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+                  return FiveStrokePage();
+                }));
+                
+                break;
+          case 4:
 
                 startBlogApp();
              

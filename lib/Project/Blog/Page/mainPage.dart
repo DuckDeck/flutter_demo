@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/Project/Blog/Actions/home.dart';
 import 'package:flutter_demo/Project/Blog/Model/entity/banner.dart';
 import 'package:flutter_demo/Project/Blog/Model/state/app.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -49,6 +50,34 @@ class HomeBlogPage extends StatefulWidget {
 }
 
 class _HomeBlogPageState extends State<HomeBlogPage> {
+  final _scrollController = ScrollController();
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _scrollController.removeListener(_scrollListener);
+  }
+
+  void _scrollListener(){
+
+  }
+
+  void loadData() {
+    widget.store.dispatch(getHomeInfoAction(onSucceed: (data){
+      print(data);
+      
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,6 +85,8 @@ class _HomeBlogPageState extends State<HomeBlogPage> {
     );
   }
 }
+
+
 
 class _ViewModel {
   final List<BannerInfo> banners;
