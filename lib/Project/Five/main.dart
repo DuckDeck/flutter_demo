@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/Project/Five/fiveStrokeInfo.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class FiveStrokePage extends StatefulWidget {
@@ -29,6 +31,7 @@ class _FiveStrokePageState extends State<FiveStrokePage> {
           title: Text("五笔反查"),
         ),
         body: Container(
+          padding: const EdgeInsets.all(10),
           child: Column(children: [
              Row(children: [
                Expanded(child: TextField(controller: _textEditingController,),),
@@ -39,34 +42,52 @@ class _FiveStrokePageState extends State<FiveStrokePage> {
              ],),
              Expanded(child: 
               ListView.builder(itemBuilder: (BuildContext context,int index){
-                return ListTile(title: Text("123"));
-              },itemCount: items.length,)
+                return FiveCell(fiveStrokeInfo: items[index],);
+              },itemCount: items.length,),
+              
              )
           ],)
         ));
   }
 
-  void search() {
-    print("search");
+  void search() async {
     if(_textEditingController.text.length <= 0){
       Fluttertoast.showToast(msg: "请输入文字");
       return;
     }
-    const regex = r"[\\u4e00-\\u9fa5]";
-    var res =  RegExp(regex).firstMatch(_textEditingController.text);
-    if(res == null){
+    const regex = r"^[\u4e00-\u9fa5]+$";
+    print(_textEditingController.text);    
+    if(!RegExp(regex).hasMatch(_textEditingController.text)){
       Fluttertoast.showToast(msg: "请输入中文");
       return;
     }
     
+    final data = await FiveStrokeInfo.getFiveStroke(_textEditingController.text);
+    if(data.code != 0){
+      Fluttertoast.showToast(msg: data.msg);
+      return;
+    }
+    setState(() {
+      items.addAll(data.data);
+    });
     
   }
 }
 
-class FiveStrokeInfo {
-  var id = 0;
-  var text = "";
-  var pinyin = "";
-  var img = "";
-  var code = "";
+
+class FiveCell extends StatelessWidget {
+  final FiveStrokeInfo fiveStrokeInfo;
+  FiveCell({this.fiveStrokeInfo});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 30,
+      child: Row(children: [
+        Expanded(child: Text(fiveStrokeInfo.text),flex: 1,),
+        Expanded(child: Text(fiveStrokeInfo.pinyin),flex: 2,),
+        Expanded(child: Text(fiveStrokeInfo.code),flex: 2,),
+        Expanded(child: CachedNetworkImage(imageUrl: fiveStrokeInfo.img,),flex: 3,)
+      ],),
+    );
+  }
 }
