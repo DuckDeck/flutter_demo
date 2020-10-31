@@ -1,3 +1,4 @@
+import 'package:flutter_demo/Project/Blog/Model/state/home.dart';
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,14 +13,15 @@ part 'app.g.dart';
 class AppState {
   final String version;
   final AccountState account;
-
+  final HomePageState home;
 
   AppState({
     String version,
     AccountState account,
-  
+    HomePageState home
   })  : this.version = version ?? BlogConfig.packageInfo.version,
-        this.account = account ?? AccountState();
+        this.account = account ?? AccountState(),
+        this.home = home ?? HomePageState();
        
 
   factory AppState.fromJson(Map<String, dynamic> json) =>

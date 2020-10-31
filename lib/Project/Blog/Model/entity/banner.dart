@@ -20,4 +20,8 @@ class BannerInfo {
     this.articleBrief = ''
   });
 
+  factory BannerInfo.fromJson(Map<String, dynamic> json) =>
+      _$BannerInfoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BannerInfoToJson(this);
 }

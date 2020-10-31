@@ -12,10 +12,14 @@ AppState _$AppStateFromJson(Map<String, dynamic> json) {
     account: json['account'] == null
         ? null
         : AccountState.fromJson(json['account'] as Map<String, dynamic>),
+    home: json['home'] == null
+        ? null
+        : HomePageState.fromJson(json['home'] as Map<String, dynamic>),
   );
 }
 
 Map<String, dynamic> _$AppStateToJson(AppState instance) => <String, dynamic>{
       'version': instance.version,
       'account': instance.account,
+      'home': instance.home,
     };

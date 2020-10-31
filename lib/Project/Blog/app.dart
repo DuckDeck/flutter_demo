@@ -22,7 +22,7 @@ BlogApp(this.store){
         title: BlogConfig.packageInfo.appName,
         theme: BlogTheme.theme,
         routes: {
-          '/':(context)=> HomeBlogPage()
+          '/':(context)=> HomePage()
         },
       ),
     );
