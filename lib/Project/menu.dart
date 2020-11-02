@@ -62,7 +62,9 @@ void gotoPage(int index,BuildContext context) async{
                 break;
           case 4:
 
-                startBlogApp();
+                  Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
+                  return ZoeBlogPage();
+                }));
              
           break;
         default:
