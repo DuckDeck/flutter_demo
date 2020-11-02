@@ -4,9 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Five/fiveStrokeInfo.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:redux_persist/redux_persist.dart';
 
 class FiveStrokePage extends StatefulWidget {
   @override
@@ -29,9 +29,10 @@ class _FiveStrokePageState extends State<FiveStrokePage> {
   }
 
   void setData(List<FiveStrokeInfo> fives) {
+    
     setState(() {
-      items = fives;
-      saveFives(fives);
+      items.addAll(fives);
+      saveFives(items);
     });
   }
 
@@ -63,8 +64,21 @@ class _FiveStrokePageState extends State<FiveStrokePage> {
                 Expanded(
                   child: ListView.builder(
                     itemBuilder: (BuildContext context, int index) {
-                      return FiveCell(
-                        fiveStrokeInfo: items[index],
+                      return Dismissible(
+                        child: FiveCell(
+                          fiveStrokeInfo: items[index],
+                        ),
+                        movementDuration: Duration(microseconds: 100),
+                        key: Key(items[index].code),
+                        onDismissed: (_) {
+                          print(index);
+                        },
+                        background: Container(
+                          child: Text('右滑删除', style: TextStyle(fontSize: 22, color: Colors.white)),
+                          color: Colors.red,
+                          padding: EdgeInsets.only(left: 10),
+                          alignment: Alignment.center,
+                        ),
                       );
                     },
                     itemCount: items.length,
@@ -87,13 +101,15 @@ class _FiveStrokePageState extends State<FiveStrokePage> {
     }
 
     FocusScope.of(context).requestFocus(FocusNode());
-
+    EasyLoading.show(status: "加载中");
     final data =
         await FiveStrokeInfo.getFiveStroke(_textEditingController.text);
+    EasyLoading.dismiss();
     if (data.code != 0) {
       Fluttertoast.showToast(msg: data.msg);
       return;
     }
+  
     setData(data.data);
   }
 

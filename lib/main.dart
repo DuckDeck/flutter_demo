@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/home.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -12,6 +13,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
       ),
       home: HomePage(),
+      builder: (BuildContext context,Widget child){
+        return FlutterEasyLoading(child: child);
+      },
     );
   }
 }

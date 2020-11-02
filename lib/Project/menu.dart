@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/Project/4KImage/main_image_list.dart';
 import 'package:flutter_demo/Project/Blog/main.dart';
 import 'package:flutter_demo/Project/Five/main.dart';
 import 'package:flutter_demo/Project/Isolated_island/app.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_demo/Project/4KImage/tool.dart';
+
 import 'TimeBooking/main.dart';
 const items = [
   "孤岛","美图","TimeCarving","五笔反查","Zoe Blog"
@@ -43,7 +44,8 @@ void gotoPage(int index,BuildContext context) async{
           case 1:
 
           Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
-                  return ImgReduxApp();
+                  return MainImageList();
+                  
                 }));
              
           break;
