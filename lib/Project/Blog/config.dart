@@ -1,0 +1,1 @@
+const BaseUrl = "http://api.bqbbq.com/api";

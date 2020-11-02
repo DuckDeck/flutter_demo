@@ -31,7 +31,7 @@ class _FiveStrokePageState extends State<FiveStrokePage> {
   void setData(List<FiveStrokeInfo> fives) {
     
     setState(() {
-      items.addAll(fives);
+      items.insertAll(0,fives);
       saveFives(items);
     });
   }
@@ -71,7 +71,10 @@ class _FiveStrokePageState extends State<FiveStrokePage> {
                         movementDuration: Duration(microseconds: 100),
                         key: Key(items[index].code),
                         onDismissed: (_) {
-                          print(index);
+                          print("第几个$index");
+                          setState(() {
+                            items.removeAt(index);
+                          });
                         },
                         background: Container(
                           child: Text('右滑删除', style: TextStyle(fontSize: 22, color: Colors.white)),
@@ -165,9 +168,10 @@ class _FiveStrokePageState extends State<FiveStrokePage> {
   }
 
   void deleteData() {
-    items.removeRange(0, items.length);
-
-    setData(items);
+    setState(() {
+      items.removeRange(0, items.length);
+      saveFives(items);
+    });
   }
 }
 

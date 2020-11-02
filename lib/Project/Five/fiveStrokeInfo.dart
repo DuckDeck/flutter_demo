@@ -1,8 +1,6 @@
 
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:flutter_demo/Foundation/Reflect.dart';
+import 'package:flutter_demo/ResultInfo.dart';
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -59,9 +57,5 @@ class FiveStrokeInfo {
 
 }
 
-class ResultInfo {
-  var code = 0;
-  var msg = "";
-  dynamic data; 
-}
+
 
