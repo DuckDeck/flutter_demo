@@ -12,7 +12,8 @@ ArticleInfo _$ArticleInfoFromJson(Map<String, dynamic> json) {
     ..title = json['article_name'] as String
     ..createTime = json['article_create_time'] as int
     ..createTimeStr = json['createTimeStr'] as String
-    ..releaseTime = json['article_release_time'] as String
+    ..releaseTime = json['article_release_time'] as int
+    ..releaseTimeStr = json['releaseTimeStr'] as String
     ..ipAddress = json['article_ip'] as String
     ..clickCount = json['article_click'] as int
     ..sortId = json['article_sort_id'] as int
@@ -44,6 +45,7 @@ Map<String, dynamic> _$ArticleInfoToJson(ArticleInfo instance) =>
       'article_create_time': instance.createTime,
       'createTimeStr': instance.createTimeStr,
       'article_release_time': instance.releaseTime,
+      'releaseTimeStr': instance.releaseTimeStr,
       'article_ip': instance.ipAddress,
       'article_click': instance.clickCount,
       'article_sort_id': instance.sortId,

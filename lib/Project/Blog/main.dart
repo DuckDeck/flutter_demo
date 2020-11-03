@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
+import 'package:flutter_demo/Project/Blog/UI/articleCell.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -10,7 +11,6 @@ class ZoeBlogPage extends StatefulWidget {
 }
 
 class _ZoeBlogPageState extends State<ZoeBlogPage> {
-
   List<ArticleInfo> banners;
   List<ArticleInfo> articles;
 
@@ -20,68 +20,64 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
     super.initState();
     banners = List<ArticleInfo>();
     articles = List<ArticleInfo>();
+    initData();
+    print(initData);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-          centerTitle: true,
-          title: Text("ZOE Blog"),
-          actions: [IconButton(icon: Icon(Icons.search), onPressed: null)],
-          leading: Builder(builder: (context) {
-            return IconButton(
-                icon: Icon(Icons.person),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                });
-          }),
-        ),
-        drawer: LeftMenu(),
-        body: Container(child:
-          Column(children: [
-            SizedBox(child: new Swiper(itemCount: 3,pagination: new SwiperPagination(),
-              itemBuilder: (BuildContext context,int index){
-                return CachedNetworkImage(imageUrl: "https://img.3dmgame.com/uploads/images2/news/20201030/1604028144_924041.jpg",);
-              },
-            ), height: 300,),
-            Expanded(child: ListView.builder(itemBuilder: (BuildContext context, int index) {
-              
-
-            }))
-          ],)
-        ,),
-    
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("ZOE Blog"),
+        actions: [IconButton(icon: Icon(Icons.search), onPressed: null)],
+        leading: Builder(builder: (context) {
+          return IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              });
+        }),
+      ),
+      drawer: LeftMenu(),
+      body: Container(
+          child: ListView.builder(
+              itemCount: articles.length + 1,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 0) {
+                  return SizedBox(
+                    child: new Swiper(
+                      itemCount: banners.length,
+                      pagination: new SwiperPagination(),
+                      itemBuilder: (BuildContext context, int bannerIndex) {
+                        return CachedNetworkImage(
+                          imageUrl: banners[bannerIndex].mainImage,
+                        );
+                      },
+                    ),
+                    height: 200,
+                  );
+                } else {
+                  return ArticleCell(
+                    articleInfo: articles[index - 1],
+                  );
+                }
+              })),
     );
   }
 
-  void initData() {
-    ArticleInfo.indexPage().then((value) => 
-        
-          
-        setState(() {
-          
-
-          //articles = value.data as [String,dynamic]
-      })
-    );
-
-  
-  }
-}
-
-
-class ArticleCell extends StatelessWidget {
-  final ArticleInfo articleInfo;
-  ArticleCell({this.articleInfo});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(children: [
-        Text(articleInfo.brief),
-        CachedNetworkImage(imageUrl: articleInfo.mainImage,)
-      ],),
-    );
+  void initData() async {
+    final result = await ArticleInfo.indexPage();
+    if (result.code != 0) {
+      Fluttertoast.showToast(msg: result.msg);
+      return;
+    }
+    final homeData = result.data as Map<String, dynamic>;
+    print(homeData);
+    setState(() {
+      banners = homeData["banners"];
+      articles = homeData["articles"];
+    });
   }
 }
 

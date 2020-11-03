@@ -20,7 +20,8 @@ class ArticleInfo {
   int createTime;
   String createTimeStr;
   @JsonKey(name: "article_release_time")
-  String releaseTime;
+  int releaseTime;
+  String releaseTimeStr;
   @JsonKey(name: "article_ip")
   String ipAddress;
   @JsonKey(name: "article_click")
