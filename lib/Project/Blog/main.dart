@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleCell.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -50,8 +51,31 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
                       itemCount: banners.length,
                       pagination: new SwiperPagination(),
                       itemBuilder: (BuildContext context, int bannerIndex) {
-                        return CachedNetworkImage(
-                          imageUrl: banners[bannerIndex].mainImage,
+                        return Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            DecoratedBox(
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: [
+                                    Colors.white,
+                                    Colors.grey[700].withOpacity(0.5)
+                                  ],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter)),
+                              child: CachedNetworkImage(
+                                imageUrl: banners[bannerIndex].mainImage,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned(
+                              child: Text(
+                                banners[bannerIndex].title,
+                                style: TextStyle(color: Colors.grey[100]),
+                              ),
+                              bottom: 30,
+                            )
+                          ],
                         );
                       },
                     ),
@@ -67,7 +91,9 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
   }
 
   void initData() async {
+    EasyLoading.show(status: "加载中");
     final result = await ArticleInfo.indexPage();
+    EasyLoading.dismiss();
     if (result.code != 0) {
       Fluttertoast.showToast(msg: result.msg);
       return;
@@ -80,8 +106,6 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
     });
   }
 }
-
-
 
 class LeftMenu extends StatelessWidget {
   const LeftMenu({

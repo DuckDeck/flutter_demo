@@ -13,14 +13,22 @@ class ArticleCell extends StatelessWidget {
         children: [
           Row(
             children: [
-              CachedNetworkImage(
-                imageUrl: articleInfo.userInfo.headImage,
+              ClipOval(
+                child: CachedNetworkImage(
+                    imageUrl: articleInfo.userInfo.headImage,
+                    width: 30,
+                    height: 30,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => CircularProgressIndicator()),
               ),
-              Text(articleInfo.userInfo.realName),
-              Text("${articleInfo.commentCount}条评论"),
+
+              Text(articleInfo.userInfo.realName,style: TextStyle(fontSize: 18,color: Colors.grey[10]),),
+              Spacer(),
               Icon(Icons.comment),
-              Text("${articleInfo.likeCount}人喜欢"),
+              Text("${articleInfo.commentCount}条评论"),
+              
               Icon(Icons.favorite),
+              Text("${articleInfo.likeCount}人喜欢"),
             ],
           ),
           Row(
@@ -29,7 +37,7 @@ class ArticleCell extends StatelessWidget {
                   constraints: BoxConstraints.tightFor(height: 200),
                   child: Column(
                     children: [
-                      Text(articleInfo.title),
+                      // Text(articleInfo.title),
                       Expanded(
                         child: Text(
                           articleInfo.brief,
@@ -40,13 +48,13 @@ class ArticleCell extends StatelessWidget {
                       )
                     ],
                   )),
-              SizedBox(
-                child: CachedNetworkImage(
-                  imageUrl: articleInfo.mainImage,
-                ),
-                width: 200,
-                height: 200,
-              )
+              // SizedBox(
+              //   child: CachedNetworkImage(
+              //     imageUrl: articleInfo.mainImage,
+              //   ),
+              //   width: 200,
+              //   height: 200,
+              // )
             ],
           ),
         ],
