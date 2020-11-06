@@ -5,10 +5,15 @@ import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
 class ArticleCell extends StatelessWidget {
   final ArticleInfo articleInfo;
   ArticleCell({this.articleInfo});
+  
   @override
   Widget build(BuildContext context) {
-    print(articleInfo.title);
+    final screenSize = MediaQuery.of(context).size;
+    double imgSize = articleInfo.mainImage.indexOf("http") < 0 ? 0 : 100;
+   
+    
     return Container(
+      padding: EdgeInsets.all(5),
       child: Column(
         children: [
           Row(
@@ -21,9 +26,9 @@ class ArticleCell extends StatelessWidget {
                     fit: BoxFit.cover,
                     placeholder: (context, url) => CircularProgressIndicator()),
               ),
-
-              Text(articleInfo.userInfo.realName,style: TextStyle(fontSize: 18,color: Colors.grey[10]),),
-              Spacer(),
+              
+              Container(child: Text(articleInfo.userInfo.realName,style: TextStyle(fontSize: 16,color: Colors.grey,fontWeight: FontWeight.bold),),margin: EdgeInsets.fromLTRB(6, 0, 0, 0),),
+              
               Icon(Icons.comment),
               Text("${articleInfo.commentCount}条评论"),
               
@@ -31,32 +36,13 @@ class ArticleCell extends StatelessWidget {
               Text("${articleInfo.likeCount}人喜欢"),
             ],
           ),
-          Row(
-            children: [
-              Container(
-                  constraints: BoxConstraints.tightFor(height: 200),
-                  child: Column(
-                    children: [
-                      // Text(articleInfo.title),
-                      Expanded(
-                        child: Text(
-                          articleInfo.brief,
-                          style: TextStyle(),
-                          textAlign: TextAlign.left,
-                          maxLines: 4,
-                        ),
-                      )
-                    ],
-                  )),
-              // SizedBox(
-              //   child: CachedNetworkImage(
-              //     imageUrl: articleInfo.mainImage,
-              //   ),
-              //   width: 200,
-              //   height: 200,
-              // )
-            ],
-          ),
+          Row(children: [
+            Container(child: Column(children: [
+              Text(articleInfo.title, style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+              Text(articleInfo.brief, style: TextStyle(fontSize: 12,),maxLines: 5,)
+            ],),width: screenSize.width - imgSize - 10,),
+             SizedBox(width: imgSize,height: imgSize, child:  CachedNetworkImage(imageUrl: articleInfo.mainImage,fit: BoxFit.cover,),)
+          ],)
         ],
       ),
     );

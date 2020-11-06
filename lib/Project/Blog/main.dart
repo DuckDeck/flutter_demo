@@ -52,22 +52,22 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
                       pagination: new SwiperPagination(),
                       itemBuilder: (BuildContext context, int bannerIndex) {
                         return Stack(
+                          fit: StackFit.expand,
                           alignment: Alignment.center,
                           children: [
-                            DecoratedBox(
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                    Colors.white,
-                                    Colors.grey[700].withOpacity(0.5)
-                                  ],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter)),
-                              child: CachedNetworkImage(
-                                imageUrl: banners[bannerIndex].mainImage,
-                                fit: BoxFit.cover,
-                              ),
+                            CachedNetworkImage(
+                              imageUrl: banners[bannerIndex].mainImage,
+                              fit: BoxFit.cover,
                             ),
+                            DecoratedBox(
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        colors: [
+                                  Colors.white.withAlpha(0),
+                                  Colors.grey.withAlpha(100)
+                                ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter))),
                             Positioned(
                               child: Text(
                                 banners[bannerIndex].title,
