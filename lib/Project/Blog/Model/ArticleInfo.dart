@@ -63,11 +63,10 @@ class ArticleInfo {
   @JsonKey(name: "like_count")
   int likeCount;
 
- @JsonKey(name: "userInfo")
+  @JsonKey(name: "userInfo")
   UserInfo userInfo;
- @JsonKey(name: "tags")
+  @JsonKey(name: "tags")
   List<ArticleTagInfo> tags;
-
 
   ArticleInfo();
 
@@ -76,33 +75,47 @@ class ArticleInfo {
 
   Map<String, dynamic> toJson() => _$ArticleInfoToJson(this);
 
-  static Future<ResultInfo> indexPage() async {
-    final url = BaseUrl + "/index";
+  static Future<ResultInfo> indexPage(int index) async {
+    var url = BaseUrl + "/index";
+    if (index > 0) {
+      url = url + "/$index/10";
+    }
     final dio = new Dio();
     final res = await dio.get(url);
-    final result =  ResultInfo.toResult(res);
-    if(result.code != 0){
+    final result = ResultInfo.toResult(res);
+    if (result.code != 0) {
       return result;
     }
-    Map<String,dynamic> items = result.data;
-    List<dynamic> bannersData = items["top"];
-    Map<String,dynamic> resData = Map<String,dynamic>();
-    List<ArticleInfo> banners = List<ArticleInfo>();
-    for (var item in bannersData) {
-      final a = ArticleInfo.fromJson(item);
-      banners.add(a);
-    }
-    resData["banners"] = banners;
+    if (index == 0) {
+      Map<String, dynamic> items = result.data;
+      List<dynamic> bannersData = items["top"];
+      Map<String, dynamic> resData = Map<String, dynamic>();
+      List<ArticleInfo> banners = List<ArticleInfo>();
+      for (var item in bannersData) {
+        final a = ArticleInfo.fromJson(item);
+        banners.add(a);
+      }
+      resData["banners"] = banners;
 
-    List<dynamic> articlesData = items["articles"];
-    List<ArticleInfo> articles = List<ArticleInfo>();
-    for (var item in articlesData) {
-      final a = ArticleInfo.fromJson(item);
-      articles.add(a);
+      List<dynamic> articlesData = items["articles"];
+      List<ArticleInfo> articles = List<ArticleInfo>();
+      for (var item in articlesData) {
+        final a = ArticleInfo.fromJson(item);
+        articles.add(a);
+      }
+      resData["articles"] = articles;
+      result.data = resData;
     }
-    resData["articles"] = articles;
-    result.data = resData;
+    else{
+      List<ArticleInfo> articles = List<ArticleInfo>();
+      List<dynamic> articlesData = result.data;
+      for (var item in articlesData) {
+        final a = ArticleInfo.fromJson(item);
+        articles.add(a);
+      }
+      result.data = articles;
+    }
+
     return result;
   }
-
 }

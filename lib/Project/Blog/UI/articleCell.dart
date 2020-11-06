@@ -39,7 +39,7 @@ class ArticleCell extends StatelessWidget {
           Row(children: [
             Container(child: Column(children: [
               Text(articleInfo.title, style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-              Text(articleInfo.brief, style: TextStyle(fontSize: 12,),maxLines: 5,)
+              Text(articleInfo.brief, style: TextStyle(fontSize: 12,),maxLines: 5,overflow: TextOverflow.ellipsis,)
             ],),width: screenSize.width - imgSize - 10,),
              SizedBox(width: imgSize,height: imgSize, child:  CachedNetworkImage(imageUrl: articleInfo.mainImage,fit: BoxFit.cover,),)
           ],)

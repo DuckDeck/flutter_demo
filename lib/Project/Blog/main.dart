@@ -14,7 +14,7 @@ class ZoeBlogPage extends StatefulWidget {
 class _ZoeBlogPageState extends State<ZoeBlogPage> {
   List<ArticleInfo> banners;
   List<ArticleInfo> articles;
-
+  var index = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -92,7 +92,7 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
 
   void initData() async {
     EasyLoading.show(status: "加载中");
-    final result = await ArticleInfo.indexPage();
+    final result = await ArticleInfo.indexPage(index);
     EasyLoading.dismiss();
     if (result.code != 0) {
       Fluttertoast.showToast(msg: result.msg);
