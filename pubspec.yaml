@@ -91,6 +91,7 @@ flutter:
     - Images/home.png
     - Images/like.png
     - Images/barcode.png
+    - Images/placeholder-image.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -41,7 +41,9 @@ class ArticleCell extends StatelessWidget {
               Text(articleInfo.title, style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
               Text(articleInfo.brief, style: TextStyle(fontSize: 12,),maxLines: 5,overflow: TextOverflow.ellipsis,)
             ],),width: screenSize.width - imgSize - 10,),
-             SizedBox(width: imgSize,height: imgSize, child:  CachedNetworkImage(imageUrl: articleInfo.mainImage,fit: BoxFit.cover,),)
+             SizedBox(width: imgSize,height: imgSize, child:  CachedNetworkImage(imageUrl: articleInfo.mainImage,fit: BoxFit.cover,placeholder: (context,url){
+               return Image.asset("Images/placeholder-image.png",fit: BoxFit.fill,);
+             },),)
           ],)
         ],
       ),
