@@ -16,8 +16,8 @@ class ZoeBlogPage extends StatefulWidget {
 class _ZoeBlogPageState extends State<ZoeBlogPage> {
   List<ArticleInfo> banners;
   List<ArticleInfo> articles;
-  
-   RefreshController rc = RefreshController(initialRefresh: true);
+
+  RefreshController rc = RefreshController(initialRefresh: true);
   var index = 0;
   @override
   void initState() {
@@ -25,8 +25,6 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
     super.initState();
     banners = List<ArticleInfo>();
     articles = List<ArticleInfo>();
-    initData();
-    print(initData);
   }
 
   @override
@@ -47,11 +45,7 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
       drawer: LeftMenu(),
       body: Container(
           child: RefreshAndLoadMore(
-           controller: rc,
-           refreshFun: initData,
-          children: buildList() 
-          )
-          ),
+              controller: rc, refreshFun: initData,loadMoreFun: loadMore, children: buildList())),
     );
   }
 
@@ -70,97 +64,63 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
     });
   }
 
+  void loadMore() async{
+    index += 1;
+    final result = await ArticleInfo.indexPage(index);
+    rc.loadComplete();
+        if (result.code != 0) {
+      Fluttertoast.showToast(msg: result.msg);
+      return;
+    }
+    final data = result.data as List<ArticleInfo>;
+    if(data.length <= 0){
+      rc.loadNoData();
+      return;
+    }
+    setState(() {
+      articles.addAll(data);
+    });
 
-  List<Widget>  buildList(){
+  }
+
+  List<Widget> buildList() {
     var widgets = List<Widget>();
     widgets.add(SizedBox(
-                    child: new Swiper(
-                      itemCount: banners.length,
-                      pagination: new SwiperPagination(),
-                      itemBuilder: (BuildContext context, int bannerIndex) {
-                        return Stack(
-                          fit: StackFit.expand,
-                          alignment: Alignment.center,
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl: banners[bannerIndex].mainImage,
-                              fit: BoxFit.cover,
-                            ),
-                            DecoratedBox(
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        colors: [
-                                  Colors.white.withAlpha(0),
-                                  Colors.grey.withAlpha(100)
-                                ],
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter))),
-                            Positioned(
-                              child: Text(
-                                banners[bannerIndex].title,
-                                style: TextStyle(color: Colors.grey[100]),
-                              ),
-                              bottom: 30,
-                            )
-                          ],
-                        );
-                      },
-                    ),
-                    height: 200,
-                  ));
+      child: new Swiper(
+        itemCount: banners.length,
+        pagination: new SwiperPagination(),
+        itemBuilder: (BuildContext context, int bannerIndex) {
+          return Stack(
+            fit: StackFit.expand,
+            alignment: Alignment.center,
+            children: [
+              CachedNetworkImage(
+                imageUrl: banners[bannerIndex].mainImage,
+                fit: BoxFit.cover,
+              ),
+              DecoratedBox(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                Colors.white.withAlpha(0),
+                Colors.grey.withAlpha(100)
+              ], begin: Alignment.topCenter, end: Alignment.bottomCenter))),
+              Positioned(
+                child: Text(
+                  banners[bannerIndex].title,
+                  style: TextStyle(color: Colors.grey[100]),
+                ),
+                bottom: 30,
+              )
+            ],
+          );
+        },
+      ),
+      height: 200,
+    ));
     widgets.addAll(articles.map((e) => ArticleCell(articleInfo: e)).toList());
     return widgets;
   }
-  
 }
-
-
-// ListView.builder(
-//               itemCount: articles.length + 1,
-//               itemBuilder: (BuildContext context, int index) {
-//                 if (index == 0) {
-//                   return SizedBox(
-//                     child: new Swiper(
-//                       itemCount: banners.length,
-//                       pagination: new SwiperPagination(),
-//                       itemBuilder: (BuildContext context, int bannerIndex) {
-//                         return Stack(
-//                           fit: StackFit.expand,
-//                           alignment: Alignment.center,
-//                           children: [
-//                             CachedNetworkImage(
-//                               imageUrl: banners[bannerIndex].mainImage,
-//                               fit: BoxFit.cover,
-//                             ),
-//                             DecoratedBox(
-//                                 decoration: BoxDecoration(
-//                                     gradient: LinearGradient(
-//                                         colors: [
-//                                   Colors.white.withAlpha(0),
-//                                   Colors.grey.withAlpha(100)
-//                                 ],
-//                                         begin: Alignment.topCenter,
-//                                         end: Alignment.bottomCenter))),
-//                             Positioned(
-//                               child: Text(
-//                                 banners[bannerIndex].title,
-//                                 style: TextStyle(color: Colors.grey[100]),
-//                               ),
-//                               bottom: 30,
-//                             )
-//                           ],
-//                         );
-//                       },
-//                     ),
-//                     height: 200,
-//                   );
-//                 } else {
-//                   return ArticleCell(
-//                     articleInfo: articles[index - 1],
-//                   );
-//                 }
-//               })
-
 
 class LeftMenu extends StatelessWidget {
   const LeftMenu({

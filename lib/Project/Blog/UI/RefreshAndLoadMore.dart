@@ -41,10 +41,10 @@ class PullToRefreshWidgetFoot extends StatelessWidget {
       builder: (BuildContext context,LoadStatus mode){
         Widget body ;
         if(mode==LoadStatus.idle){
-          body =  Image.asset("assets/images/loading.gif");
+          body =  Image.asset("Images/loading.gif");
         }
         else if(mode==LoadStatus.loading){
-          body =  Image.asset("assets/images/loading.gif");
+          body =  Image.asset("Images/loading.gif");
         }
         else if(mode == LoadStatus.failed){
           body = Text("加载失败！点击重试！");
