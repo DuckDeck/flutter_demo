@@ -38,9 +38,6 @@ class HomePage extends StatelessWidget {
     print(index);
     switch (index) {
       case 0:
-      var now = DateTime.now();
-      print(now.millisecondsSinceEpoch);
-      print(1605608783732.toTime());
         Navigator.of(context)
             .push(new MaterialPageRoute(builder: (BuildContext context) {
           return FoundationMenuPage();

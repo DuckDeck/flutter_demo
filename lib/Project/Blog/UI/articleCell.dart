@@ -13,6 +13,7 @@ class ArticleCell extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(5),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -30,20 +31,26 @@ class ArticleCell extends StatelessWidget {
                   articleInfo.userInfo.realName,
                   style: TextStyle(
                       fontSize: 16,
-                      color: Colors.grey,
+                      color: Colors.black54,
                       fontWeight: FontWeight.bold),
                 ),
                 margin: EdgeInsets.fromLTRB(6, 0, 0, 0),
               ),
+              SizedBox(
+                width: 5,
+              ),
               Icon(Icons.comment),
               Text("${articleInfo.commentCount}条评论"),
+              SizedBox(
+                width: 5,
+              ),
               Icon(Icons.favorite),
               Text("${articleInfo.likeCount}人喜欢"),
-
               Spacer(),
               Text("${articleInfo.CreateTimeStr}"),
             ],
           ),
+          SizedBox(height:5 ),
           Row(
             children: [
               Container(
@@ -56,7 +63,9 @@ class ArticleCell extends StatelessWidget {
                           TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(
+                      height: 5,
+                    ),
                     Text(
                       articleInfo.brief,
                       style: TextStyle(
@@ -84,7 +93,31 @@ class ArticleCell extends StatelessWidget {
                 ),
               )
             ],
-          )
+          ),
+          SizedBox(
+            height: 6,
+          ),
+          Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              alignment: WrapAlignment.start,
+              children: articleInfo.tags
+                  .map((e) => Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 3, horizontal: 5),
+
+                    
+                      decoration:
+                          BoxDecoration(border: Border.all(color: Colors.blue,),borderRadius: BorderRadius.all(Radius.circular(4))),
+                      child:
+                         Text(
+                        e.tagName,
+                        style: TextStyle(
+                          color: Colors.blue,
+                          height: 1.1
+                        ),
+                      )))
+                  .toList())
         ],
       ),
     );

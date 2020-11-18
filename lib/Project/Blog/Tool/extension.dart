@@ -1,10 +1,10 @@
 import 'package:intl/intl.dart';
 extension IntExt on int{
-  String toTime({String formatStr = "yyyy-MM-DD HH:mm"}){
+  String toTime({String formatStr = "yyyy-MM-dd HH:mm"}){
     var now = new DateTime.now();
     
     var format = new DateFormat(formatStr);
-    var date = new DateTime.fromMicrosecondsSinceEpoch(this);
+    var date = new DateTime.fromMillisecondsSinceEpoch(this);
     print(date);
     var diff = date.difference(now);
     var time = '';
