@@ -6,7 +6,7 @@ import 'package:flutter_demo/Project/Five/fiveStrokeInfo.dart';
 import 'package:flutter_demo/ResultInfo.dart';
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
-
+import '../Tool/extension.dart';
 part 'ArticleInfo.g.dart';
 
 @JsonSerializable()
@@ -19,6 +19,9 @@ class ArticleInfo {
   @JsonKey(name: "article_create_time")
   int createTime;
   String createTimeStr;
+  String get CreateTimeStr{
+    return createTime.toTime();
+  }
   @JsonKey(name: "article_release_time")
   int releaseTime;
   String releaseTimeStr;

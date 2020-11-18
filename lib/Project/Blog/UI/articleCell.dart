@@ -40,8 +40,8 @@ class ArticleCell extends StatelessWidget {
               Icon(Icons.favorite),
               Text("${articleInfo.likeCount}人喜欢"),
 
-              SizedBox(width: 100,),
-              Text("${articleInfo.createTimeStr}"),
+              Spacer(),
+              Text("${articleInfo.CreateTimeStr}"),
             ],
           ),
           Row(
