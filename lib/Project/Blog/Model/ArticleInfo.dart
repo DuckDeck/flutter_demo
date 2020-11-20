@@ -121,4 +121,17 @@ class ArticleInfo {
 
     return result;
   }
+
+  static Future<ResultInfo> articleInfo(int articleId) async{
+    var url = BaseUrl + "/article/" + articleId.toString();
+        final dio = new Dio();
+    final res = await dio.get(url);
+    final result = ResultInfo.toResult(res);
+    if (result.code != 0) {
+      return result;
+    }
+    final article = ArticleInfo.fromJson(result.data);
+    result.data = article;
+    return result;
+  }
 }
