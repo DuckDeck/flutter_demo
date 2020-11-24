@@ -11,10 +11,9 @@ const items = ["基础", "触摸&手势", "UI和布局", "数据和文件", "影
 
 class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Welcome to flutter',
-        theme: new ThemeData(primaryColor: Colors.purple),
-        home: Scaffold(
+    return 
+       
+        Scaffold(
           appBar: AppBar(
             title: Text("Flutter Demo"),
           ),
@@ -31,17 +30,14 @@ class HomePage extends StatelessWidget {
             },
             itemCount: items.length,
           ),
-        ));
+        );
   }
 
   void gotoPage(int index, BuildContext context) {
     print(index);
     switch (index) {
       case 0:
-        Navigator.of(context)
-            .push(new MaterialPageRoute(builder: (BuildContext context) {
-          return FoundationMenuPage();
-        }));
+        Navigator.of(context).pushNamed("/foundation");
         break;
       case 1:
         Navigator.of(context)

@@ -36,10 +36,7 @@ void gotoPage(int index,BuildContext context) async{
       switch (index) {
         case 0:
 
-         Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
-                return Island();
-              }));
-             
+         Navigator.of(context).pushNamed("/project/isolated");
           break;
           case 1:
 
@@ -64,9 +61,7 @@ void gotoPage(int index,BuildContext context) async{
                 break;
           case 4:
 
-                  Navigator.of(context).push(new CupertinoPageRoute(builder: (BuildContext context){
-                  return ZoeBlogPage();
-                }));
+                  Navigator.of(context).pushNamed("/project/blog");
              
           break;
         default:

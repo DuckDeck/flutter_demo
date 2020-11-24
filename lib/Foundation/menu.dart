@@ -35,10 +35,7 @@ class _FoundationMenuPageState extends State<FoundationMenuPage> {
     print(index);
     switch (index) {
       case 0:
-        Navigator.of(context)
-            .push(new CupertinoPageRoute(builder: (BuildContext context) {
-          return Reflect();
-        }));
+        Navigator.of(context).pushNamed("/foundation/reflect");
         break;
       case 1:
         // Navigator.of(context)
