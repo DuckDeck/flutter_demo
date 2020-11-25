@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         '/project/mito': (BuildContext context) => new MainImageList(),
         '/project/five': (BuildContext context) => new FiveStrokePage(),
         '/project/blog': (BuildContext context) => new ZoeBlogPage(),
-        '/project/blog/article': (BuildContext context) => new article(),
+        '/project/blog/article': (BuildContext context) => new ZoeBlogPage(),
       },
     );
   }

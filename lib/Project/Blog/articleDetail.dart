@@ -5,6 +5,7 @@ class ArtilDetailPage extends StatefulWidget {
 }
 
 class _ArtilDetailPageState extends State<ArtilDetailPage> {
+  
   @override
   Widget build(BuildContext context) {
     return Container(

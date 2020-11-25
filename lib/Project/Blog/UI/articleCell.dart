@@ -103,4 +103,14 @@ class ArticleCell extends StatelessWidget {
       ),
     );
   }
+
+  void gotoArticle(BuildContext context){
+    Navigator.of(context).pushNamed("/project/blog/article");
+  }
+
+  void gotoUser(){
+
+  }
+
+
 }
