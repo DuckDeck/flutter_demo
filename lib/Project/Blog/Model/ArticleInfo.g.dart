@@ -15,6 +15,7 @@ ArticleInfo _$ArticleInfoFromJson(Map<String, dynamic> json) {
     ..releaseTime = json['article_release_time'] as int
     ..releaseTimeStr = json['releaseTimeStr'] as String
     ..ipAddress = json['article_ip'] as String
+    ..content = json['article_content'] as String
     ..clickCount = json['article_click'] as int
     ..sortId = json['article_sort_id'] as int
     ..userId = json['user_id'] as int
@@ -28,6 +29,9 @@ ArticleInfo _$ArticleInfoFromJson(Map<String, dynamic> json) {
     ..sortName = json['article_sort_name'] as String
     ..commentCount = json['comment_count'] as int
     ..likeCount = json['like_count'] as int
+    ..collectCount = json['collect_count'] as int
+    ..isUserCollect = json['is_user_collect'] as bool
+    ..isUserLike = json['is_user_like'] as bool
     ..userInfo = json['userInfo'] == null
         ? null
         : UserInfo.fromJson(json['userInfo'] as Map<String, dynamic>)
@@ -47,6 +51,7 @@ Map<String, dynamic> _$ArticleInfoToJson(ArticleInfo instance) =>
       'article_release_time': instance.releaseTime,
       'releaseTimeStr': instance.releaseTimeStr,
       'article_ip': instance.ipAddress,
+      'article_content': instance.content,
       'article_click': instance.clickCount,
       'article_sort_id': instance.sortId,
       'user_id': instance.userId,
@@ -60,6 +65,9 @@ Map<String, dynamic> _$ArticleInfoToJson(ArticleInfo instance) =>
       'article_sort_name': instance.sortName,
       'comment_count': instance.commentCount,
       'like_count': instance.likeCount,
+      'collect_count': instance.collectCount,
+      'is_user_collect': instance.isUserCollect,
+      'is_user_like': instance.isUserLike,
       'userInfo': instance.userInfo,
       'tags': instance.tags,
     };

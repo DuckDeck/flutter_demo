@@ -14,20 +14,20 @@ class ArticleUserInfoView extends StatelessWidget {
           ClipOval(
             child: CachedNetworkImage(
                 imageUrl: articleInfo.userInfo.headImage,
-                width: 30,
-                height: 30,
+                width: 36,
+                height: 36,
                 fit: BoxFit.cover,
                 placeholder: (context, url) =>
                     Image.asset("Images/placeholder_head.jpg")),
           ),
           SizedBox(width: 10),
           Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Container(
+                    padding: EdgeInsets.symmetric(vertical: 1,horizontal: 5),
                     child: Text("作者"),
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.purple, width: 1.0),borderRadius: BorderRadius.circular(10)),
@@ -36,19 +36,24 @@ class ArticleUserInfoView extends StatelessWidget {
                   Text(articleInfo.userInfo.realName),
                   SizedBox(width: 10,),
                  Container(
-                   width: 40,
-                   height: 20,
-                   
-                   child: RaisedButton.icon(
-                      onPressed: null, shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)) , icon: Icon(Icons.add), label: Text("关注")),)
+                  padding: EdgeInsets.symmetric(vertical: 1,horizontal: 5),
+                   decoration: BoxDecoration(border: Border.all(color: Colors.green,width: 1),borderRadius: BorderRadius.circular(10)),
+                   child: GestureDetector(
+                     child: Row(
+                       children: [
+                         Icon(Icons.add,size: 14,),
+                         Text("关注",style: TextStyle(fontSize: 14),)
+                       ],
+                     )
+                   ))
                 ],
               ),
               Row(children: [
                 Text("发布于${articleInfo.CreateTimeStr}"),
                 SizedBox(width: 5,),
-                Text("文章数${articleInfo.commentCount}"),
+                Text("文章数${articleInfo.userInfo.articleCount}"),
                 SizedBox(width: 5,),
-                Text("浏览量${articleInfo.commentCount}"),
+                Text("浏览量${articleInfo.userInfo.commentCount}"),
 
               ],)
             ],

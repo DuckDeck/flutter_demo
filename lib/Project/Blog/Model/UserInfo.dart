@@ -21,12 +21,12 @@ class UserInfo {
   String headImage;
 
 
-  @JsonKey(name: "user_image_url")
+  @JsonKey(name: "user_address")
   String address;
 
 
   @JsonKey(name: "user_birthday")
-  String headImage;
+  int birthday;
 
 
   @JsonKey(name: "user_description")

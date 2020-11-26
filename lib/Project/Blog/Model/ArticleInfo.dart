@@ -25,8 +25,13 @@ class ArticleInfo {
   @JsonKey(name: "article_release_time")
   int releaseTime;
   String releaseTimeStr;
+
   @JsonKey(name: "article_ip")
   String ipAddress;
+
+  @JsonKey(name: "article_content")
+  String content;
+
   @JsonKey(name: "article_click")
   int clickCount;
 
@@ -65,6 +70,15 @@ class ArticleInfo {
 
   @JsonKey(name: "like_count")
   int likeCount;
+
+  @JsonKey(name: "collect_count")
+  int collectCount;
+
+  @JsonKey(name: "is_user_collect")
+  bool isUserCollect;
+
+  @JsonKey(name: "is_user_like")
+  bool isUserLike;
 
   @JsonKey(name: "userInfo")
   UserInfo userInfo;
@@ -127,12 +141,14 @@ class ArticleInfo {
     print(url);
     final dio = new Dio();
     final res = await dio.get(url);
-    print("~~~~~~~~111~~~~~~~~");
+    
     final result = ResultInfo.toResult(res);
     if (result.code != 0) {
       return result;
     }
     final article = ArticleInfo.fromJson(result.data);
+    print("~~~~~~~~111~~~~~~~~");
+    print(article.title);
     result.data = article;
     return result;
   }
