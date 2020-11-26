@@ -3,29 +3,26 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
+import 'package:flutter_demo/Project/Blog/Model/CommentInfo.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleTagsView.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleUserInfo.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 class ArtcilDetailPage extends StatefulWidget {
   @override
   _ArtcilDetailPageState createState() => _ArtcilDetailPageState();
 }
 
 class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
-  
-
   ArticleInfo info;
-
+  List<CommentInfo> comments = List<CommentInfo>();
   @override
   Widget build(BuildContext context) {
     info = ModalRoute.of(context).settings.arguments;
   
-    print(info.id);
     return Scaffold(
       appBar: AppBar(
-        title: Text("文章详情"),
+        title: Text(info.title),
       ),
       body: FutureBuilder<ArticleInfo>(
         future: _getData(),
@@ -85,6 +82,7 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
 
                   Container(
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         FlatButton(onPressed: null, child: Text("登录")),
                         Text("且发表评论")
@@ -116,4 +114,8 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
     print(article.title);
     return res.data as ArticleInfo;
   }
+
+  // Future<List<CommentInfo>> _getComment() async{
+
+  // }
 }

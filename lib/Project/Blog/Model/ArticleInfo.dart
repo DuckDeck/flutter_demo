@@ -147,8 +147,6 @@ class ArticleInfo {
       return result;
     }
     final article = ArticleInfo.fromJson(result.data);
-    print("~~~~~~~~111~~~~~~~~");
-    print(article.title);
     result.data = article;
     return result;
   }
