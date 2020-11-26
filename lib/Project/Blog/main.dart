@@ -68,7 +68,7 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
     index += 1;
     final result = await ArticleInfo.indexPage(index);
     rc.loadComplete();
-        if (result.code != 0) {
+    if (result.code != 0) {
       Fluttertoast.showToast(msg: result.msg);
       return;
     }

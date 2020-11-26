@@ -3,6 +3,7 @@ import 'package:flutter_demo/Foundation/Reflect.dart';
 import 'package:flutter_demo/Foundation/menu.dart';
 import 'package:flutter_demo/Project/4KImage/main_image_list.dart';
 import 'package:flutter_demo/Project/Blog/main.dart';
+import 'package:flutter_demo/Project/Blog/articleDetail.dart';
 import 'package:flutter_demo/Project/Five/main.dart';
 import 'package:flutter_demo/Project/Isolated_island/app.dart';
 import 'package:flutter_demo/Project/menu.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         '/project/mito': (BuildContext context) => new MainImageList(),
         '/project/five': (BuildContext context) => new FiveStrokePage(),
         '/project/blog': (BuildContext context) => new ZoeBlogPage(),
-        '/project/blog/article': (BuildContext context) => new ZoeBlogPage(),
+        '/project/blog/article': (BuildContext context) => new ArtcilDetailPage(),
       },
     );
   }

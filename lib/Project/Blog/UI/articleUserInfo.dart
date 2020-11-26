@@ -20,18 +20,27 @@ class ArticleUserInfoView extends StatelessWidget {
                 placeholder: (context, url) =>
                     Image.asset("Images/placeholder_head.jpg")),
           ),
+          SizedBox(width: 10),
           Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Container(
                     child: Text("作者"),
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.purple, width: 1.0)),
+                        border: Border.all(color: Colors.purple, width: 1.0),borderRadius: BorderRadius.circular(10)),
                   ),
+                  SizedBox(width: 10,),
                   Text(articleInfo.userInfo.realName),
-                  RaisedButton.icon(
-                      onPressed: null, icon: Icon(Icons.add), label: Text("关注"))
+                  SizedBox(width: 10,),
+                 Container(
+                   width: 40,
+                   height: 20,
+                   
+                   child: RaisedButton.icon(
+                      onPressed: null, shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)) , icon: Icon(Icons.add), label: Text("关注")),)
                 ],
               ),
               Row(children: [
@@ -39,7 +48,7 @@ class ArticleUserInfoView extends StatelessWidget {
                 SizedBox(width: 5,),
                 Text("文章数${articleInfo.commentCount}"),
                 SizedBox(width: 5,),
-                Text("流星量${articleInfo.commentCount}"),
+                Text("浏览量${articleInfo.commentCount}"),
 
               ],)
             ],

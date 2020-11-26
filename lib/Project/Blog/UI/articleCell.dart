@@ -52,7 +52,8 @@ class ArticleCell extends StatelessWidget {
             ],
           ),
           SizedBox(height:5 ),
-          Row(
+          GestureDetector(
+            child: Row(
             children: [
               Container(
                 child: Column(
@@ -95,6 +96,10 @@ class ArticleCell extends StatelessWidget {
               )
             ],
           ),
+          onTap: ()=>{
+            gotoArticle(context)
+          },
+          ),
           SizedBox(
             height: 6,
           ),
@@ -105,11 +110,11 @@ class ArticleCell extends StatelessWidget {
   }
 
   void gotoArticle(BuildContext context){
-    Navigator.of(context).pushNamed("/project/blog/article");
+    Navigator.of(context).pushNamed("/project/blog/article",arguments: articleInfo);
   }
 
   void gotoUser(){
-
+   
   }
 
 

@@ -7,10 +7,54 @@ part 'UserInfo.g.dart';
 class UserInfo {
   @JsonKey(name: "user_id")
   int id;
+
   @JsonKey(name: "user_real_name")
   String realName;
+
+  @JsonKey(name: "article_count")
+  int articleCount;
+  
+  @JsonKey(name: "comment_count")
+  int commentCount;
+
   @JsonKey(name: "user_image_url")
   String headImage;
+
+
+  @JsonKey(name: "user_image_url")
+  String address;
+
+
+  @JsonKey(name: "user_birthday")
+  String headImage;
+
+
+  @JsonKey(name: "user_description")
+  String description;
+
+
+  @JsonKey(name: "user_email")
+  String email;
+
+
+  @JsonKey(name: "user_gender")
+  int gender;
+
+
+  @JsonKey(name: "user_name")
+  String userName;
+
+
+  @JsonKey(name: "user_phone")
+  String phone;
+
+
+  @JsonKey(name: "user_qq")
+  String qq;
+
+
+  @JsonKey(name: "user_says")
+  String says;
 
 
     UserInfo();
