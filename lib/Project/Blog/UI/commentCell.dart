@@ -11,30 +11,58 @@ class CommentCell extends StatelessWidget {
     // TODO: implement build
     return Card(
       child: Container(
+          padding: EdgeInsets.all(5),
           child: Column(
-        children: [
-          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipOval(
-                child: CachedNetworkImage(
-                    imageUrl: commentInfo.userInfo.headImage,
-                    width: 36,
-                    height: 36,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) =>
-                        Image.asset("Images/placeholder_head.jpg")),
-              ),
-              Column(
+              Row(
                 children: [
-                  Text(commentInfo.userInfo.userName),
-                  Text("发布于${commentInfo.CommentTimeStr}"),
+                  ClipOval(
+                    child: CachedNetworkImage(
+                        imageUrl: commentInfo.userInfo.headImage,
+                        width: 36,
+                        height: 36,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            Image.asset("Images/placeholder_head.jpg")),
+                  ),
+                  SizedBox(width: 5),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(commentInfo.userInfo.userName),
+                        Text("发布于${commentInfo.CommentTimeStr}"),
+                      ],
+                    ),
+                  ),
+                  Icon(Icons.comment)
                 ],
-              )
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                commentInfo.content,
+                style: TextStyle(fontSize: 16),
+              ),
+              commentInfo.subComments.length > 0
+                  ? Container(
+                    margin: EdgeInsets.fromLTRB(20, 5, 5, 5),
+                    color: Colors.greenAccent,
+                    
+                    padding: EdgeInsets.all(5),
+                      child: Column(
+
+                      children: commentInfo.subComments
+                          .map((e) => Text(e.content))
+                          .toList(),
+                    ))
+                  : SizedBox(
+                      height: 0,
+                    ),
             ],
-          ),
-          Text(commentInfo.content)
-        ],
-      )),
+          )),
     );
   }
 }

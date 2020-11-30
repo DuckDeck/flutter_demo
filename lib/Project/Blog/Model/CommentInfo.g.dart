@@ -19,7 +19,10 @@ CommentInfo _$CommentInfoFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..userInfo = json['userInfo'] == null
         ? null
-        : UserInfo.fromJson(json['userInfo'] as Map<String, dynamic>);
+        : UserInfo.fromJson(json['userInfo'] as Map<String, dynamic>)
+    ..targetUserInfo = json['targetUserInfo'] == null
+        ? null
+        : UserInfo.fromJson(json['targetUserInfo'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$CommentInfoToJson(CommentInfo instance) =>
@@ -31,4 +34,5 @@ Map<String, dynamic> _$CommentInfoToJson(CommentInfo instance) =>
       'comment_content': instance.content,
       'sub_comments': instance.subComments,
       'userInfo': instance.userInfo,
+      'targetUserInfo': instance.targetUserInfo,
     };

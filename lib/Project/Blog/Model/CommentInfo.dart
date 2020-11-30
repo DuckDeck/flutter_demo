@@ -35,6 +35,9 @@ class CommentInfo {
    @JsonKey(name: "userInfo")
   UserInfo userInfo;
 
+   @JsonKey(name: "targetUserInfo")
+  UserInfo targetUserInfo;
+
   CommentInfo();
     factory CommentInfo.fromJson(Map<String, dynamic> json) =>
       _$CommentInfoFromJson(json);
@@ -53,12 +56,14 @@ class CommentInfo {
     }
     print(result.data);
     List<CommentInfo> arrComments = List<CommentInfo>();
-    
-
-
+    final arrs = result.data as List<dynamic>;
+    for (var item in arrs) {
+      final com = CommentInfo.fromJson(item);
+      print("~~~~~~~~~~~~~~~~~~~~~~");
+      print(com.subComments.length);
+      arrComments.add(com);
+    }
+    result.data = arrComments;
     return result;
-    // final article = CommentInfo.fromJson(result.data);
-    // result.data = article;
-    // return result;
    }
 }
