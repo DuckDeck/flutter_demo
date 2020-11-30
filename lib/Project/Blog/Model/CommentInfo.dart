@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:flutter_demo/Project/Blog/config.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter_demo/ResultInfo.dart';
+import '../Tool/extension.dart';
 part 'CommentInfo.g.dart';
 @JsonSerializable()
 @immutable
@@ -21,6 +22,9 @@ class CommentInfo {
    @JsonKey(name: "comment_time")
   int commentTime;
 
+  String get CommentTimeStr{
+    return commentTime.toTime();
+  }
    @JsonKey(name: "comment_content")
   String content;
 
@@ -49,6 +53,9 @@ class CommentInfo {
     }
     print(result.data);
     List<CommentInfo> arrComments = List<CommentInfo>();
+    
+
+
     return result;
     // final article = CommentInfo.fromJson(result.data);
     // result.data = article;

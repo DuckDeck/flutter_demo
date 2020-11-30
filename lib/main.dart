@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+   
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         '/project/mito': (BuildContext context) => new MainImageList(),
         '/project/five': (BuildContext context) => new FiveStrokePage(),
         '/project/blog': (BuildContext context) => new ZoeBlogPage(),
-        '/project/blog/article': (BuildContext context) => new ArtcilDetailPage(),
+        '/project/blog/article': (BuildContext context) => new ArticleDetailPage(info:ModalRoute.of(context).settings.arguments),
       },
     );
   }

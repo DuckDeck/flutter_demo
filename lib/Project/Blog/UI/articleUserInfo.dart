@@ -51,9 +51,11 @@ class ArticleUserInfoView extends StatelessWidget {
               Row(children: [
                 Text("发布于${articleInfo.CreateTimeStr}"),
                 SizedBox(width: 5,),
-                Text("文章数${articleInfo.userInfo.articleCount}"),
+                articleInfo.userInfo.articleCount == null ? Text("") : Text("文章数${articleInfo.userInfo.articleCount}"),
+                
                 SizedBox(width: 5,),
-                Text("浏览量${articleInfo.userInfo.commentCount}"),
+                articleInfo.userInfo.commentCount == null ? Text("") : Text("浏览量${articleInfo.userInfo.commentCount}")
+  
 
               ],)
             ],

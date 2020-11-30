@@ -9,21 +9,21 @@ import 'package:flutter_demo/Project/Blog/UI/articleUserInfo.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:skeleton_loader/skeleton_loader.dart';
-class ArtcilDetailPage extends StatefulWidget {
-    ArticleInfo info;
-    ArtcilDetailPage({this.info});
+class ArticleDetailPage extends StatefulWidget {
+  ArticleInfo info;
+  ArticleDetailPage({this.info});
   @override
-  _ArtcilDetailPageState createState() => _ArtcilDetailPageState();
+  _ArticleDetailPagePageState createState() => _ArticleDetailPagePageState();
 }
 
-class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
-
+class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
+  ArticleInfo info;
   List<CommentInfo> comments = List<CommentInfo>();
   var _isLoading = false;
   var _isInit = true;
   @override
   void initState() { 
-    
+    info = widget.info;
      print("~~~~~~~~~~~~~~~~~~~~~~");
     super.initState();
     _getData();
@@ -33,19 +33,18 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-     print("~~~~~~~~~~~~~~~~~~~~~~");
-     print(widget.info);
+     
   
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.info.title),
+        title: Text(info.title),
       ),
       body: ListView(children: [
-         Container(margin: EdgeInsets.all(10),child: Text(widget.info.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
-                  ArticleUserInfoView(articleInfo: widget.info,),
+         Container(margin: EdgeInsets.all(10),child: Text(info.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+                  ArticleUserInfoView(articleInfo: info,),
                   SizedBox(height: 10,),
-                  ArticleTagsView(tags: widget.info.tags,),
+                  ArticleTagsView(tags: info.tags,),
                   SizedBox(height: 10,),
 
                   _isInit  ? SkeletonLoader(builder: Container(
@@ -61,7 +60,7 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
                   period: Duration(seconds: 2),
                   
                    direction: SkeletonDirection.ltr,
-                  ) : Html(data: widget.info.content),
+                  ) : Html(data: info.content),
                   SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -76,7 +75,7 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
                                 SizedBox(width: 8,),
                                 Divider(height: 10,indent: 1,),
                                 SizedBox(width: 8,),
-                                Text(widget.info.likeCount.toString())
+                                Text(info.likeCount.toString())
                               ],
                             ),
                         ),
@@ -91,7 +90,7 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
                                 SizedBox(width: 8,),
                                 Divider(height: 10,indent: 1,),
                                 SizedBox(width: 8,),
-                                Text(widget.info.collectCount.toString())
+                                Text(info.collectCount.toString())
                               ],
                             ),
                         ),
@@ -101,7 +100,7 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
 
                   Container(
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FlatButton(onPressed: null, child: Text("登录")),
                         Text("且发表评论")
@@ -109,7 +108,7 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
                     ),
                   ),
                 
-                  Text("${widget.info.commentCount}条评论")
+                  Text("${info.commentCount}条评论")
       ],)
     );
   }
@@ -117,25 +116,21 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
 
 
   void _getData() async {
-    
-    final res = await  ArticleInfo.articleInfo(widget.info.id);
+    final res = await  ArticleInfo.articleInfo(info.id);
      if (res.code != 0) {
       Fluttertoast.showToast(msg: res.msg);
       return null;
     }
-    
     final article = res.data as ArticleInfo;
-    print("~~~~~~~~~~~~~~~~~~~~~~");
-    print(article.content);
     setState(() {
       _isInit = false;
-      widget.info =  article;
+      info =  article;
     });
      
   }
 
-  Future<List<CommentInfo>> _getComment() async{
-    final res = await CommentInfo.getComments(widget.info.id, 0);
-
+  void _getComment() async{
+    final res = await CommentInfo.getComments(info.id, 0);
+    
   }
 }
