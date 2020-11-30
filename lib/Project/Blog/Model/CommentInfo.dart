@@ -38,7 +38,7 @@ class CommentInfo {
   Map<String, dynamic> toJson() => _$CommentInfoToJson(this);
 
    static Future<ResultInfo> getComments(int id, int index) async {
-     var url = BaseUrl + "/articleComment/${id}/${index}/10";
+     var url = BaseUrl + "/articleComment/$id/$index/10";
     print(url);
     final dio = new Dio();
     final res = await dio.get(url);
@@ -47,7 +47,7 @@ class CommentInfo {
     if (result.code != 0) {
       return result;
     }
-  
+    print(result.data);
     List<CommentInfo> arrComments = List<CommentInfo>();
     return result;
     // final article = CommentInfo.fromJson(result.data);

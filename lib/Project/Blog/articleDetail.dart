@@ -8,41 +8,60 @@ import 'package:flutter_demo/Project/Blog/UI/articleTagsView.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleUserInfo.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:skeleton_loader/skeleton_loader.dart';
 class ArtcilDetailPage extends StatefulWidget {
+    ArticleInfo info;
+    ArtcilDetailPage({this.info});
   @override
   _ArtcilDetailPageState createState() => _ArtcilDetailPageState();
 }
 
 class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
-  ArticleInfo info;
+
   List<CommentInfo> comments = List<CommentInfo>();
+  var _isLoading = false;
+  var _isInit = true;
+  @override
+  void initState() { 
+    
+     print("~~~~~~~~~~~~~~~~~~~~~~");
+    super.initState();
+    _getData();
+    _getComment();
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    info = ModalRoute.of(context).settings.arguments;
+     print("~~~~~~~~~~~~~~~~~~~~~~");
+     print(widget.info);
   
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(info.title),
+        title: Text(widget.info.title),
       ),
-      body: FutureBuilder<ArticleInfo>(
-        future: _getData(),
-        // ignore: missing_return
-        builder:(BuildContext context, AsyncSnapshot<ArticleInfo> snapshot){
-            switch(snapshot.connectionState){
-              case ConnectionState.waiting:
-              case ConnectionState.active:
-              return Center(child: CircularProgressIndicator(),);
-              case ConnectionState.none:
-              return Text("加载失败");
-              case ConnectionState.done:
-              return ListView(
-                children: [
-                  Container(margin: EdgeInsets.all(10),child: Text(snapshot.data.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
-                  ArticleUserInfoView(articleInfo: snapshot.data,),
+      body: ListView(children: [
+         Container(margin: EdgeInsets.all(10),child: Text(widget.info.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+                  ArticleUserInfoView(articleInfo: widget.info,),
                   SizedBox(height: 10,),
-                  ArticleTagsView(tags: snapshot.data.tags,),
+                  ArticleTagsView(tags: widget.info.tags,),
                   SizedBox(height: 10,),
-                  Html(data: snapshot.data.content),
+
+                  _isInit  ? SkeletonLoader(builder: Container(
+                    padding:EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      child: Container(
+                          width: double.infinity,
+                          height: 12,
+                          color: Colors.white,
+                      )
+
+                  ),
+                  items: 20,
+                  period: Duration(seconds: 2),
+                  
+                   direction: SkeletonDirection.ltr,
+                  ) : Html(data: widget.info.content),
                   SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -57,7 +76,7 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
                                 SizedBox(width: 8,),
                                 Divider(height: 10,indent: 1,),
                                 SizedBox(width: 8,),
-                                Text(snapshot.data.likeCount.toString())
+                                Text(widget.info.likeCount.toString())
                               ],
                             ),
                         ),
@@ -72,7 +91,7 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
                                 SizedBox(width: 8,),
                                 Divider(height: 10,indent: 1,),
                                 SizedBox(width: 8,),
-                                Text(snapshot.data.collectCount.toString())
+                                Text(widget.info.collectCount.toString())
                               ],
                             ),
                         ),
@@ -90,32 +109,33 @@ class _ArtcilDetailPageState extends State<ArtcilDetailPage> {
                     ),
                   ),
                 
-                  Text("${snapshot.data.commentCount}条评论")
-                
-                ],
-              );
-            }
-        }),
+                  Text("${widget.info.commentCount}条评论")
+      ],)
     );
   }
 
 
 
-  Future<ArticleInfo> _getData() async {
+  void _getData() async {
     
-    final res = await  ArticleInfo.articleInfo(info.id);
+    final res = await  ArticleInfo.articleInfo(widget.info.id);
      if (res.code != 0) {
       Fluttertoast.showToast(msg: res.msg);
       return null;
     }
     
     final article = res.data as ArticleInfo;
-    
-    print(article.title);
-    return res.data as ArticleInfo;
+    print("~~~~~~~~~~~~~~~~~~~~~~");
+    print(article.content);
+    setState(() {
+      _isInit = false;
+      widget.info =  article;
+    });
+     
   }
 
-  // Future<List<CommentInfo>> _getComment() async{
+  Future<List<CommentInfo>> _getComment() async{
+    final res = await CommentInfo.getComments(widget.info.id, 0);
 
-  // }
+  }
 }

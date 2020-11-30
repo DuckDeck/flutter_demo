@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
 import 'package:flutter_demo/Project/Blog/UI/RefreshAndLoadMore.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleCell.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
