@@ -138,7 +138,6 @@ class ArticleInfo {
 
   static Future<ResultInfo> articleInfo(int articleId) async{
     var url = BaseUrl + "/article/" + articleId.toString() + "/0/0";
-    print(url);
     final dio = new Dio();
     final res = await dio.get(url);
     
@@ -150,4 +149,19 @@ class ArticleInfo {
     result.data = article;
     return result;
   }
+
+  static Future<ResultInfo> searchArticle(String key,int index) async{
+    var url = "$BaseUrl/search/$key/article/$index/10";
+    final dio = new Dio();
+    final res = await dio.get(url);
+    
+    final result = ResultInfo.toResult(res);
+    if (result.code != 0) {
+      return result;
+    }
+    final article = ArticleInfo.fromJson(result.data);
+    result.data = article;
+    return result;
+  }
+
 }

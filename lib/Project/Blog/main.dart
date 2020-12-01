@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/Project/4KImage/main_image_list.dart';
 import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
 import 'package:flutter_demo/Project/Blog/UI/RefreshAndLoadMore.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleCell.dart';
@@ -32,7 +33,7 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("ZOE Blog"),
-        actions: [IconButton(icon: Icon(Icons.search), onPressed: null)],
+        actions: [IconButton(icon: Icon(Icons.search,color: Colors.white,), onPressed: gotoSearch)],
         leading: Builder(builder: (context) {
           return IconButton(
               icon: Icon(Icons.person),
@@ -86,6 +87,7 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
     var widgets = List<Widget>();
     widgets.add(SizedBox(
       child: new Swiper(
+        autoplay: true,
         itemCount: banners.length,
         pagination: new SwiperPagination(),
         itemBuilder: (BuildContext context, int bannerIndex) {
@@ -118,6 +120,11 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
     ));
     widgets.addAll(articles.map((e) => ArticleCell(articleInfo: e)).toList());
     return widgets;
+  }
+
+  void gotoSearch() {
+   
+    showSearch(context: context,delegate: SearchBarDelegate());
   }
 }
 
