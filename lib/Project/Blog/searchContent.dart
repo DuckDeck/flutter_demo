@@ -35,9 +35,7 @@ class SearchBarDelegate extends SearchDelegate<String>{
   }
    @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty
-        ? recentSuggest
-        : searchList.where((input) => input.startsWith(query)).toList();
+    final suggestionList = recentSuggest;
     return ListView.builder(
         itemCount: suggestionList.length,
         itemBuilder: (context, index) => ListTile(

@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/Project/4KImage/main_image_list.dart';
 import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
 import 'package:flutter_demo/Project/Blog/UI/RefreshAndLoadMore.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleCell.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
+import 'searchContent.dart';
 class ZoeBlogPage extends StatefulWidget {
   @override
   _ZoeBlogPageState createState() => _ZoeBlogPageState();
@@ -90,6 +89,10 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
         autoplay: true,
         itemCount: banners.length,
         pagination: new SwiperPagination(),
+        onTap: (int index){
+              Navigator.of(context).pushNamed("/project/blog/article",arguments: banners[index]);
+
+        },
         itemBuilder: (BuildContext context, int bannerIndex) {
           return Stack(
             fit: StackFit.expand,
