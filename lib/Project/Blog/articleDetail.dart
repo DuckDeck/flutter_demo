@@ -41,23 +41,30 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
           padding: EdgeInsets.all(5),
             child: ListView(
           children: [
-            Container(
-                margin: EdgeInsets.all(10),
-                child: Text(
-                  info.title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                )),
+               info.userInfo == null ? SkeletonLoader(
+                    builder: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        child: Container(
+                          width: double.infinity,
+                          height: 12,
+                          color: Colors.white,
+                        )),
+                    items: 2,
+                    period: Duration(seconds: 2),
+                    direction: SkeletonDirection.ltr,
+                  ) : 
             ArticleUserInfoView(
               articleInfo: info,
             ),
             SizedBox(
               height: 10,
             ),
-            Container(
+            info.tags == null ? SizedBox(height: 1,) : Container(
                 padding: EdgeInsets.symmetric(vertical: 4, horizontal: 15),
                 child: ArticleTagsView(
                   tags: info.tags,
-                )),
+                )), 
             SizedBox(
               height: 10,
             ),
@@ -88,18 +95,15 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
                       children: [
                         Icon(Icons.favorite),
                         SizedBox(
-                          width: 8,
+                          width: 2,
                         ),
                         Text("喜欢"),
                         SizedBox(
                           width: 8,
                         ),
-                        Divider(
-                          height: 10,
-                          indent: 1,
-                        ),
+             
                         SizedBox(
-                          width: 8,
+                          width: 2,
                         ),
                         Text(info.likeCount.toString())
                       ],
@@ -112,20 +116,18 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
                       children: [
                         Icon(Icons.star),
                         SizedBox(
-                          width: 8,
+                          width: 2,
                         ),
                         Text("收藏"),
                         SizedBox(
                           width: 8,
                         ),
-                        Divider(
-                          height: 10,
-                          indent: 1,
-                        ),
+                      
                         SizedBox(
-                          width: 8,
+                          width: 2,
                         ),
-                        Text(info.collectCount.toString())
+                        info.collectCount == null ? Text("") : 
+                         Text(info.collectCount.toString())
                       ],
                     ),
                   ),
@@ -140,7 +142,7 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
                     Text("且发表评论")
                   ]),
             ),
-            Text("${info.commentCount}条评论"),
+            Text("${info.commentCount ?? 0}条评论"),
             SizedBox(height: 5),
             Column(
               children:

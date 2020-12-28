@@ -66,7 +66,7 @@ class ArticleInfo {
   String sortName;
 
   @JsonKey(name: "comment_count")
-  int commentCount;
+  int commentCount = 0;
 
   @JsonKey(name: "like_count")
   int likeCount;
