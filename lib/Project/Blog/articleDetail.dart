@@ -105,7 +105,9 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
                         SizedBox(
                           width: 2,
                         ),
-                        Text(info.likeCount.toString())
+                        info.likeCount == null ? Text("") : 
+                         Text(info.collectCount.toString())
+                  
                       ],
                     ),
                   ),
