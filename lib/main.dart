@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/Foundation/Reflect.dart';
 import 'package:flutter_demo/Foundation/menu.dart';
 import 'package:flutter_demo/Project/4KImage/main_image_list.dart';
+import 'package:flutter_demo/Project/Blog/blogLogin.dart';
 import 'package:flutter_demo/Project/Blog/main.dart';
 import 'package:flutter_demo/Project/Blog/articleDetail.dart';
 import 'package:flutter_demo/Project/Five/main.dart';
@@ -35,6 +36,8 @@ class MyApp extends StatelessWidget {
         '/project/five': (BuildContext context) => new FiveStrokePage(),
         '/project/blog': (BuildContext context) => new ZoeBlogPage(),
         '/project/blog/article': (BuildContext context) => new ArticleDetailPage(info:ModalRoute.of(context).settings.arguments),
+        '/project/blog/login': (BuildContext context) => new BlogLoginPage(),
+
       },
     );
   }

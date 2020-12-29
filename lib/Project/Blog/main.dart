@@ -6,6 +6,7 @@ import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
 import 'package:flutter_demo/Project/Blog/Model/UserInfo.dart';
 import 'package:flutter_demo/Project/Blog/UI/RefreshAndLoadMore.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleCell.dart';
+import 'package:flutter_demo/Project/Blog/config.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -161,42 +162,50 @@ class LeftMenu extends StatelessWidget {
               padding: const EdgeInsets.only(top: 38.0),
               child: Row(
                 children: [
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                     CachedNetworkImage(
-                        imageUrl: "http://bqbbq.com/static/img/zoe_logo.jpg",
-                        fit: BoxFit.cover,
-                        width: 300,
-                      ),
-                      Center(
-                        child: ClipRect(
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 5.0,sigmaY: 5.0),
-                            child: Opacity(
-                              opacity: 0.5,
-                              child: Container(child: Text(" "),width: 300,height:200),
+                  GestureDetector(
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CachedNetworkImage(
+                          imageUrl: "http://bqbbq.com/static/img/zoe_logo.jpg",
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Center(
+                          child: ClipRect(
+                            child: BackdropFilter(
+                              filter:
+                                  ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                              child: Opacity(
+                                opacity: 0.5,
+                                child: Container(
+                                    child: Text(" "), width: 300, height: 200),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        left: 20,
-                        child: ClipOval(
-                          child: CachedNetworkImage(
-                              imageUrl: userInfo == null ? "" : userInfo.headImage,
-                              width: 64,
-                              height: 64,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) =>
-                                  Image.asset("Images/placeholder_head.jpg")),
+                        Positioned(
+                          left: 20,
+                          child: ClipOval(
+                            child: CachedNetworkImage(
+                                imageUrl:
+                                    userInfo == null ? "" : userInfo.headImage,
+                                width: 64,
+                                height: 64,
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) =>
+                                    Image.asset("Images/placeholder_head.jpg")),
+                          ),
                         ),
-                      ),
-                      Positioned(
-                        left: 100,
-                        child:Text("未登录",style: TextStyle(fontSize: 25),)
-                      ),
-                    ],
+                        Positioned(
+                            left: 100,
+                            child: Text(
+                              "未登录",
+                              style: TextStyle(fontSize: 25),
+                            )),
+                      ],
+                    ),
+                    onTap: ()=>gotoUser(context),
                   )
                 ],
               ),
@@ -218,5 +227,14 @@ class LeftMenu extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void gotoUser(BuildContext context) {
+    if(currentUser == null){
+            Navigator.of(context).pushNamed("/project/blog/login");
+    }
+    else{
+
+    }
   }
 }
