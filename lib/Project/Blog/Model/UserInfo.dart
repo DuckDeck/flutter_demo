@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_demo/Project/Blog/config.dart';
+import 'package:flutter_demo/ResultInfo.dart';
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'UserInfo.g.dart';
@@ -62,4 +64,17 @@ class UserInfo {
       _$UserInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserInfoToJson(this);
+
+  static Future<ResultInfo> login(String username, String password) async {
+    var url = BaseUrl + "/login";
+    final dio = new Dio();
+    final data = {"userName":username,"password":password};
+    final res = await dio.post(url,data: data);
+    final result = ResultInfo.toResult(res);
+    if (result.code != 0) {
+      return result;
+    }
+
+    return result;
+  }
 }

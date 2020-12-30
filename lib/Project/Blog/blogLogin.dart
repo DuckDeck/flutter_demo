@@ -40,6 +40,9 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
                   Icons.arrow_back,
                   color: Colors.white,
                 ),
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
               ),
             )),
            getWidget(),
@@ -63,7 +66,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
     return Center(
         child: Container(
       width: 360,
-      height: 200,
+      height: 240,
       child: Column(
         children: [
           TextField(
@@ -120,7 +123,10 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
             height: 10,
           ),
           RaisedButton(
-            onPressed: null,
+            onPressed: (){
+                  final timeStamp = new DateTime.now().millisecondsSinceEpoch;
+                  print(timeStamp);
+            },
             child: Container(
               width: 240,
               child: Text(
@@ -222,7 +228,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
               GestureDetector(
                 onTap: (){
                   setState(() {
-                    type = 1;
+                    type = 0;
                   });
                 },
                 child: Text("返回登录",
@@ -231,6 +237,11 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
                         decoration: TextDecoration.underline)),
               ),
               GestureDetector(
+                onTap: (){
+                  setState(() {
+                    type = 2;
+                  });
+                },
                 child: Text("忘记密码",
                     style: TextStyle(
                         color: Colors.white,
@@ -247,7 +258,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
     return Center(
         child: Container(
       width: 360,
-      height: 400,
+      height: 450,
       child: Column(
         children: [
           Text("重设密码",style: TextStyle(fontSize: 28,color: Colors.white)),
@@ -263,13 +274,17 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
               color: Colors.white,
             ),
           )),
+          SizedBox(height: 5),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("输入你的注册邮箱后点击发送重设码,系统会发送一封邮件到你填写的邮箱里 ,你可以用邮件里的重设码来重设你的密码"),
+              Container(child: Text("输入你的注册邮箱后点击发送重设码,系统会发送一封邮件到你填写的邮箱里 ,你可以用邮件里的重设码来重设你的密码"),
+              width: 200,
+              ),
               RaisedButton(
             onPressed: null,
             child: Container(
-              width: 40,
+              width: 100,
               child: Text(
                 "发送重设码",
                 textAlign: TextAlign.center,
@@ -325,7 +340,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
             child: Container(
               width: 240,
               child: Text(
-                "注册",
+                "提交",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -333,7 +348,37 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
                 ),
               ),
             ),
-          )
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    type = 0;
+                  });
+                },
+                child: Text("返回登录",
+                    style: TextStyle(
+                        color: Colors.white,
+                        decoration: TextDecoration.underline)),
+              ),
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    type = 1;
+                  });
+                },
+                child: Text("去注册",
+                    style: TextStyle(
+                        color: Colors.white,
+                        decoration: TextDecoration.underline)),
+              ),
+            ],
+          ),
         ],
       ),
     ));
