@@ -10,7 +10,10 @@ class BlogLoginPage extends StatefulWidget {
 
 class _BlogLoginPageState extends State<BlogLoginPage> {
   @override
-  int type = 0; //0 登录 1 注册 2 找加密码
+  int loginType = 0; //0 登录 1 注册 2 找加密码
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(fit: StackFit.expand, alignment: Alignment.center, children: [
@@ -52,7 +55,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
   }
 
   Widget getWidget() {
-    switch (type) {
+    switch (loginType) {
       case 1:
         return buildRegisterView();
       case 2:
@@ -62,6 +65,10 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
     }
   }
 
+void login() {
+  
+}
+
   Widget buildLoginView() {
     return Center(
         child: Container(
@@ -70,7 +77,8 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
       child: Column(
         children: [
           TextField(
-              decoration: InputDecoration(
+            controller: userNameController,
+            decoration: InputDecoration(
             labelText: "用户名",
             hintText: "用户名或者邮箱",
             prefixIcon: Icon(
@@ -79,6 +87,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
             ),
           )),
           TextField(
+            controller: passwordController,
             decoration: InputDecoration(
               labelText: "密码",
               hintText: "你的登录密码",
@@ -98,7 +107,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
               GestureDetector(
                 onTap: (){
                   setState(() {
-                    type = 1;
+                    loginType = 1;
                   });
                 },
                 child: Text("注册",
@@ -109,7 +118,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
               GestureDetector(
                 onTap: (){
                   setState(() {
-                    type = 2;
+                    loginType = 2;
                   });
                 },
                 child: Text("忘记密码",
@@ -124,8 +133,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
           ),
           RaisedButton(
             onPressed: (){
-                  final timeStamp = new DateTime.now().millisecondsSinceEpoch;
-                  print(timeStamp);
+              login();
             },
             child: Container(
               width: 240,
@@ -228,7 +236,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
               GestureDetector(
                 onTap: (){
                   setState(() {
-                    type = 0;
+                    loginType = 0;
                   });
                 },
                 child: Text("返回登录",
@@ -239,7 +247,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
               GestureDetector(
                 onTap: (){
                   setState(() {
-                    type = 2;
+                    loginType = 2;
                   });
                 },
                 child: Text("忘记密码",
@@ -358,7 +366,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
               GestureDetector(
                 onTap: (){
                   setState(() {
-                    type = 0;
+                    loginType = 0;
                   });
                 },
                 child: Text("返回登录",
@@ -369,7 +377,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
               GestureDetector(
                 onTap: (){
                   setState(() {
-                    type = 1;
+                    loginType = 1;
                   });
                 },
                 child: Text("去注册",

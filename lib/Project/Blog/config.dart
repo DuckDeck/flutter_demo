@@ -51,3 +51,13 @@ UserInfo currentUser ;
     final encrypted = encrypter.encrypt(str, iv: iv);
     return encrypted.toString();
   }
+
+  const regex_Chinese = r"^[\u4e00-\u9fa5]+$";
+  const regex_Email = r"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
+  
+
+    // print(_textEditingController.text);
+    // if (!RegExp(regex).hasMatch(_textEditingController.text)) {
+    //   Fluttertoast.showToast(msg: "请输入中文");
+    //   return;
+    // }
