@@ -52,6 +52,14 @@ UserInfo currentUser ;
     return encrypted.toString();
   }
 
+  String decrypt(String str){
+    final key = Key.fromUtf8(_key);
+    final iv = IV.fromUtf8(_iv);
+    final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+    final dncrypted = encrypter.decrypt64(str,iv: iv);
+    return dncrypted.toString();
+  }
+
   const regex_Chinese = r"^[\u4e00-\u9fa5]+$";
   const regex_Email = r"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
   
