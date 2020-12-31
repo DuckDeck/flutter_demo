@@ -46,7 +46,7 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
                   color: Colors.white,
                 ),
                 onPressed: (){
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(false);
                 },
               ),
             )),
@@ -77,7 +77,11 @@ void login() async {
       return;
     }
     final res = await UserInfo.login(userNameController.text, passwordController.text);
-    print(res.msg);
+    if(res.code != 0){
+      Fluttertoast.showToast(msg: res.msg);
+      return;
+    }
+     Navigator.of(context).pop(true); 
 }
 
   Widget buildLoginView() {

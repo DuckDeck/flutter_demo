@@ -29,6 +29,7 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
     super.initState();
     banners = List<ArticleInfo>();
     articles = List<ArticleInfo>();
+    getUserInfo().then((value) => currentUser = value);
   }
 
   @override
@@ -53,7 +54,7 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
               });
         }),
       ),
-      drawer: LeftMenu(),
+      drawer: LeftBlogMenu(userInfo: currentUser,),
       body: Container(
           child: RefreshAndLoadMore(
               controller: rc,
@@ -144,15 +145,18 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
   }
 }
 
-class LeftMenu extends StatelessWidget {
-  LeftMenu({
-    UserInfo userinfo,
-    Key key,
-  }) : super(key: key);
-  UserInfo userInfo;
+class LeftBlogMenu extends StatefulWidget {
+  LeftBlogMenu({this.userInfo});
+    UserInfo userInfo;
   @override
+  _LeftBlogMenuState createState() => _LeftBlogMenuState();
+}
+
+class _LeftBlogMenuState extends State<LeftBlogMenu> {
+  @override
+  
   Widget build(BuildContext context) {
-    return Drawer(
+   return Drawer(
       child: MediaQuery.removePadding(
         context: context,
         removeTop: true,
@@ -189,7 +193,7 @@ class LeftMenu extends StatelessWidget {
                           child: ClipOval(
                             child: CachedNetworkImage(
                                 imageUrl:
-                                    userInfo == null ? "" : userInfo.headImage,
+                                    widget.userInfo == null ? "" : widget.userInfo.headImage,
                                 width: 64,
                                 height: 64,
                                 fit: BoxFit.cover,
@@ -200,7 +204,7 @@ class LeftMenu extends StatelessWidget {
                         Positioned(
                             left: 100,
                             child: Text(
-                              "未登录",
+                              widget.userInfo == null ? "未登录" : widget.userInfo.realName,
                               style: TextStyle(fontSize: 25),
                             )),
                       ],
@@ -229,9 +233,20 @@ class LeftMenu extends StatelessWidget {
     );
   }
 
+   void handleLoginResult(bool result) {
+    if(result){
+      setState(() {
+        widget.userInfo = currentUser;
+      });
+    }
+  }
+
   void gotoUser(BuildContext context) {
     if(currentUser == null){
-            Navigator.of(context).pushNamed("/project/blog/login");
+            Navigator.of(context).pushNamed("/project/blog/login").then((value) => {
+              handleLoginResult(value as bool)
+              
+            });
     }
     else{
 

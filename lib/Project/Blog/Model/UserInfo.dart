@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_demo/Project/4KImage/model.dart';
 import 'package:flutter_demo/Project/Blog/config.dart';
 import 'package:flutter_demo/ResultInfo.dart';
 import 'package:meta/meta.dart';
@@ -59,6 +60,8 @@ class UserInfo {
   String says;
 
 
+  String token;
+
     UserInfo();
     factory UserInfo.fromJson(Map<String, dynamic> json) =>
       _$UserInfoFromJson(json);
@@ -69,17 +72,16 @@ class UserInfo {
     var url = BaseUrl + "/login";
     final dio = new Dio();
     final encryPass = encryptPassword(password);
-    print(encryPass);
-    final originPass = decrypt(encryPass);
-    print(originPass);
     final data = {"userName":username,"password":encryPass};
-    print(data);
     final res = await dio.post(url,data: data);
     final result = ResultInfo.toResult(res);
     if (result.code != 0) {
       return result;
     }
-
+    final user = UserInfo.fromJson(result.data);
+    result.data = user;
+    saveUserInfo(user);
+    currentUser = user;
     return result;
   }
 }

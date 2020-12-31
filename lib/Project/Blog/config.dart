@@ -19,7 +19,7 @@ UserInfo currentUser ;
     return new File(filePath);
   }
 
-    Future<UserInfo> getFives() async {
+  Future<UserInfo> getUserInfo() async {
     final file = await getDataFile();
     final contents = await file.readAsString();
     
@@ -29,7 +29,7 @@ UserInfo currentUser ;
     return userInfo;
   }
 
-  void saveFives(UserInfo userInfo) async {
+  void saveUserInfo(UserInfo userInfo) async {
     final file = await getDataFile();
     final data = jsonEncode(userInfo);
     file.writeAsString(data);
@@ -38,7 +38,7 @@ UserInfo currentUser ;
   String encryptPassword(String password){
     final timeStamp = new DateTime.now().millisecondsSinceEpoch;
     final offset = new DateTime.now().timeZoneOffset;
-    final para = timeStamp - offset.inMinutes * 60000;
+    final para = timeStamp + offset.inMinutes * 60000;
     final str = password + "=" + para.toString();
     return encrypt(str);
   }
