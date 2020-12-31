@@ -84,4 +84,24 @@ class UserInfo {
     currentUser = user;
     return result;
   }
+
+   static Future<ResultInfo> searchUser(String key,int index) async{
+    var url = "$BaseUrl/search/$key/user/$index/10";
+    final dio = new Dio();
+    final res = await dio.get(url);
+    
+    final result = ResultInfo.toResult(res);
+    if (result.code != 0) {
+      return result;
+    }
+    List<dynamic> userDatas = result.data;
+    List<UserInfo> users = List<UserInfo>();
+
+    for (var item in userDatas) {
+      final a = UserInfo.fromJson(item);
+      users.add(a);
+    }
+    result.data = users;
+    return result;
+  }
 }

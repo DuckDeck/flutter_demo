@@ -68,3 +68,5 @@ UserInfo currentUser ;
     //   Fluttertoast.showToast(msg: "请输入中文");
     //   return;
     // }
+
+//这里也要弄一个grandstore这样的东西才方便

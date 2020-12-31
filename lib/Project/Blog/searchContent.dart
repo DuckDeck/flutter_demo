@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-const recentSuggest = [
-  "推荐-1",
-  "推荐-2",
-];
+import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
+import 'package:flutter_demo/Project/Blog/Model/UserInfo.dart';
+
 
 class SearchBarDelegate extends SearchDelegate<String>{
   @override
@@ -22,33 +21,20 @@ class SearchBarDelegate extends SearchDelegate<String>{
   }
   @override
   Widget buildResults(BuildContext context) {
-    return Container(
-      width: 100.0,
-      height: 100.0,
-      child: Card(
-        color: Colors.redAccent,
-        child: Center(
-          child: Text(query),
-        ),
-      ),
+    return FutureBuilder(
+     
     );
   }
    @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = recentSuggest;
-    return ListView.builder(
-        itemCount: suggestionList.length,
-        itemBuilder: (context, index) => ListTile(
-              title: RichText(
-                  text: TextSpan(
-                      text: suggestionList[index].substring(0, query.length),
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                      children: [
-                    TextSpan(
-                        text: suggestionList[index].substring(query.length),
-                        style: TextStyle(color: Colors.grey))
-                  ])),
-            ));
+    return Container();
   }
+
+  
+}
+
+class searchResult{
+  List<UserInfo> userinfos;
+  List<ArticleInfo> articles;
+  
 }
