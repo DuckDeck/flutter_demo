@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/Project/Blog/Model/UserInfo.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class BlogLoginPage extends StatefulWidget {
   @override
@@ -65,8 +67,17 @@ class _BlogLoginPageState extends State<BlogLoginPage> {
     }
   }
 
-void login() {
-  
+void login() async {
+    if(userNameController.text.length <= 0){
+       Fluttertoast.showToast(msg: "请输入用户名或者邮箱");
+      return;
+    }
+    if(passwordController.text.length <= 0){
+      Fluttertoast.showToast(msg: "请输入密码");
+      return;
+    }
+    final res = await UserInfo.login(userNameController.text, passwordController.text);
+    print(res.msg);
 }
 
   Widget buildLoginView() {
@@ -99,7 +110,7 @@ void login() {
             obscureText: true,
           ),
           SizedBox(
-            height: 10,
+            height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -132,6 +143,7 @@ void login() {
             height: 10,
           ),
           RaisedButton(
+            color: Colors.purple,
             onPressed: (){
               login();
             },

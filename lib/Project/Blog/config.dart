@@ -40,7 +40,6 @@ UserInfo currentUser ;
     final offset = new DateTime.now().timeZoneOffset;
     final para = timeStamp - offset.inMinutes * 60000;
     final str = password + "=" + para.toString();
-    print(str);
     return encrypt(str);
   }
 
@@ -49,7 +48,7 @@ UserInfo currentUser ;
     final iv = IV.fromUtf8(_iv);
     final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
     final encrypted = encrypter.encrypt(str, iv: iv);
-    return encrypted.toString();
+    return encrypted.base64;
   }
 
   String decrypt(String str){

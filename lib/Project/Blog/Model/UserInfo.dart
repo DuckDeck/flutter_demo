@@ -68,7 +68,12 @@ class UserInfo {
   static Future<ResultInfo> login(String username, String password) async {
     var url = BaseUrl + "/login";
     final dio = new Dio();
-    final data = {"userName":username,"password":password};
+    final encryPass = encryptPassword(password);
+    print(encryPass);
+    final originPass = decrypt(encryPass);
+    print(originPass);
+    final data = {"userName":username,"password":encryPass};
+    print(data);
     final res = await dio.post(url,data: data);
     final result = ResultInfo.toResult(res);
     if (result.code != 0) {
