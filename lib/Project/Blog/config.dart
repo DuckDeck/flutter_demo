@@ -70,3 +70,6 @@ UserInfo currentUser ;
     // }
 
 //这里也要弄一个grandstore这样的东西才方便
+class GrandStore<T>{
+  
+}
