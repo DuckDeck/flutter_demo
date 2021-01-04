@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_demo/Project/Blog/Model/UserInfo.dart';
 import 'package:flutter_demo/Project/Blog/config.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class UserInfoPage extends StatefulWidget {
   UserInfo userInfo;
+  UserInfo targetUserInfo;
   @override
   _UserInfoPageState createState() => _UserInfoPageState();
 }
@@ -14,7 +18,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    widget.userInfo = currentUser;
+    widget.userInfo = currentUser.copyUser();
   }
 
   @override
@@ -63,5 +67,20 @@ class _UserInfoPageState extends State<UserInfoPage> {
         ),
       ),
     );
+  }
+
+  void getUserDetail() async {
+      EasyLoading.show(status: "加载中");
+    final res = await  UserInfo.getUseiInfo(widget.userInfo.id, widget.targetUserInfo == null ? 0 : widget.targetUserInfo.id);
+    EasyLoading.dismiss();
+    if(res.code != 0){
+      Fluttertoast.showToast(msg: res.msg);
+      return;
+    }
+
+    setState(() {
+      widget.userInfo = res.data as UserInfo;
+    });
+
   }
 }

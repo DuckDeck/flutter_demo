@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_demo/Project/4KImage/model.dart';
+import 'package:flutter_demo/Project/Blog/Model/SortInfo.dart';
+import 'package:flutter_demo/Project/Blog/Model/UserLinkInfo.dart';
 import 'package:flutter_demo/Project/Blog/config.dart';
 import 'package:flutter_demo/ResultInfo.dart';
 import 'package:meta/meta.dart';
@@ -69,11 +71,41 @@ class UserInfo {
 
   String token;
 
-    UserInfo();
+  List<UserLinkInfo> links;
+
+  List<SortInfo> sorts;
+
+  UserInfo();
     factory UserInfo.fromJson(Map<String, dynamic> json) =>
       _$UserInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserInfoToJson(this);
+
+
+  UserInfo copyUser() {
+    final newUser = UserInfo();
+    newUser.id = this.id;
+    newUser.address = this.address;
+    newUser.articleCount = this.articleCount;
+    newUser.birthday = this.birthday;
+    newUser.commentCount = this.commentCount;
+    newUser.description = this.description;
+    newUser.email = this.email;
+    newUser.gender = this.gender;
+    newUser.headImage = this.headImage;
+    newUser.isAttention = this.isAttention;
+    newUser.links = this.links;
+    newUser.mark = this.mark;
+    newUser.phone = this.phone;
+    newUser.qq = this.qq;
+    newUser.realName = this.realName;
+    newUser.says = this.says;
+    newUser.sorts = this.sorts;
+    newUser.token = this.token;
+    newUser.userLikedArticleCount = this.userLikedArticleCount;
+    newUser.userName = this.userName;
+    return newUser;
+  }
 
   static Future<ResultInfo> login(String username, String password) async {
     var url = BaseUrl + "/login";
@@ -109,6 +141,19 @@ class UserInfo {
       users.add(a);
     }
     result.data = users;
+    return result;
+  }
+
+  static Future<ResultInfo> getUseiInfo(int targetUserId, int userId) async{
+    var url = "$BaseUrl/user/$targetUserId/$userId/" + createToken();
+    final dio = new Dio();
+    final res = await dio.get(url);
+    final result = ResultInfo.toResult(res);
+    if (result.code != 0) {
+      return result;
+    }
+    final user = UserInfo.fromJson(result.data);
+    result.data = user;
     return result;
   }
 }

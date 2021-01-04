@@ -60,6 +60,17 @@ UserInfo currentUser ;
     return dncrypted.toString();
   }
 
+
+  String createToken(){
+    if(currentUser == null){
+      return null;
+    }
+    final timeStamp = new DateTime.now().millisecondsSinceEpoch;
+    final offset = new DateTime.now().timeZoneOffset;
+    final para = timeStamp + offset.inMinutes * 60000;
+    final str = currentUser.token + "=" + para.toString();
+    return encrypt(str);
+  }
   const regex_Chinese = r"^[\u4e00-\u9fa5]+$";
   const regex_Email = r"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
   

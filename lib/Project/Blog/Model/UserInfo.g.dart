@@ -22,7 +22,18 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
     ..phone = json['user_phone'] as String
     ..qq = json['user_qq'] as String
     ..says = json['user_says'] as String
-    ..token = json['token'] as String;
+    ..userLikedArticleCount = json['articles_be_liked_count'] as int
+    ..isAttention = json['isAttention'] as bool
+    ..mark = json['user_mark'] as String
+    ..token = json['token'] as String
+    ..links = (json['links'] as List)
+        ?.map((e) =>
+            e == null ? null : UserLinkInfo.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..sorts = (json['sorts'] as List)
+        ?.map((e) =>
+            e == null ? null : SortInfo.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
@@ -40,5 +51,10 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'user_phone': instance.phone,
       'user_qq': instance.qq,
       'user_says': instance.says,
+      'articles_be_liked_count': instance.userLikedArticleCount,
+      'isAttention': instance.isAttention,
+      'user_mark': instance.mark,
       'token': instance.token,
+      'links': instance.links,
+      'sorts': instance.sorts,
     };
