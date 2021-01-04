@@ -72,6 +72,11 @@ UserInfo currentUser ;
 
 //这里也要弄一个grandstore这样的东西才方便
 
+
 const color_333333 = Color.fromARGB(1, 51, 51, 51);
 const color_666666 = Color.fromARGB(1, 102, 102, 102);
 const color_999999 = Color.fromARGB(255, 153, 153, 153);
+
+class GrandStore<T>{
+  
+}
