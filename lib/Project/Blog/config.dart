@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:encrypt/encrypt.dart';
+import 'package:encrypt/encrypt.dart' as Encrypt;
+import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/Model/UserInfo.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -44,17 +45,17 @@ UserInfo currentUser ;
   }
 
   String encrypt(String str){
-    final key = Key.fromUtf8(_key);
-    final iv = IV.fromUtf8(_iv);
-    final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+    final key = Encrypt.Key.fromUtf8(_key);
+    final iv = Encrypt.IV.fromUtf8(_iv);
+    final encrypter = Encrypt.Encrypter(Encrypt.AES(key, mode: Encrypt.AESMode.cbc));
     final encrypted = encrypter.encrypt(str, iv: iv);
     return encrypted.base64;
   }
 
   String decrypt(String str){
-    final key = Key.fromUtf8(_key);
-    final iv = IV.fromUtf8(_iv);
-    final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+    final key = Encrypt.Key.fromUtf8(_key);
+    final iv = Encrypt.IV.fromUtf8(_iv);
+    final encrypter = Encrypt.Encrypter(Encrypt.AES(key, mode: Encrypt.AESMode.cbc));
     final dncrypted = encrypter.decrypt64(str,iv: iv);
     return dncrypted.toString();
   }
@@ -70,3 +71,7 @@ UserInfo currentUser ;
     // }
 
 //这里也要弄一个grandstore这样的东西才方便
+
+const color_333333 = Color.fromARGB(1, 51, 51, 51);
+const color_666666 = Color.fromARGB(1, 102, 102, 102);
+const color_999999 = Color.fromARGB(255, 153, 153, 153);

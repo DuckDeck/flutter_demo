@@ -7,6 +7,7 @@ import 'package:flutter_demo/Project/Blog/Model/CommentInfo.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleTagsView.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleUserInfo.dart';
 import 'package:flutter_demo/Project/Blog/UI/commentCell.dart';
+import 'package:flutter_demo/Project/Blog/config.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:skeleton_loader/skeleton_loader.dart';
@@ -106,7 +107,7 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
                           width: 2,
                         ),
                         info.likeCount == null ? Text("") : 
-                         Text(info.collectCount.toString())
+                         Text(info.likeCount.toString())
                   
                       ],
                     ),
@@ -137,12 +138,13 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
               ],
             ),
             Container(
-              child: Row(
+              child: currentUser == null ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    FlatButton(onPressed: null, child: Text("登录")),
+                    FlatButton(onPressed: ()=> { Navigator.of(context).pushNamed("/project/blog/login")}
+                    , child: Text("登录")),
                     Text("且发表评论")
-                  ]),
+                  ]) : Row()
             ),
             Text("${info.commentCount ?? 0}条评论"),
             SizedBox(height: 5),

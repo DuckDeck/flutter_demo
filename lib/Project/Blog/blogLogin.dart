@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/Model/UserInfo.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class BlogLoginPage extends StatefulWidget {
@@ -76,7 +77,10 @@ void login() async {
       Fluttertoast.showToast(msg: "请输入密码");
       return;
     }
+    
+    EasyLoading.show(status: "加载中");
     final res = await UserInfo.login(userNameController.text, passwordController.text);
+    EasyLoading.dismiss();
     if(res.code != 0){
       Fluttertoast.showToast(msg: res.msg);
       return;

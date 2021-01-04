@@ -59,6 +59,13 @@ class UserInfo {
   @JsonKey(name: "user_says")
   String says;
 
+  @JsonKey(name: "articles_be_liked_count")
+  int userLikedArticleCount;
+
+  bool isAttention;
+
+  @JsonKey(name: "user_mark")
+  String mark;
 
   String token;
 
