@@ -5,10 +5,12 @@ import 'package:flutter_demo/Project/Blog/Model/UserInfo.dart';
 import 'package:flutter_demo/Project/Blog/config.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:skeleton_loader/skeleton_loader.dart';
 
 class UserInfoPage extends StatefulWidget {
   UserInfo userInfo;
   UserInfo targetUserInfo;
+  UserInfoPage({this.targetUserInfo});
   @override
   _UserInfoPageState createState() => _UserInfoPageState();
 }
@@ -19,6 +21,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
     // TODO: implement initState
     super.initState();
     widget.userInfo = currentUser.copyUser();
+    print("targetUserId${widget.targetUserInfo}");
+    this.getUserDetail();
   }
 
   @override
@@ -55,10 +59,23 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     top: 25,
                     child: Text(widget.userInfo.realName,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                   ),
+                
                    Positioned(
                     left: 87,
                     top: 55,
-                    child: Text("发布的文章${widget.userInfo.articleCount} 收获的喜欢${widget.userInfo}",style: TextStyle(fontSize: 14,color: color_999999),),
+                    child: widget.userInfo.userLikedArticleCount == null ? SkeletonLoader(
+                    builder: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        child: Container(
+                          width: double.infinity,
+                          height: 12,
+                          color: Colors.white,
+                        )),
+                    items: 1,
+                    period: Duration(seconds: 2),
+                    direction: SkeletonDirection.ltr,
+                  ) : Text("发布的文章${widget.userInfo.articleCount} 收获的喜欢${widget.userInfo.userLikedArticleCount}",style: TextStyle(fontSize: 14,color: color_999999),),
                   ),
                 ],
               ),
@@ -70,9 +87,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
   }
 
   void getUserDetail() async {
-      EasyLoading.show(status: "加载中");
-    final res = await  UserInfo.getUseiInfo(widget.userInfo.id, widget.targetUserInfo == null ? 0 : widget.targetUserInfo.id);
-    EasyLoading.dismiss();
+     // EasyLoading.show(status: "加载中");
+    final res = await  UserInfo.getUseiInfo(widget.targetUserInfo == null ? 0 : widget.targetUserInfo.id,widget.userInfo.id);
+    //EasyLoading.dismiss();
     if(res.code != 0){
       Fluttertoast.showToast(msg: res.msg);
       return;

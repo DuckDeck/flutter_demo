@@ -25,7 +25,6 @@ class UserInfo {
   @JsonKey(name: "user_image_url")
   String headImage;
 
-
   @JsonKey(name: "user_address")
   String address;
 
@@ -64,10 +63,8 @@ class UserInfo {
   @JsonKey(name: "articles_be_liked_count")
   int userLikedArticleCount;
 
+  @JsonKey(name: "is_attention")
   bool isAttention;
-
-  @JsonKey(name: "user_mark")
-  String mark;
 
   String token;
 
@@ -95,7 +92,6 @@ class UserInfo {
     newUser.headImage = this.headImage;
     newUser.isAttention = this.isAttention;
     newUser.links = this.links;
-    newUser.mark = this.mark;
     newUser.phone = this.phone;
     newUser.qq = this.qq;
     newUser.realName = this.realName;
@@ -146,6 +142,7 @@ class UserInfo {
 
   static Future<ResultInfo> getUseiInfo(int targetUserId, int userId) async{
     var url = "$BaseUrl/user/$targetUserId/$userId/" + createToken();
+    print(url);
     final dio = new Dio();
     final res = await dio.get(url);
     final result = ResultInfo.toResult(res);

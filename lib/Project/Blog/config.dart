@@ -22,6 +22,10 @@ UserInfo currentUser ;
 
   Future<UserInfo> getUserInfo() async {
     final file = await getDataFile();
+    final fileExist = await file.exists();
+    if(!fileExist){
+      return null;
+    }
     final contents = await file.readAsString();
     
     dynamic item = jsonDecode(contents);
@@ -65,11 +69,13 @@ UserInfo currentUser ;
     if(currentUser == null){
       return null;
     }
+    print("token${currentUser.token}");
     final timeStamp = new DateTime.now().millisecondsSinceEpoch;
     final offset = new DateTime.now().timeZoneOffset;
     final para = timeStamp + offset.inMinutes * 60000;
     final str = currentUser.token + "=" + para.toString();
-    return encrypt(str);
+    print("timestamp${para.toString()}");
+    return Uri.encodeComponent(encrypt(str));
   }
   const regex_Chinese = r"^[\u4e00-\u9fa5]+$";
   const regex_Email = r"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";

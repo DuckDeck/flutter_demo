@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         '/project/blog': (BuildContext context) => new ZoeBlogPage(),
         '/project/blog/article': (BuildContext context) => new ArticleDetailPage(info:ModalRoute.of(context).settings.arguments),
         '/project/blog/login': (BuildContext context) => new BlogLoginPage(),
-        '/project/blog/userinfo': (BuildContext context) => new UserInfoPage(),
+        '/project/blog/userinfo': (BuildContext context) => new UserInfoPage(targetUserInfo: ModalRoute.of(context).settings.arguments,),
       },
     );
   }

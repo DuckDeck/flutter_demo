@@ -26,6 +26,7 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
   var _isInit = true;
   @override
   void initState() {
+     print("targetUserId${widget.info}");
     info = widget.info;
     super.initState();
     _getData();

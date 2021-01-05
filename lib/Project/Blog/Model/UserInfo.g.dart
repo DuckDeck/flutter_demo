@@ -23,8 +23,7 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
     ..qq = json['user_qq'] as String
     ..says = json['user_says'] as String
     ..userLikedArticleCount = json['articles_be_liked_count'] as int
-    ..isAttention = json['isAttention'] as bool
-    ..mark = json['user_mark'] as String
+    ..isAttention = json['is_attention'] as bool
     ..token = json['token'] as String
     ..links = (json['links'] as List)
         ?.map((e) =>
@@ -52,8 +51,7 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'user_qq': instance.qq,
       'user_says': instance.says,
       'articles_be_liked_count': instance.userLikedArticleCount,
-      'isAttention': instance.isAttention,
-      'user_mark': instance.mark,
+      'is_attention': instance.isAttention,
       'token': instance.token,
       'links': instance.links,
       'sorts': instance.sorts,

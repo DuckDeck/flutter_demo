@@ -249,7 +249,7 @@ class _LeftBlogMenuState extends State<LeftBlogMenu> {
             });
     }
     else{
-        Navigator.of(context).pushNamed("/project/blog/userinfo");
+        Navigator.of(context).pushNamed("/project/blog/userinfo",arguments: currentUser);
     }
   }
 }
