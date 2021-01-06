@@ -218,8 +218,16 @@ class _LeftBlogMenuState extends State<LeftBlogMenu> {
                 child: ListView(
               children: [
                 ListTile(
-                  leading: const Icon(Icons.add),
-                  title: const Text("Add Count"),
+                  leading: const Icon(Icons.message),
+                  title: const Text("我的消息"),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.collections),
+                  title: const Text("我的关注"),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.tag),
+                  title: const Text("我的标签"),
                 ),
                 ListTile(
                   leading: const Icon(Icons.settings),

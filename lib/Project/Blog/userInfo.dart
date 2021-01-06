@@ -128,6 +128,16 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       "我喜欢的文章",
                       style: TextStyle(color: color_666666, fontSize: 18),
                     ),
+                  ),
+                  Divider(
+                    height: 1,
+                    color: color_e0e0e0,
+                  ),
+                  FlatButton(
+                    child: Text(
+                      "个人设置",
+                      style: TextStyle(color: color_666666, fontSize: 18),
+                    ),
                   )
                 ],
               ),
@@ -227,6 +237,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         child: Text(e.url),
+        onPressed: ()=>{
+          Navigator.of(context).pushNamed("/project/blog/web",arguments: e.url)
+        },
       );
     }).toList();
     return links;
