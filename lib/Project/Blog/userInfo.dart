@@ -32,11 +32,11 @@ class _UserInfoPageState extends State<UserInfoPage> {
         title: Text("我"),
       ),
       body: Container(
-        color: Colors.grey,
+        color: color_f0f0f0,
         child: Column(
           children: [
             Container(
-              height: 100,
+              height: 90,
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
               child: Stack(
@@ -56,15 +56,153 @@ class _UserInfoPageState extends State<UserInfoPage> {
                   ),
                   Positioned(
                     left: 87,
-                    top: 25,
-                    child: Text(widget.userInfo.realName,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                    top: 20,
+                    child: Text(
+                      widget.userInfo.realName,
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                
-                   Positioned(
+                  Positioned(
                     left: 87,
-                    top: 55,
-                    child: widget.userInfo.userLikedArticleCount == null ? SkeletonLoader(
+                    top: 50,
+                    child: widget.userInfo.userLikedArticleCount == null
+                        ? SkeletonLoader(
+                            builder: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 12,
+                                  color: Colors.white,
+                                )),
+                            items: 1,
+                            period: Duration(seconds: 2),
+                            direction: SkeletonDirection.ltr,
+                          )
+                        : Text(
+                            "发布的文章${widget.userInfo.articleCount} 收获的喜欢${widget.userInfo.userLikedArticleCount}",
+                            style: TextStyle(fontSize: 16, color: color_999999),
+                          ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: 500,
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FlatButton(
+                    child: Text(
+                      "我的文章",
+                      style: TextStyle(color: color_666666, fontSize: 18),
+                    ),
+                  ),
+                  Divider(
+                    height: 1,
+                    color: color_e0e0e0,
+                  ),
+                  FlatButton(
+                      child: Text(
+                    "我的动态",
+                    style: TextStyle(color: color_666666, fontSize: 18),
+                  )),
+                  Divider(
+                    height: 1,
+                    color: color_e0e0e0,
+                  ),
+                  FlatButton(
+                    child: Text(
+                      "我的评论",
+                      style: TextStyle(color: color_666666, fontSize: 18),
+                    ),
+                  ),
+                  Divider(
+                    height: 1,
+                    color: color_e0e0e0,
+                  ),
+                  FlatButton(
+                    child: Text(
+                      "我喜欢的文章",
+                      style: TextStyle(color: color_666666, fontSize: 18),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: 500,
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              color: Colors.white,
+              child: Text(
+                "作者个人介绍",
+                textAlign: TextAlign.left,
+                style: TextStyle(color: color_333333, fontSize: 20),
+              ),
+            ),
+            Divider(
+              height: 1,
+              color: color_e0e0e0,
+            ),
+            Container(
+              width: 500,
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              color: Colors.white,
+              child: widget.userInfo.says == null
+                  ? SkeletonLoader(
+                      builder: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Container(
+                            width: double.infinity,
+                            height: 12,
+                            color: Colors.white,
+                          )),
+                      items: 1,
+                      period: Duration(seconds: 2),
+                      direction: SkeletonDirection.ltr,
+                    )
+                  : Text(
+                      widget.userInfo.says,
+                      style: TextStyle(color: color_666666),
+                    ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              color: Colors.white,
+              width: 500,
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Text(
+                "我的链接",
+                textAlign: TextAlign.left,
+                style: TextStyle(color: color_333333, fontSize: 20),
+              ),
+            ),
+            Divider(
+              height: 1,
+              color: color_e0e0e0,
+            ),
+            Container(
+              width: 500,
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: (widget.userInfo.links != null && widget.userInfo.links.length > 0)
+                ? 
+                     Wrap(
+                      children: createWebsites(),
+                    )
+                   
+                  
+                : SkeletonLoader(
                     builder: Container(
+                      
                         padding:
                             EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                         child: Container(
@@ -75,22 +213,30 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     items: 1,
                     period: Duration(seconds: 2),
                     direction: SkeletonDirection.ltr,
-                  ) : Text("发布的文章${widget.userInfo.articleCount} 收获的喜欢${widget.userInfo.userLikedArticleCount}",style: TextStyle(fontSize: 14,color: color_999999),),
-                  ),
-                ],
-              ),
-            )
+                  ),)
+            
           ],
         ),
       ),
     );
   }
 
+  List<Widget> createWebsites() {
+    final links = widget.userInfo.links.map((e) {
+      return OutlineButton(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        child: Text(e.url),
+      );
+    }).toList();
+    return links;
+  }
+
   void getUserDetail() async {
-     // EasyLoading.show(status: "加载中");
-    final res = await  UserInfo.getUseiInfo(widget.targetUserInfo == null ? 0 : widget.targetUserInfo.id,widget.userInfo.id);
-    //EasyLoading.dismiss();
-    if(res.code != 0){
+    final res = await UserInfo.getUseiInfo(
+        widget.targetUserInfo == null ? 0 : widget.targetUserInfo.id,
+        widget.userInfo.id);
+    if (res.code != 0) {
       Fluttertoast.showToast(msg: res.msg);
       return;
     }
@@ -98,6 +244,5 @@ class _UserInfoPageState extends State<UserInfoPage> {
     setState(() {
       widget.userInfo = res.data as UserInfo;
     });
-
   }
 }
