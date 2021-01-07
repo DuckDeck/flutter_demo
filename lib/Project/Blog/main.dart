@@ -220,6 +220,9 @@ class _LeftBlogMenuState extends State<LeftBlogMenu> {
                 ListTile(
                   leading: const Icon(Icons.message),
                   title: const Text("我的消息"),
+                  onTap: ()=>{
+                    Navigator.of(context).pushNamed("/project/blog/message")
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.collections),

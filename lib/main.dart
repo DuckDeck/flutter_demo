@@ -6,6 +6,7 @@ import 'package:flutter_demo/Project/Blog/blogLogin.dart';
 import 'package:flutter_demo/Project/Blog/blogWebview.dart';
 import 'package:flutter_demo/Project/Blog/main.dart';
 import 'package:flutter_demo/Project/Blog/articleDetail.dart';
+import 'package:flutter_demo/Project/Blog/myMessage.dart';
 import 'package:flutter_demo/Project/Blog/userInfo.dart';
 import 'package:flutter_demo/Project/Five/main.dart';
 import 'package:flutter_demo/Project/Isolated_island/app.dart';
@@ -41,6 +42,8 @@ class MyApp extends StatelessWidget {
         '/project/blog/login': (BuildContext context) => new BlogLoginPage(),
         '/project/blog/userinfo': (BuildContext context) => new UserInfoPage(targetUserInfo: ModalRoute.of(context).settings.arguments,),
         '/project/blog/web': (BuildContext context) => new BlogWebviewPage(url: ModalRoute.of(context).settings.arguments,),
+        '/project/blog/message': (BuildContext context) => new MyMessagePage(),
+
       },
     );
   }
