@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/Project/Blog/Model/MessageInfo.dart';
+import 'package:flutter_demo/Project/Blog/config.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MyMessagePage extends StatefulWidget {
   @override
@@ -8,14 +11,18 @@ class MyMessagePage extends StatefulWidget {
 class _MyMessagePageState extends State<MyMessagePage>
     with SingleTickerProviderStateMixin {
   var currentType = 1;
+  var messageIndex = [0, 0, 0, 0];
   TabController _tabController;
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this)..addListener(() { 
-      print(_tabController.index);
-    });
-    
+    _tabController = TabController(length: 4, vsync: this)
+      ..addListener(() {
+        if (currentType != _tabController.index + 1) {
+          currentType = _tabController.index + 1;
+        }
+      });
+      this.getMessage();
   }
 
   @override
@@ -31,13 +38,35 @@ class _MyMessagePageState extends State<MyMessagePage>
         child: Scaffold(
           appBar: AppBar(
             title: Text("我的消息"),
-            bottom: TabBar(
-              controller: _tabController,
-              tabs: [
-              Tab(icon: Icon(Icons.comment,size: 30,),text: "评论",),
-              Tab(icon: Icon(Icons.favorite,size: 30,),text: "喜欢和赞",),
-              Tab(icon: Icon(Icons.beach_access,size: 30,),text: "关注",),
-              Tab(icon: Icon(Icons.message,size: 30,),text: "私信",),
+            bottom: TabBar(controller: _tabController, tabs: [
+              Tab(
+                icon: Icon(
+                  Icons.comment,
+                  size: 30,
+                ),
+                text: "评论",
+              ),
+              Tab(
+                icon: Icon(
+                  Icons.favorite,
+                  size: 30,
+                ),
+                text: "喜欢和赞",
+              ),
+              Tab(
+                icon: Icon(
+                  Icons.beach_access,
+                  size: 30,
+                ),
+                text: "关注",
+              ),
+              Tab(
+                icon: Icon(
+                  Icons.message,
+                  size: 30,
+                ),
+                text: "私信",
+              ),
             ]),
           ),
           body: TabBarView(children: [
@@ -47,9 +76,13 @@ class _MyMessagePageState extends State<MyMessagePage>
             Text("data"),
           ]),
         ));
-
-    void getMessage() async {
-      
-    }
   }
+  void getMessage() async {
+      final res = await MessageInfo.getMessage(
+          currentUser.id, currentType, messageIndex[currentType]);
+      if (res.code != 0) {
+        Fluttertoast.showToast(msg: res.msg);
+        return;
+      }
+    }
 }

@@ -140,7 +140,7 @@ class UserInfo {
     return result;
   }
 
-  static Future<ResultInfo> getUseiInfo(int targetUserId, int userId) async{
+  static Future<ResultInfo> getUserInfo(int targetUserId, int userId) async{
     var url = "$BaseUrl/user/$targetUserId/$userId/" + createToken();
     print(url);
     final dio = new Dio();

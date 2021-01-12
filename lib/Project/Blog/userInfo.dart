@@ -246,7 +246,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
   }
 
   void getUserDetail() async {
-    final res = await UserInfo.getUseiInfo(
+    final res = await UserInfo.getUserInfo(
         widget.targetUserInfo == null ? 0 : widget.targetUserInfo.id,
         widget.userInfo.id);
     if (res.code != 0) {
