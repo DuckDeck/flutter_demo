@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/Model/MessageInfo.dart';
+import 'package:flutter_demo/Project/Blog/UI/RefreshAndLoadMore.dart';
 import 'package:flutter_demo/Project/Blog/config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MyMessagePage extends StatefulWidget {
   @override
@@ -10,9 +13,11 @@ class MyMessagePage extends StatefulWidget {
 
 class _MyMessagePageState extends State<MyMessagePage>
     with SingleTickerProviderStateMixin {
+     RefreshController rc1 = RefreshController(initialRefresh: true);
   var currentType = 1;
   var messageIndex = [0, 0, 0, 0];
   TabController _tabController;
+  var commentList = List<MessageInfo>();
   @override
   void initState() {
     super.initState();
@@ -23,6 +28,7 @@ class _MyMessagePageState extends State<MyMessagePage>
         }
       });
       this.getMessage();
+    
   }
 
   @override
@@ -70,13 +76,28 @@ class _MyMessagePageState extends State<MyMessagePage>
             ]),
           ),
           body: TabBarView(children: [
-            Text("data"),
+            RefreshAndLoadMore(
+              controller: rc1,
+              loadMoreFun: loadMore,
+
+            ),
             Text("data"),
             Text("data"),
             Text("data"),
           ]),
         ));
   }
+
+  void loadMore(){
+    messageIndex[currentType] += 1;
+    this.getMessage();
+  }
+
+    List<Widget> buildList() {
+    var widgets = List<Widget>();
+      return widgets;
+    }
+
   void getMessage() async {
       final res = await MessageInfo.getMessage(
           currentUser.id, currentType, messageIndex[currentType]);
@@ -85,4 +106,42 @@ class _MyMessagePageState extends State<MyMessagePage>
         return;
       }
     }
+}
+
+
+class CommentMessageCell extends StatelessWidget {
+  final MessageInfo messageInfo;
+  CommentMessageCell({this.messageInfo});
+  @override
+  Widget build(BuildContext context) {
+    
+    return Container(
+      child: Column(children: [
+        Row(
+          children: [
+            ClipOval(
+                child: CachedNetworkImage(
+                    imageUrl: messageInfo.userInfo.headImage,
+                    width: 30,
+                    height: 30,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        Image.asset("Images/placeholder_head.jpg")),
+              ),
+              Container(
+                child: Text(
+                  messageInfo.userInfo.realName,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold),
+                ),
+                margin: EdgeInsets.fromLTRB(6, 0, 0, 0),
+              ),
+          ],
+        ),
+        Text(messageInfo.extraInfo["content"])
+      ],),
+    );
+  }
 }

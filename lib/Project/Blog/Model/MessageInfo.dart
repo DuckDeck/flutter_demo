@@ -34,6 +34,7 @@ class MessageInfo {
   static Future<ResultInfo> getMessage(int userId, int type, int index) async {
     var url =
         "$BaseUrl/message/listbytype/${type.toString()}/${userId.toString()}/${createToken()}/${index.toString()}/10";
+        print(url);
     final dio = new Dio();
     final res = await dio.get(url);
 
@@ -47,9 +48,10 @@ class MessageInfo {
       final msg = MessageInfo.fromJson(item);
       var extraData = Map<String, String>();
       switch (type) {
-        case 2: //评论
+        case 1: //评论
             extraData["comment_project_id"] = item["comment_project_id"];
             extraData["comment_project_title"] = item["comment_project_title"];
+            extraData["content"] = item["content"];
           break;
         default:
       }
