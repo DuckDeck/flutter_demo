@@ -13,7 +13,7 @@ class MyMessagePage extends StatefulWidget {
 
 class _MyMessagePageState extends State<MyMessagePage>
     with SingleTickerProviderStateMixin {
-     RefreshController rc1 = RefreshController(initialRefresh: true);
+  RefreshController rc1 = RefreshController(initialRefresh: true);
   var currentType = 1;
   var messageIndex = [0, 0, 0, 0];
   TabController _tabController;
@@ -27,8 +27,7 @@ class _MyMessagePageState extends State<MyMessagePage>
           currentType = _tabController.index + 1;
         }
       });
-      this.getMessage();
-    
+    // this.getMessage();
   }
 
   @override
@@ -78,8 +77,9 @@ class _MyMessagePageState extends State<MyMessagePage>
           body: TabBarView(children: [
             RefreshAndLoadMore(
               controller: rc1,
+              refreshFun: getMessage,
               loadMoreFun: loadMore,
-
+              children: buildList(1),
             ),
             Text("data"),
             Text("data"),
@@ -88,38 +88,54 @@ class _MyMessagePageState extends State<MyMessagePage>
         ));
   }
 
-  void loadMore(){
+  void loadMore() {
     messageIndex[currentType] += 1;
     this.getMessage();
   }
 
-    List<Widget> buildList() {
+  List<Widget> buildList(int type) {
     var widgets = List<Widget>();
-      return widgets;
+    switch (type) {
+      case 1:
+
+        for (var item in commentList) {
+          final cell = CommentMessageCell(item);
+          widgets.add(cell);
+        }
+        break;
+      default:
     }
+    return widgets;
+  }
 
   void getMessage() async {
-      final res = await MessageInfo.getMessage(
-          currentUser.id, currentType, messageIndex[currentType]);
-      if (res.code != 0) {
-        Fluttertoast.showToast(msg: res.msg);
-        return;
-      }
+    final res = await MessageInfo.getMessage(
+        currentUser.id, currentType, messageIndex[currentType]);
+    if (res.code != 0) {
+      Fluttertoast.showToast(msg: res.msg);
+      return;
     }
+    rc1.refreshCompleted();
+    rc1.loadComplete();
+    if(currentType == 1){
+      setState(() {
+        commentList = res.data as List<MessageInfo>;
+      });
+    }
+  }
 }
 
-
 class CommentMessageCell extends StatelessWidget {
-  final MessageInfo messageInfo;
-  CommentMessageCell({this.messageInfo});
+  MessageInfo messageInfo;
+  CommentMessageCell(this.messageInfo);
   @override
   Widget build(BuildContext context) {
-    
     return Container(
-      child: Column(children: [
-        Row(
-          children: [
-            ClipOval(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              ClipOval(
                 child: CachedNetworkImage(
                     imageUrl: messageInfo.userInfo.headImage,
                     width: 30,
@@ -138,10 +154,13 @@ class CommentMessageCell extends StatelessWidget {
                 ),
                 margin: EdgeInsets.fromLTRB(6, 0, 0, 0),
               ),
-          ],
-        ),
-        Text(messageInfo.extraInfo["content"])
-      ],),
+              Text("评论了你的文章"),
+              Text(messageInfo.extraInfo["comment_project_title"])
+            ],
+          ),
+          Text(messageInfo.extraInfo["content"])
+        ],
+      ),
     );
   }
 }
