@@ -134,6 +134,7 @@ class CommentMessageCell extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ClipOval(
                 child: CachedNetworkImage(
@@ -148,17 +149,19 @@ class CommentMessageCell extends StatelessWidget {
                 child: Text(
                   messageInfo.userInfo.realName,
                   style: TextStyle(
-                      fontSize: 16,
+                      
                       color: Colors.black54,
                       fontWeight: FontWeight.bold),
                 ),
                 margin: EdgeInsets.fromLTRB(6, 0, 0, 0),
               ),
-              Text("评论了你的文章"),
-              Text(messageInfo.extraInfo["comment_project_title"])
+              SizedBox(width: 8,),
+              Text("评论了你的文章:"),
+              
             ],
           ),
-          Text(messageInfo.extraInfo["content"])
+          Text(messageInfo.extraInfo["comment_project_title"],style: TextStyle(color: Colors.blue),textAlign: TextAlign.left,),
+          Text(messageInfo.extraInfo["content"],textAlign: TextAlign.left)
         ],
       ),
     );
