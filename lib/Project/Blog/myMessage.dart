@@ -14,10 +14,12 @@ class MyMessagePage extends StatefulWidget {
 class _MyMessagePageState extends State<MyMessagePage>
     with SingleTickerProviderStateMixin {
   RefreshController rc1 = RefreshController(initialRefresh: true);
+  RefreshController rc2 = RefreshController(initialRefresh: true);
   var currentType = 1;
   var messageIndex = [0, 0, 0, 0];
   TabController _tabController;
   var commentList = List<MessageInfo>();
+  var likeList = List<MessageInfo>();
   @override
   void initState() {
     super.initState();
@@ -81,7 +83,12 @@ class _MyMessagePageState extends State<MyMessagePage>
               loadMoreFun: loadMore,
               children: buildList(1),
             ),
-            Text("data"),
+            RefreshAndLoadMore(
+              controller: rc2,
+              refreshFun: getMessage,
+              loadMoreFun: loadMore,
+              children: buildList(2),
+            ),
             Text("data"),
             Text("data"),
           ]),
@@ -97,12 +104,18 @@ class _MyMessagePageState extends State<MyMessagePage>
     var widgets = List<Widget>();
     switch (type) {
       case 1:
-
         for (var item in commentList) {
           final cell = CommentMessageCell(item);
           widgets.add(cell);
         }
         break;
+      case 2:
+        for (var item in likeList) {
+          final cell = CommentMessageCell(item);
+          widgets.add(cell);
+        }
+        break;
+
       default:
     }
     return widgets;
@@ -117,9 +130,14 @@ class _MyMessagePageState extends State<MyMessagePage>
     }
     rc1.refreshCompleted();
     rc1.loadComplete();
-    if(currentType == 1){
+    if (currentType == 1) {
       setState(() {
         commentList = res.data as List<MessageInfo>;
+      });
+    }
+    if (currentType == 2) {
+      setState(() {
+        likeList = res.data as List<MessageInfo>;
       });
     }
   }
@@ -149,19 +167,63 @@ class CommentMessageCell extends StatelessWidget {
                 child: Text(
                   messageInfo.userInfo.realName,
                   style: TextStyle(
-                      
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold),
+                      color: Colors.black54, fontWeight: FontWeight.bold),
                 ),
                 margin: EdgeInsets.fromLTRB(6, 0, 0, 0),
               ),
-              SizedBox(width: 8,),
+              SizedBox(
+                width: 8,
+              ),
               Text("评论了你的文章:"),
-              
             ],
           ),
-          Text(messageInfo.extraInfo["comment_project_title"],style: TextStyle(color: Colors.blue),textAlign: TextAlign.left,),
-          Text(messageInfo.extraInfo["content"],textAlign: TextAlign.left)
+          Text(
+            messageInfo.extraInfo["comment_project_title"],
+            style: TextStyle(color: Colors.blue),
+            textAlign: TextAlign.left,
+          ),
+          Text(messageInfo.extraInfo["content"], textAlign: TextAlign.left)
+        ],
+      ),
+    );
+  }
+}
+
+class LikeMessageCell extends StatelessWidget {
+  MessageInfo messageInfo;
+  LikeMessageCell(this.messageInfo);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          ClipOval(
+            child: CachedNetworkImage(
+                imageUrl: messageInfo.userInfo.headImage,
+                width: 30,
+                height: 30,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    Image.asset("Images/placeholder_head.jpg")),
+          ),
+          Container(
+            child: Text(
+              messageInfo.userInfo.realName,
+              style:
+                  TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+            ),
+            margin: EdgeInsets.fromLTRB(6, 0, 0, 0),
+          ),
+          SizedBox(
+            width: 8,
+          ),
+          Text("评论了你的文章:"),
+          Text(
+            messageInfo.extraInfo["comment_project_title"],
+            style: TextStyle(color: Colors.blue),
+            textAlign: TextAlign.left,
+          ),
         ],
       ),
     );

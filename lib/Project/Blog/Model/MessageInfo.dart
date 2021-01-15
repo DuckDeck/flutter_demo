@@ -52,6 +52,10 @@ class MessageInfo {
             extraData["comment_project_id"] = item["comment_project_id"].toString();
             extraData["comment_project_title"] = item["comment_project_title"];
             extraData["content"] = item["content"];
+            break;
+        case 2: //评论
+            extraData["comment_project_id"] = item["comment_project_id"].toString();
+            extraData["comment_project_title"] = item["comment_project_title"];
           break;
         default:
       }
