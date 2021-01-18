@@ -12,9 +12,11 @@ class MyMessagePage extends StatefulWidget {
 }
 
 class _MyMessagePageState extends State<MyMessagePage>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin ,AutomaticKeepAliveClientMixin{
   RefreshController rc1 = RefreshController(initialRefresh: true);
   RefreshController rc2 = RefreshController(initialRefresh: true);
+  @override
+  bool get wantKeepAlive => true;
   var currentType = 1;
   var messageIndex = [0, 0, 0, 0];
   TabController _tabController;
@@ -76,7 +78,9 @@ class _MyMessagePageState extends State<MyMessagePage>
               ),
             ]),
           ),
-          body: TabBarView(children: [
+          body: TabBarView(
+            controller: _tabController,
+            children: [
             RefreshAndLoadMore(
               controller: rc1,
               refreshFun: getMessage,
@@ -122,6 +126,7 @@ class _MyMessagePageState extends State<MyMessagePage>
   }
 
   void getMessage() async {
+    print("获取信息${currentType.toString()}");
     final res = await MessageInfo.getMessage(
         currentUser.id, currentType, messageIndex[currentType]);
     if (res.code != 0) {
