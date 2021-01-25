@@ -297,3 +297,14 @@ class ConcernMessageCell extends StatelessWidget {
     );
   }
 }
+
+class PrivateMessageCell extends StatelessWidget {
+  MessageInfo messageInfo;
+  PrivateMessageCell(this.messageInfo);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
+    );
+  }
+}

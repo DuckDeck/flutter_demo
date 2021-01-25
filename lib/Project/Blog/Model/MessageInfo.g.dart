@@ -15,6 +15,9 @@ MessageInfo _$MessageInfoFromJson(Map<String, dynamic> json) {
     ..userInfo = json['user_info'] == null
         ? null
         : UserInfo.fromJson(json['user_info'] as Map<String, dynamic>)
+    ..chatInfo = json['chat_info'] == null
+        ? null
+        : ChatInfo.fromJson(json['chat_info'] as Map<String, dynamic>)
     ..extraInfo = (json['extraInfo'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(k, e as String),
     );
@@ -27,5 +30,6 @@ Map<String, dynamic> _$MessageInfoToJson(MessageInfo instance) =>
       'read_status': instance.readStatus,
       'message_time': instance.messageTime,
       'user_info': instance.userInfo,
+      'chat_info': instance.chatInfo,
       'extraInfo': instance.extraInfo,
     };

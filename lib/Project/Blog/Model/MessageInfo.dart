@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_demo/Project/Blog/Model/ChatInfo.dart';
 import 'package:flutter_demo/Project/Blog/Model/UserInfo.dart';
 import 'package:flutter_demo/ResultInfo.dart';
 import 'package:meta/meta.dart';
@@ -22,6 +23,9 @@ class MessageInfo {
 
   @JsonKey(name: "user_info")
   UserInfo userInfo;
+
+  @JsonKey(name: "chat_info")
+  ChatInfo chatInfo;
 
   Map<String, String> extraInfo;
 
