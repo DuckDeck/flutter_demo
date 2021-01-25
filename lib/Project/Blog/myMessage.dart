@@ -12,9 +12,11 @@ class MyMessagePage extends StatefulWidget {
 }
 
 class _MyMessagePageState extends State<MyMessagePage>
-    with SingleTickerProviderStateMixin ,AutomaticKeepAliveClientMixin{
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   RefreshController rc1 = RefreshController(initialRefresh: true);
   RefreshController rc2 = RefreshController(initialRefresh: true);
+  RefreshController rc3 = RefreshController(initialRefresh: true);
+
   @override
   bool get wantKeepAlive => true;
   var currentType = 1;
@@ -22,6 +24,7 @@ class _MyMessagePageState extends State<MyMessagePage>
   TabController _tabController;
   var commentList = List<MessageInfo>();
   var likeList = List<MessageInfo>();
+  var concernList = List<MessageInfo>();
   @override
   void initState() {
     super.initState();
@@ -78,9 +81,7 @@ class _MyMessagePageState extends State<MyMessagePage>
               ),
             ]),
           ),
-          body: TabBarView(
-            controller: _tabController,
-            children: [
+          body: TabBarView(controller: _tabController, children: [
             RefreshAndLoadMore(
               controller: rc1,
               refreshFun: getMessage,
@@ -93,7 +94,12 @@ class _MyMessagePageState extends State<MyMessagePage>
               loadMoreFun: loadMore,
               children: buildList(2),
             ),
-            Text("data"),
+            RefreshAndLoadMore(
+              controller: rc3,
+              refreshFun: getMessage,
+              loadMoreFun: loadMore,
+              children: buildList(3),
+            ),
             Text("data"),
           ]),
         ));
@@ -119,7 +125,12 @@ class _MyMessagePageState extends State<MyMessagePage>
           widgets.add(cell);
         }
         break;
-
+      case 3:
+        for (var item in likeList) {
+          final cell = ConcernMessageCell(item);
+          widgets.add(cell);
+        }
+        break;
       default:
     }
     return widgets;
@@ -133,16 +144,14 @@ class _MyMessagePageState extends State<MyMessagePage>
       Fluttertoast.showToast(msg: res.msg);
       return;
     }
-    
 
     if (currentType == 1) {
       rc1.refreshCompleted();
       rc1.loadComplete();
       setState(() {
-        if (messageIndex[currentType] == 0){
+        if (messageIndex[currentType - 1] == 0) {
           commentList = res.data as List<MessageInfo>;
-        }
-        else{
+        } else {
           commentList += res.data as List<MessageInfo>;
         }
       });
@@ -151,11 +160,21 @@ class _MyMessagePageState extends State<MyMessagePage>
       rc2.refreshCompleted();
       rc2.loadComplete();
       setState(() {
-        if (messageIndex[currentType] == 0){
+        if (messageIndex[currentType - 1] == 0) {
           likeList = res.data as List<MessageInfo>;
-        }
-        else{
+        } else {
           likeList += res.data as List<MessageInfo>;
+        }
+      });
+    }
+    if (currentType == 3) {
+      rc3.refreshCompleted();
+      rc3.loadComplete();
+      setState(() {
+        if (messageIndex[currentType - 1] == 0) {
+          concernList = res.data as List<MessageInfo>;
+        } else {
+          concernList += res.data as List<MessageInfo>;
         }
       });
     }
@@ -168,12 +187,11 @@ class CommentMessageCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-           
             children: [
               ClipOval(
                 child: CachedNetworkImage(
@@ -239,7 +257,7 @@ class LikeMessageCell extends StatelessWidget {
           SizedBox(
             width: 8,
           ),
-          Text("评论了你的文章:"),
+          Text("喜欢发发你的文章:"),
           Text(
             messageInfo.extraInfo["comment_project_title"],
             style: TextStyle(color: Colors.blue),
@@ -257,12 +275,25 @@ class ConcernMessageCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          
-        ]
-      ),
+      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        ClipOval(
+          child: CachedNetworkImage(
+              imageUrl: messageInfo.userInfo.headImage,
+              width: 30,
+              height: 30,
+              fit: BoxFit.cover,
+              placeholder: (context, url) =>
+                  Image.asset("Images/placeholder_head.jpg")),
+        ),
+         SizedBox(
+          width: 8,
+        ),
+        Text(
+          messageInfo.userInfo.realName,
+          style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+        ),
+        Text("关注了你"),
+      ]),
     );
   }
 }

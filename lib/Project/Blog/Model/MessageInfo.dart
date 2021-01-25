@@ -53,9 +53,11 @@ class MessageInfo {
             extraData["comment_project_title"] = item["comment_project_title"];
             extraData["content"] = item["content"];
             break;
-        case 2: //评论
+        case 2: //喜欢和赞
             extraData["comment_project_id"] = item["comment_project_id"].toString();
             extraData["comment_project_title"] = item["comment_project_title"];
+          break;
+        case 3: //关注
           break;
         default:
       }
