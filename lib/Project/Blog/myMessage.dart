@@ -115,7 +115,7 @@ class _MyMessagePageState extends State<MyMessagePage>
         break;
       case 2:
         for (var item in likeList) {
-          final cell = CommentMessageCell(item);
+          final cell = LikeMessageCell(item);
           widgets.add(cell);
         }
         break;
@@ -133,16 +133,30 @@ class _MyMessagePageState extends State<MyMessagePage>
       Fluttertoast.showToast(msg: res.msg);
       return;
     }
-    rc1.refreshCompleted();
-    rc1.loadComplete();
+    
+
     if (currentType == 1) {
+      rc1.refreshCompleted();
+      rc1.loadComplete();
       setState(() {
-        commentList = res.data as List<MessageInfo>;
+        if (messageIndex[currentType] == 0){
+          commentList = res.data as List<MessageInfo>;
+        }
+        else{
+          commentList += res.data as List<MessageInfo>;
+        }
       });
     }
     if (currentType == 2) {
+      rc2.refreshCompleted();
+      rc2.loadComplete();
       setState(() {
-        likeList = res.data as List<MessageInfo>;
+        if (messageIndex[currentType] == 0){
+          likeList = res.data as List<MessageInfo>;
+        }
+        else{
+          likeList += res.data as List<MessageInfo>;
+        }
       });
     }
   }
@@ -232,6 +246,22 @@ class LikeMessageCell extends StatelessWidget {
             textAlign: TextAlign.left,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ConcernMessageCell extends StatelessWidget {
+  MessageInfo messageInfo;
+  ConcernMessageCell(this.messageInfo);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+         mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          
+        ]
       ),
     );
   }
