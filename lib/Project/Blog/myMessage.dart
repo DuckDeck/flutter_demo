@@ -16,7 +16,7 @@ class _MyMessagePageState extends State<MyMessagePage>
   RefreshController rc1 = RefreshController(initialRefresh: true);
   RefreshController rc2 = RefreshController(initialRefresh: true);
   RefreshController rc3 = RefreshController(initialRefresh: true);
-
+  RefreshController rc4 = RefreshController(initialRefresh: true);
   @override
   bool get wantKeepAlive => true;
   var currentType = 1;
@@ -25,6 +25,7 @@ class _MyMessagePageState extends State<MyMessagePage>
   var commentList = List<MessageInfo>();
   var likeList = List<MessageInfo>();
   var concernList = List<MessageInfo>();
+  var messageList = List<MessageInfo>();
   @override
   void initState() {
     super.initState();
@@ -100,7 +101,12 @@ class _MyMessagePageState extends State<MyMessagePage>
               loadMoreFun: loadMore,
               children: buildList(3),
             ),
-            Text("data"),
+            RefreshAndLoadMore(
+              controller: rc4,
+              refreshFun: getMessage,
+              loadMoreFun: loadMore,
+              children: buildList(4),
+            ),
           ]),
         ));
   }
@@ -128,6 +134,12 @@ class _MyMessagePageState extends State<MyMessagePage>
       case 3:
         for (var item in likeList) {
           final cell = ConcernMessageCell(item);
+          widgets.add(cell);
+        }
+        break;
+      case 4:
+        for (var item in likeList) {
+          final cell = PrivateMessageCell(item);
           widgets.add(cell);
         }
         break;
@@ -175,6 +187,17 @@ class _MyMessagePageState extends State<MyMessagePage>
           concernList = res.data as List<MessageInfo>;
         } else {
           concernList += res.data as List<MessageInfo>;
+        }
+      });
+    }
+    if (currentType == 4) {
+      rc4.refreshCompleted();
+      rc4.loadComplete();
+      setState(() {
+        if (messageIndex[currentType - 1] == 0) {
+          messageList = res.data as List<MessageInfo>;
+        } else {
+          messageList += res.data as List<MessageInfo>;
         }
       });
     }
@@ -234,6 +257,7 @@ class LikeMessageCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding:  EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -275,6 +299,7 @@ class ConcernMessageCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding:  EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         ClipOval(
           child: CachedNetworkImage(
@@ -285,7 +310,7 @@ class ConcernMessageCell extends StatelessWidget {
               placeholder: (context, url) =>
                   Image.asset("Images/placeholder_head.jpg")),
         ),
-         SizedBox(
+        SizedBox(
           width: 8,
         ),
         Text(
@@ -304,7 +329,38 @@ class PrivateMessageCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
+      padding:  EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      child: Row(
+        children: [
+          ClipOval(
+            child: CachedNetworkImage(
+                imageUrl: messageInfo.userInfo.headImage,
+                width: 30,
+                height: 30,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    Image.asset("Images/placeholder_head.jpg")),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    messageInfo.userInfo.realName,
+                    style: TextStyle(
+                        color: Colors.black54, fontWeight: FontWeight.bold),
+                  ),
+                  Text("聊天时间")
+                ],
+              ),
+              Text("聊天内容")
+            ],
+          )
+        ],
+      ),
     );
   }
 }
