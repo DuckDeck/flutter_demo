@@ -48,16 +48,13 @@ class CommentCell extends StatelessWidget {
               ),
               commentInfo.subComments.length > 0
                   ? Container(
-                    margin: EdgeInsets.fromLTRB(20, 5, 5, 5),
-                    color: Colors.greenAccent,
-                    
-                    padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.fromLTRB(20, 5, 5, 5),
+                      padding: EdgeInsets.all(5),
                       child: Column(
-
-                      children: commentInfo.subComments
-                          .map((e) => Text(e.content))
-                          .toList(),
-                    ))
+                        children: commentInfo.subComments
+                            .map((e) => Text(e.content))
+                            .toList(),
+                      ))
                   : SizedBox(
                       height: 0,
                     ),

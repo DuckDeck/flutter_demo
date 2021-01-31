@@ -6,6 +6,7 @@ import 'package:flutter_demo/ResultInfo.dart';
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 import '../Tool/extension.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
 part 'ArticleInfo.g.dart';
 
 @JsonSerializable()
@@ -97,7 +98,8 @@ class ArticleInfo {
       url = url + "/$index/10";
     }
     final dio = new Dio();
-    final res = await dio.get(url);
+    dio.interceptors.add(DioCacheManager(CacheConfig()).interceptor);
+    final res = await dio.get(url,options: buildCacheOptions(Duration(hours: 1)));
     final result = ResultInfo.toResult(res);
     if (result.code != 0) {
       return result;
