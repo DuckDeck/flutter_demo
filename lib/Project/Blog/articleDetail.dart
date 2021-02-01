@@ -6,6 +6,7 @@ import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
 import 'package:flutter_demo/Project/Blog/Model/CommentInfo.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleTagsView.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleUserInfo.dart';
+import 'package:flutter_demo/Project/Blog/UI/collectClickView.dart';
 import 'package:flutter_demo/Project/Blog/UI/commentCell.dart';
 import 'package:flutter_demo/Project/Blog/config.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -91,53 +92,11 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                GestureDetector(
-                  child: Container(
-                    child: Row(
-                      children: [
-                        Icon(Icons.favorite),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Text("喜欢"),
-                        SizedBox(
-                          width: 8,
-                        ),
-             
-                        SizedBox(
-                          width: 2,
-                        ),
-                        info.likeCount == null ? Text("") : 
-                         Text(info.likeCount.toString())
-                  
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  child: Container(
-                    child: Row(
-                      children: [
-                        Icon(Icons.star),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Text("收藏"),
-                        SizedBox(
-                          width: 8,
-                        ),
-                      
-                        SizedBox(
-                          width: 2,
-                        ),
-                        info.collectCount == null ? Text("") : 
-                         Text(info.collectCount.toString())
-                      ],
-                    ),
-                  ),
-                )
+                CollectClickView(icon: Icons.favorite, isSelect: false,title: "喜欢", num: info.likeCount,),
+                CollectClickView(icon: Icons.star,isSelect: false,title: "收藏", num: info.collectCount,)
               ],
             ),
+            SizedBox(height: 10,),
             Container(
               child: currentUser == null ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -145,8 +104,18 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
                     FlatButton(onPressed: ()=> { Navigator.of(context).pushNamed("/project/blog/login")}
                     , child: Text("登录")),
                     Text("且发表评论")
-                  ]) : Row()
+                  ]) : Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      TextField(
+                        keyboardType: TextInputType.multiline,
+                        decoration: InputDecoration(labelText: "你想写的评论",border: OutlineInputBorder(borderSide: BorderSide(width: 1,color: color_999999)) ),
+                      ),
+                      FlatButton(onPressed: null, child: Text("提交"))
+                    ],
+                  )
             ),
+            SizedBox(height: 10,),
             Text("${info.commentCount ?? 0}条评论"),
             SizedBox(height: 5),
             Column(

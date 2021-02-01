@@ -59,11 +59,11 @@ class CommentInfo {
     final arrs = result.data as List<dynamic>;
     for (var item in arrs) {
       final com = CommentInfo.fromJson(item);
-      print("~~~~~~~~~~~~~~~~~~~~~~");
-      print(com.subComments.length);
       arrComments.add(com);
     }
     result.data = arrComments;
     return result;
    }
+
+
 }

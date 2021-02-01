@@ -21,8 +21,8 @@ class ArticleCell extends StatelessWidget {
               ClipOval(
                 child: CachedNetworkImage(
                     imageUrl: articleInfo.userInfo.headImage,
-                    width: 30,
-                    height: 30,
+                    width: 27,
+                    height: 27,
                     fit: BoxFit.cover,
                     placeholder: (context, url) =>
                         Image.asset("Images/placeholder_head.jpg")),
@@ -37,15 +37,15 @@ class ArticleCell extends StatelessWidget {
                 ),
                 margin: EdgeInsets.fromLTRB(6, 0, 0, 0),
               ),
-              SizedBox(
-                width: 5,
-              ),
-              Icon(Icons.comment),
+              SizedBox(width: 10,),
+              Icon(Icons.comment,size: 15,color: Colors.purple,),
+              SizedBox(width: 3,),
               Text("${articleInfo.commentCount}条评论"),
               SizedBox(
                 width: 5,
               ),
-              Icon(Icons.favorite),
+              Icon(Icons.favorite,size: 15,color: Colors.purple,),
+              SizedBox(width: 3,),
               Text("${articleInfo.likeCount}人喜欢"),
               Spacer(),
               Text("${articleInfo.CreateTimeStr}"),
