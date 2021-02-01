@@ -96,6 +96,7 @@ void login() async {
       child: Column(
         children: [
           TextField(
+            style: TextStyle(color: Colors.white),
             controller: userNameController,
             decoration: InputDecoration(
             labelText: "用户名",
@@ -106,6 +107,7 @@ void login() async {
             ),
           )),
           TextField(
+            style: TextStyle(color: Colors.white),
             controller: passwordController,
             decoration: InputDecoration(
               labelText: "密码",
@@ -176,7 +178,7 @@ void login() async {
     return Center(
         child: Container(
       width: 360,
-      height: 400,
+      height: 440,
       child: Column(
         children: [
           SizedBox(
@@ -187,6 +189,7 @@ void login() async {
             height: 10,
           ),
           TextField(
+            style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
             labelText: "你的呢称",
             hintText: "请输入呢称，注册后可随时修改",
@@ -196,6 +199,7 @@ void login() async {
             ),
           )),
           TextField(
+            style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
               labelText: "你的邮箱",
               hintText: "你注册和找回密码使用的邮箱",
@@ -206,6 +210,7 @@ void login() async {
             ),
           ),
           TextField(
+            style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
               labelText: "密码",
               hintText: "你的登录密码",
@@ -217,6 +222,7 @@ void login() async {
             obscureText: true,
           ),
           TextField(
+            style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
               labelText: "密码确认",
               hintText: "请再次输入一至密码",

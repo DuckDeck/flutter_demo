@@ -221,7 +221,16 @@ class _LeftBlogMenuState extends State<LeftBlogMenu> {
                   leading: const Icon(Icons.message),
                   title: const Text("我的消息"),
                   onTap: ()=>{
-                    Navigator.of(context).pushNamed("/project/blog/message")
+                    if(currentUser == null){
+                       Navigator.of(context).pushNamed("/project/blog/login").then((value) => {
+                        handleLoginResult(value as bool)
+                        
+                      })
+                    }
+                    else{
+                      Navigator.of(context).pushNamed("/project/blog/message")
+                    }
+                    
                   },
                 ),
                 ListTile(
