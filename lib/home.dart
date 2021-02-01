@@ -6,7 +6,7 @@ import 'package:flutter_demo/Media/menu.dart';
 import 'package:flutter_demo/Project/menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_demo/Foundation/menu.dart';
-import 'Project/Blog/Tool/extension.dart';
+import 'Project/Blog/Tool/Extension.dart';
 const items = ["基础", "触摸&手势", "UI和布局", "数据和文件", "影音多媒体", "独立项目"];
 
 class HomePage extends StatelessWidget {

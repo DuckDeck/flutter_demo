@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
-import '../Tool/extension.dart';
+import '../Tool/Extension.dart';
 part 'ChatInfo.g.dart';
 
 @JsonSerializable()

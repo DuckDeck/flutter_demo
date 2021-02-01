@@ -5,7 +5,7 @@ import 'package:flutter_demo/Project/Blog/config.dart';
 import 'package:flutter_demo/ResultInfo.dart';
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
-import '../Tool/extension.dart';
+import '../Tool/Extension.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 part 'ArticleInfo.g.dart';
 
@@ -165,4 +165,13 @@ class ArticleInfo {
     return result;
   }
 
+  static Future<ResultInfo> userLikeArticle(int articleId,bool isLike) async{
+    final userId = currentUser.id;
+    final like = isLike ? 1 : 0;
+    var url = "$BaseUrl/usersetlike/$articleId/${like.toString()}/${userId.toString()}/${createToken()}";
+    final dio = new Dio();
+    final res = await dio.get(url);
+    
+    
+  }
 }

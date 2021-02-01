@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:flutter_demo/Project/Blog/config.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter_demo/ResultInfo.dart';
-import '../Tool/extension.dart';
+import '../Tool/Extension.dart';
 part 'CommentInfo.g.dart';
 @JsonSerializable()
 @immutable

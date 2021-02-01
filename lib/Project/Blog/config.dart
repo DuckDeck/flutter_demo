@@ -7,9 +7,10 @@ import 'package:path_provider/path_provider.dart';
 
 const _key = "751f621ea5c8f930";
 const _iv = "2624750004598718";
-
+const loginNotif = "loginNotif";
 const BaseUrl = "http://api.bqbbq.com/api";
 UserInfo currentUser ;
+
   Future<File> getDataFile() async {
     String dir = (await getApplicationDocumentsDirectory()).path;
     var path = Directory(dir + "/" + "blog");

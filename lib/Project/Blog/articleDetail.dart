@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
 import 'package:flutter_demo/Project/Blog/Model/CommentInfo.dart';
+import 'package:flutter_demo/Project/Blog/Tool/NotificationCenter.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleTagsView.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleUserInfo.dart';
 import 'package:flutter_demo/Project/Blog/UI/collectClickView.dart';
@@ -32,6 +33,9 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
     super.initState();
     _getData();
     _getComment();
+    NotifcationCenter.instance.addObserver(loginNotif, (object) {
+      _getData();
+    });
   }
 
   @override
@@ -74,8 +78,7 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
             _isInit
                 ? SkeletonLoader(
                     builder: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        padding:EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                         child: Container(
                           width: double.infinity,
                           height: 12,
@@ -86,17 +89,15 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
                     direction: SkeletonDirection.ltr,
                   )
                 : Html(data: info.content),
-            SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                CollectClickView(icon: Icons.favorite, isSelect: false,title: "喜欢", num: info.likeCount,),
-                CollectClickView(icon: Icons.star,isSelect: false,title: "收藏", num: info.collectCount,)
+                CollectClickView(icon: Icons.favorite, isSelect: info.isUserLike,title: "喜欢", num: info.likeCount,),
+                CollectClickView(icon: Icons.star,isSelect: info.isUserCollect,title: "收藏", num: info.collectCount,)
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 20,),
             Container(
               child: currentUser == null ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +118,7 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
             ),
             SizedBox(height: 10,),
             Text("${info.commentCount ?? 0}条评论"),
-            SizedBox(height: 5),
+            SizedBox(height: 15),
             Column(
               children:
                   comments.map((e) => CommentCell(commentInfo: e)).toList(),
