@@ -138,7 +138,9 @@ class ArticleInfo {
   }
 
   static Future<ResultInfo> articleInfo(int articleId) async{
-    var url = BaseUrl + "/article/" + articleId.toString() + "/0/0";
+    
+    var url = BaseUrl + "/article/" + articleId.toString() + "/${currentUser.id}/${createToken()}";
+    print(url);
     final dio = new Dio();
     final res = await dio.get(url);
     
@@ -147,6 +149,7 @@ class ArticleInfo {
       return result;
     }
     final article = ArticleInfo.fromJson(result.data);
+        print("user like" + article.isUserCollect.toString());
     result.data = article;
     return result;
   }
@@ -171,7 +174,17 @@ class ArticleInfo {
     var url = "$BaseUrl/usersetlike/$articleId/${like.toString()}/${userId.toString()}/${createToken()}";
     final dio = new Dio();
     final res = await dio.get(url);
-    
-    
+    final result = ResultInfo.toResult(res);
+    return result;
+  }
+
+  static Future<ResultInfo> userCollectArticle(int articleId,bool isLike) async{
+    final userId = currentUser.id;
+    final like = isLike ? 1 : 0;
+    var url = "$BaseUrl/usersetcollect/$articleId/${like.toString()}/${userId.toString()}/${createToken()}";
+    final dio = new Dio();
+    final res = await dio.get(url);
+    final result = ResultInfo.toResult(res);
+    return result;
   }
 }

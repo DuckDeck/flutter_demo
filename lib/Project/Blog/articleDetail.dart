@@ -10,6 +10,8 @@ import 'package:flutter_demo/Project/Blog/UI/articleUserInfo.dart';
 import 'package:flutter_demo/Project/Blog/UI/collectClickView.dart';
 import 'package:flutter_demo/Project/Blog/UI/commentCell.dart';
 import 'package:flutter_demo/Project/Blog/config.dart';
+import 'package:flutter_demo/ResultInfo.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:skeleton_loader/skeleton_loader.dart';
@@ -24,11 +26,12 @@ class ArticleDetailPage extends StatefulWidget {
 class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
   ArticleInfo info;
   List<CommentInfo> comments = List<CommentInfo>();
+  final commentTextController = TextEditingController();
   var _isLoading = false;
   var _isInit = true;
   @override
   void initState() {
-     print("targetUserId${widget.info}");
+    print("targetUserId${widget.info}");
     info = widget.info;
     super.initState();
     _getData();
@@ -45,86 +48,129 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
           title: Text(info.title),
         ),
         body: Container(
-          padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(5),
             child: ListView(
-          children: [
-               info.userInfo == null ? SkeletonLoader(
-                    builder: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        child: Container(
-                          width: double.infinity,
-                          height: 12,
-                          color: Colors.white,
-                        )),
-                    items: 2,
-                    period: Duration(seconds: 2),
-                    direction: SkeletonDirection.ltr,
-                  ) : 
-            ArticleUserInfoView(
-              articleInfo: info,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            info.tags == null ? SizedBox(height: 1,) : Container(
-                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 15),
-                child: ArticleTagsView(
-                  tags: info.tags,
-                )), 
-            SizedBox(
-              height: 10,
-            ),
-            _isInit
-                ? SkeletonLoader(
-                    builder: Container(
-                        padding:EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        child: Container(
-                          width: double.infinity,
-                          height: 12,
-                          color: Colors.white,
-                        )),
-                    items: 20,
-                    period: Duration(seconds: 2),
-                    direction: SkeletonDirection.ltr,
-                  )
-                : Html(data: info.content),
-            SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                CollectClickView(icon: Icons.favorite, isSelect: info.isUserLike,title: "喜欢", num: info.likeCount,),
-                CollectClickView(icon: Icons.star,isSelect: info.isUserCollect,title: "收藏", num: info.collectCount,)
-              ],
-            ),
-            SizedBox(height: 20,),
-            Container(
-              child: currentUser == null ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FlatButton(onPressed: ()=> { Navigator.of(context).pushNamed("/project/blog/login")}
-                    , child: Text("登录")),
-                    Text("且发表评论")
-                  ]) : Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      TextField(
-                        keyboardType: TextInputType.multiline,
-                        decoration: InputDecoration(labelText: "你想写的评论",border: OutlineInputBorder(borderSide: BorderSide(width: 1,color: color_999999)) ),
+                info.userInfo == null
+                    ? SkeletonLoader(
+                        builder: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Container(
+                              width: double.infinity,
+                              height: 12,
+                              color: Colors.white,
+                            )),
+                        items: 2,
+                        period: Duration(seconds: 2),
+                        direction: SkeletonDirection.ltr,
+                      )
+                    : ArticleUserInfoView(
+                        articleInfo: info,
                       ),
-                      FlatButton(onPressed: null, child: Text("提交"))
-                    ],
-                  )
-            ),
-            SizedBox(height: 10,),
-            Text("${info.commentCount ?? 0}条评论"),
-            SizedBox(height: 15),
-            Column(
-              children:
-                  comments.map((e) => CommentCell(commentInfo: e)).toList(),
-            )
-          ],
-        )));
+                SizedBox(
+                  height: 10,
+                ),
+                info.tags == null
+                    ? SizedBox(
+                        height: 1,
+                      )
+                    : Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 4, horizontal: 15),
+                        child: ArticleTagsView(
+                          tags: info.tags,
+                        )),
+                SizedBox(
+                  height: 10,
+                ),
+                _isInit
+                    ? SkeletonLoader(
+                        builder: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Container(
+                              width: double.infinity,
+                              height: 12,
+                              color: Colors.white,
+                            )),
+                        items: 20,
+                        period: Duration(seconds: 2),
+                        direction: SkeletonDirection.ltr,
+                      )
+                    : Html(data: info.content),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CollectClickView(
+                      icon: Icons.favorite,
+                      isSelect: info.isUserLike ?? false,
+                      title: "喜欢",
+                      num: info.likeCount,
+                      collectClick: (title, isSelect) {
+                        ArticleInfo.userLikeArticle(info.id, (isSelect as bool))
+                            .then((value) => {updateLike(value)});
+                      },
+                    ),
+                    CollectClickView(
+                      icon: Icons.star,
+                      isSelect: info.isUserCollect ?? false,
+                      title: "收藏",
+                      num: info.collectCount,
+                      collectClick: (title, isSelect) {
+                        ArticleInfo.userCollectArticle(
+                                info.id, (isSelect as bool))
+                            .then((value) => {updateCollect(value)});
+                      },
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                    child: currentUser == null
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                                FlatButton(
+                                    onPressed: () => {
+                                          Navigator.of(context)
+                                              .pushNamed("/project/blog/login")
+                                        },
+                                    child: Text("登录")),
+                                Text("且发表评论")
+                              ])
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              TextField(
+                                keyboardType: TextInputType.multiline,
+                                controller: commentTextController,
+                                decoration: InputDecoration(
+                                    labelText: "你想写的评论",
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 1, color: color_999999))),
+                              ),
+                              FlatButton(
+                                  onPressed: addComment, child: Text("提交"))
+                            ],
+                          )),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("${info.commentCount ?? 0}条评论"),
+                SizedBox(height: 15),
+                Column(
+                  children:
+                      comments.map((e) => CommentCell(commentInfo: e)).toList(),
+                )
+              ],
+            )));
   }
 
   void _getData() async {
@@ -141,8 +187,54 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
     });
   }
 
+  void updateLike(ResultInfo res) {
+    if (res.code == 0) {
+      setState(() {
+        info.isUserLike = !info.isUserLike;
+        if (info.isUserLike) {
+          info.likeCount += 1;
+        } else {
+          info.likeCount -= 1;
+        }
+      });
+    } else {
+      Fluttertoast.showToast(msg: res.msg);
+    }
+  }
+
+  void updateCollect(ResultInfo res) {
+    if (res.code == 0) {
+      setState(() {
+        info.isUserCollect = !info.isUserCollect;
+        if (info.isUserCollect) {
+          info.collectCount += 1;
+        } else {
+          info.collectCount -= 1;
+        }
+      });
+    } else {
+      Fluttertoast.showToast(msg: res.msg);
+    }
+  }
+
+  void addComment() async {
+    if (commentTextController.text.length <= 0) {
+      Fluttertoast.showToast(msg: "评论不能为空");
+      return;
+    }
+    EasyLoading.show();
+    final res = await CommentInfo.addComment(info.id, commentTextController.text);
+    if (res.code != 0) {
+      EasyLoading.dismiss();
+      Fluttertoast.showToast(msg: res.msg);
+      return ;
+    }
+    _getComment();
+  }
+
   void _getComment() async {
     final res = await CommentInfo.getComments(info.id, 0);
+    EasyLoading.dismiss();
     if (res.code != 0) {
       Fluttertoast.showToast(msg: res.msg);
       return null;
