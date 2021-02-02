@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
 import 'package:flutter_demo/Project/Blog/Model/CommentInfo.dart';
@@ -149,6 +150,7 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
                             children: [
                               TextField(
                                 keyboardType: TextInputType.multiline,
+                                maxLines: 5,
                                 controller: commentTextController,
                                 decoration: InputDecoration(
                                     labelText: "你想写的评论",
@@ -157,7 +159,11 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
                                             width: 1, color: color_999999))),
                               ),
                               FlatButton(
-                                  onPressed: addComment, child: Text("提交"))
+                                  onPressed: addComment,
+                                  child: Text(
+                                    "提交",
+                                    style: TextStyle(color: Colors.purple),
+                                  ))
                             ],
                           )),
                 SizedBox(
@@ -166,8 +172,14 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
                 Text("${info.commentCount ?? 0}条评论"),
                 SizedBox(height: 15),
                 Column(
-                  children:
-                      comments.map((e) => CommentCell(commentInfo: e)).toList(),
+                  children: comments
+                      .map((e) => CommentCell(
+                            commentInfo: e,
+                            addSubComent: (comment) {
+                              addSubComment(comment);
+                            },
+                          ))
+                      .toList(),
                 )
               ],
             )));
@@ -223,13 +235,53 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
       return;
     }
     EasyLoading.show();
-    final res = await CommentInfo.addComment(info.id, commentTextController.text);
+    final res =
+        await CommentInfo.addComment(info.id, commentTextController.text);
     if (res.code != 0) {
       EasyLoading.dismiss();
       Fluttertoast.showToast(msg: res.msg);
-      return ;
+      return;
     }
+    commentTextController.text = "";
+
     _getComment();
+  }
+
+  void addSubComment(CommentInfo mainComment) async {
+    showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: Text("添加评论"),
+            content: Card(
+              elevation: 0.0,
+              child: Container(child: TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: 5,
+                style: TextStyle(fontSize: 11),
+                decoration: InputDecoration(
+                                    labelText: "你对${mainComment.userInfo.realName}评论的回应",
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 1, color: color_999999))),
+              )),
+            ),
+            actions: <Widget>[
+                  CupertinoDialogAction(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('取消'),
+                  ),
+                  CupertinoDialogAction(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('确定'),
+                  ),
+                ],
+          );
+        });
   }
 
   void _getComment() async {

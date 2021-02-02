@@ -4,8 +4,8 @@ import 'package:flutter_demo/Project/Blog/Model/CommentInfo.dart';
 
 class CommentCell extends StatelessWidget {
   final CommentInfo commentInfo;
-  CommentCell({this.commentInfo});
-
+  CommentCell({this.commentInfo,this.addSubComent});
+  final Function addSubComent;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -36,7 +36,9 @@ class CommentCell extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Icon(Icons.comment)
+                  IconButton(icon: Icon(Icons.comment,size: 20,), onPressed: (){
+                    addSubComent(commentInfo);
+                  })
                 ],
               ),
               SizedBox(
