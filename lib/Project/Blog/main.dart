@@ -244,6 +244,9 @@ class _LeftBlogMenuState extends State<LeftBlogMenu> {
                 ListTile(
                   leading: const Icon(Icons.settings),
                   title: const Text("系统设置"),
+                  onTap: (){
+                    Navigator.of(context).pushNamed("/project/blog/setting");
+                  },
                 )
               ],
             ))

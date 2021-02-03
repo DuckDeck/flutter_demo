@@ -65,10 +65,9 @@ class CommentInfo {
     return result;
   }
 
-  static Future<ResultInfo> addComment(int targetId, String content) async {
+  static Future<ResultInfo> addComment(Map<String,dynamic> data) async {
     var url = BaseUrl + "/comment/${currentUser.id}/${createToken()}";
     print(url);
-    final data = {"commentTargetId": targetId.toString(), "commentContent": content};
     final dio = new Dio();
     final res = await dio.post(url,data: data);
     final result = ResultInfo.toResult(res);
