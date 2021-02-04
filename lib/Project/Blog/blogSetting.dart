@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/Project/Blog/Tool/NotificationCenter.dart';
 import 'package:flutter_demo/Project/Blog/config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -48,6 +49,9 @@ class BlogSettingPage extends StatelessWidget {
                   SizedBox(height: 20,),
                   Divider(),
                   FlatButton(
+                    onPressed: (){
+                      showLogout(context);
+                    },
                     child: Text(
                       "退出登陆",
                       style: TextStyle(color: color_666666, fontSize: 18),
@@ -57,5 +61,27 @@ class BlogSettingPage extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  void logOut(BuildContext context){
+    
+    Navigator.of(context).pop(true); 
+    NotifcationCenter.instance.postNotification(logoutNotif, "");
+  }
+
+  void showLogout(BuildContext context){
+    showDialog(context: context,builder: (context) {
+            return AlertDialog(
+              title: Text("登出"),
+              content: Text("你要退出登录吗？"),
+              actions: [
+                FlatButton(onPressed: ()=> Navigator.of(context).pop(), child: Text("取消")),
+                FlatButton(onPressed: (){
+                  Navigator.of(context).pop(true);
+                  logOut(context);
+                } , child: Text("确定")),
+              ],
+            );
+        });
   }
 }

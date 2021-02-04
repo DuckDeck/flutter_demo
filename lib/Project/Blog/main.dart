@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Project/Blog/Model/ArticleInfo.dart';
 import 'package:flutter_demo/Project/Blog/Model/UserInfo.dart';
+import 'package:flutter_demo/Project/Blog/Tool/NotificationCenter.dart';
 import 'package:flutter_demo/Project/Blog/UI/RefreshAndLoadMore.dart';
 import 'package:flutter_demo/Project/Blog/UI/articleCell.dart';
 import 'package:flutter_demo/Project/Blog/config.dart';
@@ -30,6 +31,11 @@ class _ZoeBlogPageState extends State<ZoeBlogPage> {
     banners = List<ArticleInfo>();
     articles = List<ArticleInfo>();
     getUserInfo().then((value) => currentUser = value);
+    NotifcationCenter.instance.addObserver(logoutNotif, (object) {
+      setState(() {
+        currentUser = null;
+      });
+    });
   }
 
   @override

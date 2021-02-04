@@ -42,6 +42,7 @@ class _ArticleDetailPagePageState extends State<ArticleDetailPage> {
     NotifcationCenter.instance.addObserver(loginNotif, (object) {
       _getData();
     });
+    
   }
 
   @override
